@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Athon.Data.Context;
 
 namespace Athon
 {
@@ -21,6 +23,11 @@ namespace Athon
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            
+            // buscar a conexao do banco de dados
+            services.AddDbContext<AthonContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("AthonDB")).EnableSensitiveDataLogging());
+
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

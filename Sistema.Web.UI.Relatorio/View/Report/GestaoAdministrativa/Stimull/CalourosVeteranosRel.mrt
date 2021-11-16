@@ -1,0 +1,2924 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <NomeConexao Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>NomeConexao</Alias>
+        <ConnectionStringEncrypted>5dDZLcYWc8VHFazYYRhkY8PE9QthURPwQ3vogOTsNRPjEv8JxRhp7WldoYBkCWVn43hTr0Z+S93iSfX0aiU0u97EgQlPXkvNaUHNmGMEMj/wfLlDYUqT/ctHuczhmKRe1VjVg2IYewViS4i9Y3jre8VA</ConnectionStringEncrypted>
+        <Key>34f2bd7d8eb94d1f893fb0ec1b7a2b47</Key>
+        <Name>NomeConexao</Name>
+      </NomeConexao>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <NomeFonteDados Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>NomeFonteDados</Alias>
+        <Columns isList="true" count="22">
+          <value>AreaConhecimento,System.String</value>
+          <value>Curso,System.String</value>
+          <value>Turno,System.String</value>
+          <value>Matric,System.Int32</value>
+          <value>Formado,System.Int32</value>
+          <value>Desistente,System.Int32</value>
+          <value>Abandono,System.Int32</value>
+          <value>TrancamentoAtual,System.Int32</value>
+          <value>TrancamentoGeral,System.Int32</value>
+          <value>OutraSaida,System.Int32</value>
+          <value>Rematriculado,System.Int32</value>
+          <value>NaoRematriculado,System.Int32</value>
+          <value>NaoRematriculadoFIES,System.Int32</value>
+          <value>Regularizado,System.Int32</value>
+          <value>TotalVeterano,System.Int32</value>
+          <value>TransfInterna,System.Int32</value>
+          <value>TransfExterna,System.Int32</value>
+          <value>CalouroAtivo,System.Int32</value>
+          <value>CalouroFIES,System.Int32</value>
+          <value>TotalCalouro,System.Int32</value>
+          <value>TotalAluno,System.Int32</value>
+          <value>DesempenhoOferta,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>60000</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Key>d741e4c39d934abd9c8e765bb3176d1e</Key>
+        <Name>NomeFonteDados</Name>
+        <NameInSource>NomeConexao</NameInSource>
+        <Parameters isList="true" count="2">
+          <value>IdPeriodoLetivo,vIdPeriodoLetivo,8,0</value>
+          <value>IdCampus,vIdCampus,8,0</value>
+        </Parameters>
+        <SqlCommand>--DECLARE @idPeriodoLetivo   INT = 30
+--DECLARE @IdCampus          INT = 1 
+DECLARE @idPeriodoAnterior INT -- = (@IdPeriodoLetivo - 1)
+
+SELECT @idPeriodoAnterior = DBComum.dbo.PeriodoLetivo.IdPeriodoLetivoAnterior
+  FROM DBComum.dbo.PeriodoLetivo
+ WHERE DBComum.dbo.PeriodoLetivo.IdPeriodoLetivo = @IdPeriodoLetivo
+
+DECLARE @PeriodoLetivoAtualSigla VARCHAR(20) = (SELECT DBComum.dbo.PeriodoLetivo.Descricao 
+	FROM DBComum.dbo.PeriodoLetivo
+	WHERE DBComum.dbo.PeriodoLetivo.IdPeriodoLetivo = @idPeriodoLetivo)
+
+
+DECLARE @tabela TABLE
+(
+     AreaConhecimento     VARCHAR(200) 
+    ,Curso                VARCHAR(200) 
+    ,Turno                VARCHAR(200) 
+    ,Matric               INT 
+    ,Rematriculado        INT 
+    ,NaoRematriculado     INT
+    ,Regularizado         INT
+    ,NaoRematriculadoFIES INT
+    ,Formado              INT
+    ,Desistente           INT
+    ,Abandono             INT
+    ,TrancamentoAtual     INT
+    ,TrancamentoGeral     INT
+    ,OutraSaida           INT
+    ,TransfInterna        INT
+    ,TransfExterna        INT    
+    ,CalouroAtivo         INT
+    ,CalouroFIES          INT   
+
+)
+---------------------------------------------------------------------------------------------------
+-- CAMPO Matric : Total de alunos em situação de ativos (base congelada todo final de semestre)
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0    
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO Rematriculado : Total de Alunos rematriculados
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+                    JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                      ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+				   WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				     AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+					 AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					 AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO Não Rematriculado : Total de Alunos não rematriculados
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,0
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND NOT EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+                    JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                      ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+				   WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				     AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+					 AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					 AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO Regularizado 
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+	,0
+	,0
+	,0
+	,COUNT(DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+ JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+   ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+  AND ((DBSecretariaAcademica.dbo.TipoAcessoIES.Calouro                         = 0) 
+OR EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre ALUNO_SERIE
+	           WHERE ALUNO_SERIE.IdCampus               = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus
+	 		     AND ALUNO_SERIE.IdPeriodoLetivo       &lt;= @IdPeriodoAnterior
+				 AND ALUNO_SERIE.SituacaoAcademicaAtivo = 1
+                 AND ALUNO_SERIE.idAluno                = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno))
+AND NOT EXISTS (SELECT 1 FROM DBRelatorio.dbo.AlunoRelatorio
+                    JOIN DBSecretariaAcademica.dbo.GradeConsepe
+                      ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+                    JOIN DBComum.dbo.Gpa
+                      ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+                   WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+                     AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+                     AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+                     AND DBRelatorio.dbo.AlunoRelatorio.IdAluno                = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                 
+AND EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre ALS
+                                     JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                                       ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = ALS.IdTipoAcessoIES
+                                    WHERE ALS.IdCampus               = @IdCampus
+                                      AND ALS.IdPeriodoLetivo        = @IdPeriodoLetivo
+                                      AND ALS.SituacaoAcademicaAtivo = 1
+                                      AND ALS.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)) 
+
+
+   GROUP BY  DBComum.dbo.Gpa.Descricao
+           	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+		    ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao 
+   ORDER BY  DBComum.dbo.Gpa.Descricao
+			,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+			,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO Não Rematriculado com FIES : Total de Alunos não rematriculados
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,0
+	,0
+	,0
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND NOT EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+					JOIN DBSecretariaAcademica.dbo.GradeConsepe
+                      ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdGradeConsepe
+                    JOIN DBComum.dbo.Gpa
+                      ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+                    JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                      ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+				   WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				     AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+					 AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					 AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno
+					 AND ((DBSecretariaAcademica.dbo.TipoAcessoIES.Calouro                         = 0) 
+OR EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre ALUNO_SERIE
+               WHERE ALUNO_SERIE.IdCampus               = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus
+				 AND ALUNO_SERIE.IdPeriodoLetivo       &lt;= @idPeriodoAnterior
+				 AND ALUNO_SERIE.SituacaoAcademicaAtivo = 1
+				 AND ALUNO_SERIE.idAluno                = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno)))
+
+AND EXISTS (SELECT 1 
+	FROM DBGestaoFiesProUni.dbo.FiesContrato FC
+   INNER JOIN DBGestaoFiesProUni.dbo.FiesContratoPeriodoLetivo FCPL
+	  ON FCPL.IdFiesContrato = FC.IdFiesContrato
+   INNER JOIN DBGestaoFiesProUni.dbo.FiesContratoPeriodoLetivoSituacao FCPLS
+ON FCPLS.IdFiesContratoPeriodoLetivoSituacao = ( SELECT MAX(FCPLS_.IdFiesContratoPeriodoLetivoSituacao) 
+	FROM DBGestaoFiesProUni.dbo.FiesContratoPeriodoLetivoSituacao FCPLS_
+														WHERE FCPLS_.IdFiesContratoPeriodoLetivo = FCPL.IdFiesContratoPeriodoLetivo)
+   INNER JOIN DBGestaoFiesProUni.dbo.FiesContratoFaseTramitacao FCFT
+ON FCFT.IdFiesContratoFaseTramitacao = ( SELECT MAX(FCFT_.IdFiesContratoFaseTramitacao) FROM DBGestaoFiesProUni.dbo.FiesContratoFaseTramitacao FCFT_
+												WHERE FCFT_.IdFiesContrato = FC.IdFiesContrato ) 
+    WHERE FC.IdAluno             = DBRelatorio.dbo.AlunoRelatorio.IdAluno
+  		AND FCPL.IdPeriodoLetivo = @idPeriodoAnterior
+  		AND FCPLS.IdSituacao     = 1 )
+
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO FORMADO
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,0
+	,0
+	,0
+	,0    
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND NOT EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+                   JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                     ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+	              WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+AND EXISTS (SELECT TOP 1 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre ALS
+	           WHERE ALS.IdCampus               = @IdCampus
+                 AND ALS.IdSituacaoAcademica    = 10
+                 AND ALS.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno
+                 ORDER BY ALS.IdAlunoSemestre)
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO DESISTENTE
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,0
+	,0
+	,0
+	,0    
+	,0
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND NOT EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+                   JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                     ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+	              WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+AND EXISTS (SELECT TOP 1 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre ALS
+	           WHERE ALS.IdCampus               = @IdCampus
+                 AND ALS.IdSituacaoAcademica    = 5
+                 AND ALS.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno
+                 ORDER BY ALS.IdAlunoSemestre)
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO ABANDONO
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,0
+	,0
+	,0
+	,0    
+	,0
+	,0
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND NOT EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+                   JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                     ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+	              WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+AND EXISTS (SELECT TOP 1 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre ALS
+	           WHERE ALS.IdCampus               = @IdCampus
+                 AND ALS.IdSituacaoAcademica    = 8
+                 AND ALS.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno
+                 ORDER BY ALS.IdAlunoSemestre)
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO TRANCAMENTO ATUAL
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,0
+	,0
+	,0
+	,0    
+	,0
+	,0
+	,0
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND NOT EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+                   JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                     ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+	              WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+AND EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAluno ALS
+	           WHERE ALS.IdCampus               = @IdCampus
+                 AND ALS.IdSituacaoAcademica    = 4
+                 AND ALS.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno
+                 AND DBComum.dbo.UfcTransformaDataPeriodoLetivo(ALS.DataInicio) COLLATE	Latin1_General_CI_AS = @PeriodoLetivoAtualSigla -- TEM QUE TER FEITO O TRANCAMENTO NO SEMESTRE ATUAL
+                 AND GETDATE() BETWEEN ALS.DataInicio 
+                                   AND ALS.DataTermino)
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO TRANCAMENTO GERAL
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,0
+	,0
+	,0
+	,0    
+	,0
+	,0
+	,0
+	,0
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND NOT EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+                   JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                     ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+	              WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+AND EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAluno ALS
+	           WHERE ALS.IdCampus               = @IdCampus
+                 AND ALS.IdSituacaoAcademica    = 4
+                 AND ALS.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno
+                 AND GETDATE() NOT BETWEEN ALS.DataInicio 
+                                       AND ALS.DataTermino)
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO OUTRAS SAIDAS
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBRelatorio.dbo.AlunoRelatorio.CursoNome
+	,DBRelatorio.dbo.AlunoRelatorio.TurnoNome
+	,0
+	,0
+	,0
+	,0
+	,0    
+	,0
+	,0
+	,0
+	,0
+	,0
+	,COUNT(DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+	,0
+	,0
+	,0
+	,0
+	FROM DBRelatorio.dbo.AlunoRelatorio
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBRelatorio.dbo.AlunoRelatorio.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+WHERE DBRelatorio.dbo.AlunoRelatorio.IdCampus               = @IdCampus
+  AND DBRelatorio.dbo.AlunoRelatorio.IdPeriodoLetivo        = @idPeriodoAnterior
+  AND DBRelatorio.dbo.AlunoRelatorio.SituacaoAcademicaAtivo = 1
+AND NOT EXISTS (SELECT 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+                   JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+                     ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+	              WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @IdPeriodoLetivo
+				    AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+					AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno)
+AND EXISTS (SELECT TOP 1 1 FROM DBSecretariaAcademica.dbo.UvwConsultaAluno ALS
+	           WHERE ALS.IdCampus               = @IdCampus
+                 AND ALS.SituacaoAcademicaAtivo = 0
+                 AND ALS.IdSituacaoAcademica NOT IN (4,5,8,10)
+                 AND ALS.IdAluno                = DBRelatorio.dbo.AlunoRelatorio.IdAluno
+                 ORDER BY ALS.IdAlunoSemestre)
+GROUP BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+	    ,DBRelatorio.dbo.AlunoRelatorio.CursoNome 
+        ,DBRelatorio.dbo.AlunoRelatorio.TurnoNome 
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO TRANSFERENCIA INTERNA
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+	,0
+	,0
+	,0
+	,0
+	,0    
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,COUNT(DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno)
+	,0
+	,0
+	,0
+	FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+ JOIN DBSecretariaAcademica.DBO.TipoAcessoIES
+   ON DBSecretariaAcademica.DBO.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.DBO.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus        = 1
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo = @idPeriodoLetivo
+  AND DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIESUnificado   = 6
+AND NOT EXISTS (SELECT 1 
+	FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre ALUNO_SERIE
+                   WHERE ALUNO_SERIE.IdCampus               = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus
+ 	                 AND ALUNO_SERIE.IdPeriodoLetivo       &lt;= @IdPeriodoAnterior
+                     AND ALUNO_SERIE.idAluno                = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno
+                     AND ALUNO_SERIE.SituacaoAcademicaAtivo = 1)
+
+GROUP BY DBComum.dbo.Gpa.Descricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+
+---------------------------------------------------------------------------------------------------
+-- CAMPO TRANSFERENCIA EXTERNA
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,COUNT(DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno)
+	,0
+	,0
+	FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+ JOIN DBSecretariaAcademica.DBO.TipoAcessoIES
+   ON DBSecretariaAcademica.DBO.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.DBO.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus        = 1
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo = @idPeriodoLetivo
+  AND DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIESUnificado   = 5
+AND NOT EXISTS (SELECT 1
+	FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre ALUNO_SERIE
+                   WHERE ALUNO_SERIE.IdCampus               = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus
+ 	                 AND ALUNO_SERIE.IdPeriodoLetivo       &lt;= @IdPeriodoAnterior
+                     AND ALUNO_SERIE.idAluno                = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno
+                     AND ALUNO_SERIE.SituacaoAcademicaAtivo = 1)
+
+GROUP BY DBComum.dbo.Gpa.Descricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+
+ORDER BY DBComum.dbo.Gpa.Descricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+
+---------------------------------------------------------------------------------------------------
+-- ALUNOS CALOUROS ATIVOS
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,COUNT(DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno) 
+	,0
+	FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre  
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+ JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+   ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @idPeriodoLetivo
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1    
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.calouro                = 1
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdSituacaoAcademica   != 21  
+  AND DBSecretariaAcademica.dbo.TipoAcessoIES.Calouro                           = 1
+GROUP BY DBComum.dbo.Gpa.Descricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+		,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao 
+ORDER BY DBComum.dbo.Gpa.Descricao
+		,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+	    ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+
+---------------------------------------------------------------------------------------------------
+-- ALUNOS CALOUROS ATIVOS FIES
+---------------------------------------------------------------------------------------------------
+INSERT INTO @tabela
+SELECT
+	DBComum.dbo.Gpa.Descricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+	,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,0
+	,COUNT(DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdAluno) 
+	FROM DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre  
+ JOIN DBSecretariaAcademica.dbo.GradeConsepe
+   ON DBSecretariaAcademica.dbo.GradeConsepe.IdGradeConsepe = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdGradeConsepe
+ JOIN DBComum.dbo.Gpa
+   ON DBComum.dbo.Gpa.IdGpa = DBSecretariaAcademica.dbo.GradeConsepe.IdGpa
+ JOIN DBSecretariaAcademica.dbo.TipoAcessoIES
+   ON DBSecretariaAcademica.dbo.TipoAcessoIES.IdTipoAcessoIES = DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdTipoAcessoIES
+WHERE DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdCampus               = @IdCampus
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdPeriodoLetivo        = @idPeriodoLetivo
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.SituacaoAcademicaAtivo = 1
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.IdSituacaoAcademica    = 21   
+  AND DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.calouro                = 1
+  AND DBSecretariaAcademica.dbo.TipoAcessoIES.Calouro                           = 1
+
+GROUP BY DBComum.dbo.Gpa.Descricao
+        ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+		,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao 
+ORDER BY DBComum.dbo.Gpa.Descricao
+		,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.CursoDescricao
+	    ,DBSecretariaAcademica.dbo.UvwConsultaAlunoSemestre.TurnoCursoDescricao
+---------------------------------------------------------------------------------------------------
+-- PROJECAO DAS INFORMACOES NA TELA                                                                  
+---------------------------------------------------------------------------------------------------
+SELECT
+	AreaConhecimento                         AS AreaConhecimento
+	,Curso                                    AS Curso
+	,Turno                                    AS Turno
+	,SUM(Matric)                              AS Matric         
+    
+	,SUM(Formado)                             AS Formado         
+	,SUM(Desistente)                          AS Desistente      
+	,SUM(Abandono)                            AS Abandono        
+	,SUM(TrancamentoAtual)                    AS TrancamentoAtual
+	,SUM(TrancamentoGeral)                    AS TrancamentoGeral
+	,SUM(OutraSaida)                          AS OutraSaida     
+              
+	,SUM(Rematriculado)                       AS Rematriculado
+	,SUM(NaoRematriculado)                    AS NaoRematriculado
+	,SUM(NaoRematriculadoFIES)                AS NaoRematriculadoFIES
+    
+	,SUM(Regularizado)                        AS Regularizado
+	,(SUM(Rematriculado) + SUM(Regularizado)) AS TotalVeterano
+
+	,SUM(TransfInterna)                       AS TransfInterna
+	,SUM(TransfExterna)                       AS TransfExterna
+
+	,SUM(CalouroAtivo)                        AS CalouroAtivo 
+	,SUM(CalouroFIES)                         AS CalouroFIES  
+	,(SUM(CalouroAtivo) + SUM(CalouroFIES))   AS TotalCalouro
+	,(SUM(Rematriculado) + SUM(Regularizado)) + (SUM(CalouroAtivo) + SUM(CalouroFIES)) AS TotalAluno
+	,CASE WHEN (((SUM(CalouroAtivo) + SUM(CalouroFIES)) + SUM(Matric) &gt; 0) AND (SUM(Matric) &gt; 0)) THEN
+         ROUND(CONVERT(NUMERIC(10,2),((CONVERT(NUMERIC(10,5),((SUM(CalouroAtivo) + SUM(CalouroFIES)) + (SUM(Rematriculado) + SUM(Regularizado)) )/CONVERT(NUMERIC(10,5),SUM(Matric)))-1)*100)),3)
+    ELSE 0 END  AS DesempenhoOferta
+
+ FROM @tabela
+  
+GROUP BY  AreaConhecimento
+         ,Curso
+         ,Turno
+
+ORDER BY  AreaConhecimento
+         ,Curso
+         ,Turno</SqlCommand>
+      </NomeFonteDados>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="5">
+      <value>,vUsuarioImpressao,vUsuarioImpressao,,System.String,,False,False,False,False</value>
+      <value>,vMatriculaRematricula,vMatriculaRematricula,,System.String,,False,False,False,False</value>
+      <value>,vPeriodoBase,vPeriodoBase,_x0033_1,System.String,_x0033_1,False,False,False,False</value>
+      <value>,vIdPeriodoLetivo,vIdPeriodoLetivo,_x0033_1,System.String,_x0033_1,False,False,False,False</value>
+      <value>,vIdCampus,vIdCampus,_x0031_,System.String,_x0031_,False,False,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>439548538b3144118b4b42c37f567101</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>All;Transparent;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="8">
+        <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,27.7,2</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text13 Ref="6" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>0,0.4,27.7,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,15,Bold</Font>
+              <Guid>6cf4c95833a04e84ae241304b65b3db2</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Relatório Comparativo de Calouros e Veteranos</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Image1 Ref="7" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,3.8,1.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Guid>b73c7d5a20a84f6495a7062db95be400</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <IconColor>68, 114, 196</IconColor>
+              <ImageBytes>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</ImageBytes>
+              <Margins>0,0,0,0</Margins>
+              <Name>Image1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+            </Image1>
+            <Text21 Ref="8" type="Text" isKey="true">
+              <Border>None;[191:191:191];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>24.6,0.6,2.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>00ef9728d0874617a189a05a985f67e8</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Emissão do Relatório
+{Time}</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text21>
+            <Text4 Ref="9" type="Text" isKey="true">
+              <Border>None;[165:165:165];1;Solid;False;4;Black</Border>
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>0,1.2,27.7,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>028c688116b34d90a7692dae50e4886a</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Campus: {vMatriculaRematricula}  - Período Letivo Base: {vPeriodoBase}</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageHeaderBand1>
+        <PageFooterBand1 Ref="10" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,18.2,27.7,0.8</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text27 Ref="11" type="Text" isKey="true">
+              <Border>None;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,White,Gainsboro,270</Brush>
+              <ClientRectangle>0,0,27.7,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>fe5ccc044e5f44659825319046cd72b9</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="4" />
+              <Parent isRef="10" />
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text27>
+            <Text15 Ref="12" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>0.2,0,23.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>0b30344fd60748fb808300dcea1b6ba8</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="4" />
+              <Parent isRef="10" />
+              <Text> {vUsuarioImpressao}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text15>
+            <Text357 Ref="13" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>24.8,0,2.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>106d310239c34410bbd226babfe2b277</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text357</Name>
+              <Page isRef="4" />
+              <Parent isRef="10" />
+              <Text>Página {PageNumber} de {TotalPageCount}</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+            </Text357>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageFooterBand1>
+        <GroupHeaderBand1 Ref="14" type="GroupHeaderBand" isKey="true">
+          <Border>Right;[127:127:127];2;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,3.2,27.7,1.66</ClientRectangle>
+          <Components isList="true" count="27">
+            <Text12 Ref="15" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>0,0.83,5.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>5bce5022deda421f9cb40f06b1c7d062</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Curso</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+            <Text7 Ref="16" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>5.4,0.83,1.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>0af10196114f4901ab78b050b8f12cf1</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Turno</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text8 Ref="17" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>7,0.83,1,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>a8468287f958408694b2a15469ab8221</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Matric.</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text9 Ref="18" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>8,0.83,1.1,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>ab888d2a6fd24b07989ff36172511619</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Formado</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text85 Ref="19" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>7,0,15.2,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>023699d5f3fa43bd85cb891f93e091df</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text85</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Veteranos</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text85>
+            <Text88 Ref="20" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>25,0,1.25,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>4e14825cc4dd4125a00e154a8bc00b64</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text88</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Total</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text88>
+            <Text10 Ref="21" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>9.09,0.83,1.1,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>ab09eeb421af414cb316fcc0a382a387</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Desistente</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+            <Text14 Ref="22" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>11.3,1.23,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>d16e4d55a94b4d2daed5309874bb8eb0</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Atual</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+            <Text6 Ref="23" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>22.2,1.23,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>f0713f84792f4b06ad163ba5aeeaad36</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Não Fies</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text28 Ref="24" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>23.2,1.23,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>4ca48b07c3064420acce9bc2e54940b6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Ativo Fies</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text28>
+            <Text30 Ref="25" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>25,0.83,1.25,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>8ed16d4c13e6414181b91d7d90fa1e10</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Total Alunos
+Matriculado</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text30>
+            <Text86 Ref="26" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>26.2,0,1.45,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>a92f1e4ee9464f1497992061724d26cc</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text86</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Desempenho
+da Oferta</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text86>
+            <Text3 Ref="27" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>26.2,0.83,1.45,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6,Bold</Font>
+              <Guid>3eee7d011e194e13adf74f8cfbc46f6e</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>%</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text57 Ref="28" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>10.2,0.83,1.1,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>c1e79e5e1399460e881d440d7cd4bffd</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text57</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Abandono</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text57>
+            <Text24 Ref="29" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>12.4,1.23,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>d377370f88ad4f4ea4d1c73ad4e1c67b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Geral</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text24>
+            <Text29 Ref="30" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>24.2,0.83,0.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6,Bold</Font>
+              <Guid>4bb083c983b24fb1bd109a7d83729112</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Total</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text29>
+            <Text87 Ref="31" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>22.2,0,2.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>ff37de111c4c416c986d587023a44dd5</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text87</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Calouros</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text87>
+            <Text40 Ref="32" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>17.1,0.83,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>06076e8dfdbe44cea5f4c15aaeb92758</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text40</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Não
+Rematriculado</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text40>
+            <Text62 Ref="33" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>18.5,0.83,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>3f05d44b9d0c4bfba1f5dea6f16ec06f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text62</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Não
+Rematriculado
+FIES</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text62>
+            <Text63 Ref="34" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>19.85,0.83,1.34,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>c925d9971dae47b9b3864a08d0626f60</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text63</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Regularizado</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text63>
+            <Text91 Ref="35" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>21.2,0.83,0.94,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6,Bold</Font>
+              <Guid>981d324c4fda4166b8dc131b0b1f2375</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text91</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Total</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text91>
+            <Text22 Ref="36" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>13.5,1.23,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>14995a8507f445eca797b3ed611a7872</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Interna</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text22>
+            <Text25 Ref="37" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>14.61,1.23,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>87d7a98dcadb4a7cb7f9fca1e3cac5e6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Externa</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text25>
+            <Text73 Ref="38" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>11.3,0.83,2.2,0.37</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>b09f8ad25e3640779f4c10587ea581f6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text73</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Trancamento</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text73>
+            <Text16 Ref="39" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>13.5,0.83,2.2,0.37</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>f8121dc40b8f479c8154766cc966d1e1</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Transferência</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text23 Ref="40" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>15.7,0.83,1.4,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>35e7de3c1ddc4531b0577805133e0ce3</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Rematriculado</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text23>
+            <Text26 Ref="41" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[225:225:225]</Brush>
+              <ClientRectangle>22.2,0.83,2,0.37</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,5,Bold</Font>
+              <Guid>58035e77a15a4f328118fb154dbf394c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="4" />
+              <Parent isRef="14" />
+              <Text>Matrícula Efetuada</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text26>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <PrintOnAllPages>True</PrintOnAllPages>
+        </GroupHeaderBand1>
+        <GroupHeaderBand2 Ref="42" type="GroupHeaderBand" isKey="true">
+          <Border>All;Black;1;Solid;False;4;Black</Border>
+          <Brush>White</Brush>
+          <ClientRectangle>0,5.66,27.7,0</ClientRectangle>
+          <Components isList="true" count="0" />
+          <Condition>{NomeFonteDados.AreaConhecimento}</Condition>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupHeaderBand2</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupHeaderBand2>
+        <DataBand1 Ref="43" type="DataBand" isKey="true">
+          <Border>None;[127:127:127];1;Solid;False;4;Black</Border>
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,6.46,27.7,0.6</ClientRectangle>
+          <Components isList="true" count="20">
+            <Text18 Ref="44" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>8,0,1.1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>e57d98148fc54606be1ad1fdc531d92c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.Formado}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text19 Ref="45" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>9.09,0,1.1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>a2067f911312403abb02254d736951d6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.Desistente}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text19>
+            <Text20 Ref="46" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>11.3,0,1.1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>f8f63355f8fd4996859030d0d8fb9dbb</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.TrancamentoAtual}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text20>
+            <Text32 Ref="47" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>15.7,0,1.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>285ce846b1e64180bf45b3a006900dc3</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text32</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.Rematriculado}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text32>
+            <Text33 Ref="48" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>12.4,0,1.1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>3461e751d78e4686aec57c4b03bbb0f2</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text33</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.TrancamentoGeral}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text33>
+            <Text34 Ref="49" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>13.5,0,1.1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>364871c88c58473a94256af0eba7b259</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text34</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.TransfInterna}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text34>
+            <Text35 Ref="50" type="Text" isKey="true">
+              <Border>All;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>14.61,0,1.1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>c0e2e686975545a38394e6584169ae70</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text35</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.TransfExterna}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text35>
+            <Text36 Ref="51" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>22.2,0,1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>5a2fee7a9cd04a419a24e3b6f06c0231</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text36</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.CalouroAtivo}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text36>
+            <Text37 Ref="52" type="Text" isKey="true">
+              <Border>All;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>23.2,0,1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>39c82746ca9446e48ebb608005284734</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text37</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.CalouroFIES}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text37>
+            <Text38 Ref="53" type="Text" isKey="true">
+              <Border>All;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>24.2,0,0.8,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>39083deec77e4cb8b4a777765164c8b7</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text38</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.TotalCalouro}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text38>
+            <Text39 Ref="54" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>25,0,1.25,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>3bf910e77ec348d698ce3c162ecfd687</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text39</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.TotalAluno}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text39>
+            <Text41 Ref="55" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>26.2,0,1.45,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>415f2da158fc49bca998e6e3364f210f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text41</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.DesempenhoOferta}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text41>
+            <Text54 Ref="56" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>17.1,0,1.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6,Italic</Font>
+              <Guid>76ee1dc4e10d495190b4636c805daea4</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text54</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.NaoRematriculado}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text54>
+            <Text58 Ref="57" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>10.2,0,1.1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>0f591015f1e643e7b3d49ee18767f0ef</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text58</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.Abandono}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text58>
+            <Text1 Ref="58" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,5.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>7717ecce3f684c9091dbd07616799a7d</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <ProcessingDuplicates>GlobalMerge</ProcessingDuplicates>
+              <Text>{NomeFonteDados.Curso}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text11 Ref="59" type="Text" isKey="true">
+              <Border>All;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.4,0,1.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>97e71983a6bc4fc5843e8df6d3457bdd</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.Turno}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+            <Text17 Ref="60" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>7,0,1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>96cc5cb6111e4fab98159dca56a82f50</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.Matric}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+            <Text69 Ref="61" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>18.5,0,1.35,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>69594ea9b6b24b19b3b7f82472184cd5</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text69</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.NaoRematriculadoFIES}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text69>
+            <Text64 Ref="62" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>19.85,0,1.35,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>e953d3a6f0dd47b181e742547c71a704</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text64</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.Regularizado}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text64>
+            <Text92 Ref="63" type="Text" isKey="true">
+              <Border>Adv[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>21.2,0,0.94,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,6</Font>
+              <Guid>932de966b2504a9a846ea638a21601b5</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text92</Name>
+              <Page isRef="4" />
+              <Parent isRef="43" />
+              <Text>{NomeFonteDados.TotalVeterano}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text92>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>NomeFonteDados</DataSourceName>
+          <EvenStyle>Cinza 50%_Dados1</EvenStyle>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="6">
+            <value>ASC</value>
+            <value>Area</value>
+            <value>ASC</value>
+            <value>Curso</value>
+            <value>ASC</value>
+            <value>Turno</value>
+          </Sort>
+        </DataBand1>
+        <GroupFooterBand1 Ref="64" type="GroupFooterBand" isKey="true">
+          <Border>Adv[127:127:127];4;None;[127:127:127];1;None;[127:127:127];1;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+          <Brush>[242:242:242]</Brush>
+          <ClientRectangle>0,7.86,27.7,0.5</ClientRectangle>
+          <Components isList="true" count="19">
+            <Text2 Ref="65" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>7,0,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>20d465bfcc764bea9fc2796eeecc3686</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Matric)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text5 Ref="66" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>0,0,6.97,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>73505009b73f4db6af16fca8ca3b493d</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>Total:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Text45 Ref="67" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>8,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>36ef15907ddf4a53a9b0fff364573c3c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text45</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Formado)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text45>
+            <Text42 Ref="68" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>9.09,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>7344f441a2f84a4a826aeb74a387bb88</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text42</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Desistente)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text42>
+            <Text43 Ref="69" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>11.3,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>09f3315efa914e53961d2b338a3d5675</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text43</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TrancamentoAtual)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text43>
+            <Text46 Ref="70" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>15.7,0,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>7b60dd406d4c42189e6172edda4fd7f4</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text46</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Rematriculado)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text46>
+            <Text47 Ref="71" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>12.4,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>7581704f869e4f338656e698fff664d8</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text47</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TrancamentoGeral)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text47>
+            <Text48 Ref="72" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>13.5,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>de687cf8febf43d19a0eec2efad78e88</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text48</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TransfInterna)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text48>
+            <Text49 Ref="73" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];1;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>14.61,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>655eac39be7a4b679fc4c4ee17ce747e</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text49</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TransfExterna)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text49>
+            <Text50 Ref="74" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>22.2,0,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>b59b3c290e2f4561b0c285d45847286a</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text50</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.CalouroAtivo)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text50>
+            <Text51 Ref="75" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>23.2,0,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>5479a48d95cc4005b39523ae71aea428</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text51</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.CalouroFIES)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text51>
+            <Text52 Ref="76" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>24.2,0,0.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>a77d2f200da3462a896dffbf5bb3620b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text52</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TotalCalouro)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text52>
+            <Text53 Ref="77" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>25,0,1.25,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>82b0e74ea13e408ebb2c70101bab6186</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text53</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TotalAluno)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text53>
+            <Text55 Ref="78" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>26.2,0,1.45,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>3ad43cf2126649c5ae4acc501f6d9651</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text55</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{((Sum(DataBand1,NomeFonteDados.TotalAluno) / Sum(DataBand1,NomeFonteDados.Matric))-1)*100}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="79" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text55>
+            <Text56 Ref="80" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>17.1,0,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold| Italic</Font>
+              <Guid>19f8f121428a47239c55b4ed5afe0b02</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text56</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.NaoRematriculado)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text56>
+            <Text59 Ref="81" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>10.2,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>706e6fcde47d494cab27f435f6435e50</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text59</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Abandono)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text59>
+            <Text70 Ref="82" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>18.5,0,1.35,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>31a8f82222dc488f9dbb1b7f362be3cd</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text70</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.NaoRematriculadoFIES)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text70>
+            <Text65 Ref="83" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>19.85,0,1.35,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>aabc1334667040d58f041fac1dc387b7</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text65</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Regularizado)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text65>
+            <Text93 Ref="84" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>21.2,0,0.94,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>00330aaef5f04417b98df5f7d6fa4d4d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text93</Name>
+              <Page isRef="4" />
+              <Parent isRef="64" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TotalVeterano)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text93>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupFooterBand1>
+        <GroupFooterBand2 Ref="85" type="GroupFooterBand" isKey="true">
+          <Border>Adv[127:127:127];4;None;[127:127:127];1;None;[127:127:127];1;None;[127:127:127];1;None;False;4;Black</Border>
+          <Brush>White</Brush>
+          <ClientRectangle>0,9.16,27.7,0.2</ClientRectangle>
+          <Components isList="true" count="0" />
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>b050871ba27d499aa0f9efa40384ac36</Guid>
+          <Name>GroupFooterBand2</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupFooterBand2>
+        <ReportSummaryBand1 Ref="86" type="ReportSummaryBand" isKey="true">
+          <Brush>[216:216:216]</Brush>
+          <ClientRectangle>0,10.16,27.7,0.4</ClientRectangle>
+          <Components isList="true" count="19">
+            <Text60 Ref="87" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>0,0,7,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>3e8be34ad76e48d989ecd484cec81cfa</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text60</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>Total Geral:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text60>
+            <Text31 Ref="88" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>7,0,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>db4e07b36da14516983ad931b34dcf53</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text31</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Matric)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text31>
+            <Text61 Ref="89" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>8,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>f83650c1917c43d2bf6a3264f7ec7417</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text61</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Formado)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text61>
+            <Text67 Ref="90" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>9.09,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>ce6ea959a3754c5985cd8f8ce8a8a335</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text67</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Desistente)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text67>
+            <Text68 Ref="91" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>11.3,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>da1a549445cd4657993e6d19be9778fa</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text68</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TrancamentoAtual)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text68>
+            <Text71 Ref="92" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>15.7,0,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>73038cd8ad664ab59cc685bd14dc0219</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text71</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Rematriculado)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text71>
+            <Text74 Ref="93" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>12.4,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>8e529c8198eb420681b55d128fecb62a</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text74</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TrancamentoGeral)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text74>
+            <Text75 Ref="94" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>13.5,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>7fb5eda0ca4b43c5bd76564d6385637f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text75</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TransfInterna)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text75>
+            <Text76 Ref="95" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];1;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>14.61,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>cfa9110d7ae9470fb589f7054c3993e0</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text76</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TransfExterna)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text76>
+            <Text77 Ref="96" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>22.2,0,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>335f6d5157774a5fb8082b8310923904</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text77</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.CalouroAtivo)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text77>
+            <Text78 Ref="97" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>23.2,0,1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>d65d8b3e38b447399afafee0988e676b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text78</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.CalouroFIES)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text78>
+            <Text79 Ref="98" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>24.2,0,0.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>76b007a24ba1445f92b31827a84a03c2</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text79</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TotalCalouro)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text79>
+            <Text80 Ref="99" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>25,0,1.25,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>83c2ba95902e481f85a5b23a0313e972</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text80</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TotalAluno)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text80>
+            <Text81 Ref="100" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];4;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>26.2,0,1.45,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>5e611fcdafe14dcab68d7415f4a60875</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text81</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{((Sum(DataBand1,NomeFonteDados.TotalAluno) / Sum(DataBand1,NomeFonteDados.Matric))-1)*100}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="101" type="NumberFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text81>
+            <Text82 Ref="102" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>17.1,0,1.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold| Italic</Font>
+              <Guid>da602c5fd89b4fb6a39544d67621faa3</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text82</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.NaoRematriculado)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text82>
+            <Text83 Ref="103" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];1;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>10.2,0,1.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>83192170af634699be26192077c96b33</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text83</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Abandono)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text83>
+            <Text84 Ref="104" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>18.5,0,1.35,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>1a733cbfe42641148a396f43ab489ddb</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text84</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.NaoRematriculadoFIES)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text84>
+            <Text90 Ref="105" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>19.85,0,1.35,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>831b8142c8a34963a8a31a16e9228120</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text90</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.Regularizado)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text90>
+            <Text94 Ref="106" type="Text" isKey="true">
+              <Border>Adv[127:127:127];4;Solid;[127:127:127];4;Solid;[127:127:127];2;Solid;[127:127:127];2;Solid;False;4;Black</Border>
+              <Brush>[216:216:216]</Brush>
+              <ClientRectangle>21.2,0,0.94,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>0d8d8ad60f7740179aa69fb484086a7d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text94</Name>
+              <Page isRef="4" />
+              <Parent isRef="86" />
+              <Text>{Sum(DataBand1,NomeFonteDados.TotalVeterano)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text94>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>ReportSummaryBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </ReportSummaryBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>f7b20ec68a344ea3955f129014c781f2</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>29.7</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/10/2021 4:36:14 PM</ReportChanged>
+  <ReportCreated>12/8/2015 8:49:59 AM</ReportCreated>
+  <ReportFile>D:\Net_v4.6_New\Projetos\Univag.Sisger\Sistema.Web.UI.Relatorio\View\Report\GestaoAdministrativa\Stimull\CalourosVeteranosRel.mrt</ReportFile>
+  <ReportGuid>c3d101dcc13b43e198299400c30b21fa</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2020.5.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="2">
+    <Cinza_x0020_50_x0025__Dados1 Ref="107" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Brush>WhiteSmoke</Brush>
+      <CollectionName>Cinza 50%</CollectionName>
+      <Conditions isList="true" count="1">
+        <Item105 Ref="108" type="Stimulsoft.Report.StiStyleCondition" isKey="true">
+          <Placement>DataEvenStyle</Placement>
+          <Type>Placement, PlacementNestedLevel</Type>
+        </Item105>
+      </Conditions>
+      <Font>Arial,8</Font>
+      <Name>Cinza 50%_Dados1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>Black</TextBrush>
+    </Cinza_x0020_50_x0025__Dados1>
+    <Estilo1 Ref="109" type="Stimulsoft.Report.StiStyle" isKey="true">
+      <Brush>Transparent</Brush>
+      <Conditions isList="true" count="0" />
+      <Font>Arial,8</Font>
+      <Name>Estilo1</Name>
+      <NegativeTextBrush>Red</NegativeTextBrush>
+      <TextBrush>Black</TextBrush>
+    </Estilo1>
+  </Styles>
+</StiSerializer>

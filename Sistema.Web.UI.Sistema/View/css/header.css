@@ -1,0 +1,24 @@
+/*
+    HEADER CSS
+    AUTOR: Evander Costa
+    ORGANIZAÇÃO: Univag - Centro Universitário (NPD - Núcleo de Tecnologia da Informação)
+*/
+
+#capaTopo {
+    width: 100%;
+    max-height: 150px;
+}
+
+@media screen and (max-width:970px)
+{
+	#capaTopo {
+     padding-left: 0px;
+	}
+}
+
+@media screen and (max-width:480px)
+{
+	#capaTopo {
+     padding-left: 0px;
+	}
+}

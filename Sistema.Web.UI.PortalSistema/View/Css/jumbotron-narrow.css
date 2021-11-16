@@ -1,0 +1,250 @@
+/*Space out content a bit*/
+
+body {
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: url(../Img/background_login.png) #142752;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 50px;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+    text-align: center;
+    padding-top: 1em;
+    box-shadow: 0px 0px 15px 7px rgba(0,0,0,0.4);
+}
+
+#form {
+    background-color: #FEFEFE;
+    padding-top: 30px;
+}
+
+#logo-login {
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    width: 300px;
+    height: 100px;
+}
+
+#foto-aluno i {
+    padding-top: 30px;
+}
+
+.error {
+color: #f56969;
+}
+
+
+input.error {
+border-color: #f56969!important;
+}
+
+#header {
+    margin: 0;
+    height: 70px;
+    border-bottom: 1px solid #eee!important;
+    overflow: hidden;
+    padding: 0 60px;
+    border-width: 0;
+    min-height: 28px;
+    background: #f4f4f4!important;
+}
+
+#foto-aluno {
+    display: flexbox;
+    float: none;
+    margin: 0 auto;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+    margin-bottom: 15px;
+    position: relative;
+    width: 130px;
+    height: 130px;
+    background-color: #eee;
+
+    /*border: rgba(11, 72, 107, 0.53) solid 5px;*/
+}
+
+
+
+
+#help-tutorial {
+    display: inline !important;
+    vertical-align: middle !important;
+    height: 49px !important;
+    padding-top: 20px !important;
+    float: right !important;
+}
+
+
+/*Everything but the jumbotron gets side spacing for mobile first views*/
+.header,
+.marketing,
+.footer {
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+/*Custom page header*/
+.header {
+    padding-bottom: 0px;
+    border-bottom: 1px solid #e5e5e5;
+}
+    /*Make the masthead heading the same height as the navigation*/
+    .header h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 40px;
+    }
+
+
+/* Customize container */
+@media (min-width: 700px) {
+    .container {
+        max-width: 500px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    #footer {
+        display: none;
+    }
+
+    #logo-login {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+
+
+    #logo-login {
+        display: none;
+    }
+}
+
+
+.container-narrow > hr {
+    margin: 20px 0;
+}
+
+#container {
+    padding-top: 8%;
+    align-items: baseline;
+    padding-bottom: 9.2%;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+    text-align: center;
+    /*border-bottom: 1px solid #e5e5e5;*/
+    background-color: rgba(238, 238, 238, 0);
+}
+
+    .jumbotron .btn {
+        padding: 14px 24px;
+        font-size: 21px;
+    }
+
+/* Supporting marketing content */
+.marketing {
+    margin: 40px 0;
+}
+
+    .marketing p + h4 {
+        margin-top: 28px;
+    }
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+    /* Remove the padding we set earlier */
+    .header,
+    .marketing,
+    .footer {
+        padding-right: 0;
+        padding-left: 0;
+    }
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 30px;
+    }
+    /* Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+        border-bottom: 0;
+    }
+
+    .container .jumbotron {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+
+@media screen and (max-width: 415px) {
+    h3 {
+        font-size: 17px;
+    }
+
+    .jumbotron {
+        padding: 0px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    p {
+        font-size: 10px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    h3 {
+        font-size: 17px;
+    }
+
+    .jumbotron {
+        padding: 0px;
+        padding-top: 5px;
+        padding-bottom: 10px;
+    }
+
+    p {
+        font-size: 10px;
+    }
+}
+
+
+@media screen and (max-width: 1366px) {
+    #container {
+        padding-top: 0%;
+        align-items: baseline;
+        padding-bottom: 1.2%;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    #container {
+              padding-top: 10%;
+    align-items: baseline;
+    padding-bottom: 15%;
+    }
+}
+
+@media screen and (max-height: 667px) {
+    #container {
+        padding-top: 0%;
+        align-items: baseline;
+        padding-bottom: 1.2%;
+    }
+}
+
+@media screen and (max-height: 630px) {
+    #footer {
+    display:none;
+    }
+}

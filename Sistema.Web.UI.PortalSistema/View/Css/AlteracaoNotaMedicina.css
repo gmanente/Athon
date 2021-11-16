@@ -1,0 +1,40 @@
+﻿/*
+    ALTERACAO NOTA 1 BIMESTRE CSS
+    AUTOR: Evander Costa
+    ORGANIZAÇÃO: Univag - Centro Universitário (NTI - Núcleo de Tecnologia da Informação)
+*/
+
+/*Charset*/
+@charset "utf-8";
+
+.badge-primary {
+  background-color: #2d6ca2;
+}
+
+.badge-primary2 {
+  background-color: #1735ba;
+}
+
+.badge-danger {
+  background-color: #d43f3a;
+}
+
+.badge-warning {
+  background-color: #d58512;
+}
+
+.badge-success {
+  background-color: #398439;
+}
+
+.badge-info {
+  background-color: #269abc;
+}
+
+.badge-inverse {
+  background-color: #333333;
+}
+
+.badge-black {
+  background-color: #000000;
+}

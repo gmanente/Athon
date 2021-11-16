@@ -1,0 +1,24 @@
+﻿#loader {
+    display: none;
+}
+
+#htmlEncode > table td, #htmlEncode > table {
+    border: #FFF solid 0px !important;
+}
+
+
+.no-padding .box-smart {
+    margin: 0 0 10px;
+}
+
+.box-smart {
+    border-bottom: 1px solid #B1B1B1;
+    background-color: #fff;
+    margin: -13px -13px 13px;
+    padding: 10px;
+}
+
+.inline-10 {
+    width: 10%;
+    display: inline-block;
+}

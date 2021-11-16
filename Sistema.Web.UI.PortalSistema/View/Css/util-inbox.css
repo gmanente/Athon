@@ -1,0 +1,36 @@
+﻿
+.modal-backdrop.in {
+    display: none;
+}
+
+#inbox-table .checkbox, #inbox-table .radio {
+    position: absolute !important;
+}
+
+.dt-toolbar, .dt-toolbar-footer {
+    background: #FFF;
+}
+
+.dataTables_info {
+    display: none;
+}
+
+#inbox-table_wrapper > div.dt-toolbar > div:first-child, #inbox-table_filter > label {
+    width: calc(100% - 20px) !important;
+    padding-right: 0 !important;
+}
+
+#inbox-table_wrapper > div.dt-toolbar > div:last-child {
+    width: 20px !important;
+}
+
+#inbox-table_filter input[type=search] {
+    width: calc(100% - 32px) !important;
+    border-left-color:#3276B1;
+}
+
+#inbox-table_filter span.input-group-addon {
+    background-color: #3276B1;
+    color: #FFF;
+    border-color: #3276B1;
+}

@@ -1,0 +1,266 @@
+﻿#modal-solicitacao .modal-dialog {
+    width: 380px !important;
+}
+
+
+body, html {
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: url(../Img/background_login.png) #142752;
+}
+
+
+
+.container {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.error {
+    display: block;
+    color: #b94a48;
+}
+
+
+#login-conteudo {
+    margin-top: 300px;
+    padding-left: 10%;
+    padding-top: 25px;
+    padding-bottom: 15px;
+    background: #FFF;
+    background: rgba(255,255,255,0.9);
+}
+
+#foto-aluno {
+    display: flex;
+    float: right;
+    margin: 0 auto;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+    margin-bottom: 15px;
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border: rgba(11, 72, 107, 0.53) solid 10px;
+}
+
+.alert {
+    background-color: #0B486B;
+    color: white;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 3em;
+    background: #fff;
+    background: rgba(255,255,255,0.9);
+    text-align: center;
+    padding-top: 1em;
+    box-shadow: 0px 0px 15px 7px rgba(0,0,0,0.4);
+}
+
+.i-login {
+    margin-bottom: 5px;
+    width: 280px;
+}
+
+.i-recupera {
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.i-btn {
+    width: 280px;
+}
+
+#div-foto {
+    margin: 0 auto!important;
+    width: inherit;
+    height: inherit;
+}
+
+.addon-tam {
+    width: 45px;
+}
+
+@media (max-height: 465px) {
+
+    #foto-aluno {
+        width: 130px;
+        height: 125px;
+    }
+
+    .i-login > span {
+        font-size: 11px;
+    }
+
+    #info-login {
+        padding: 5px!important;
+    }
+}
+
+@media (max-width: 399px) {
+    .i-login {
+        width: 100%;
+    }
+}
+
+#login-form {
+
+}
+
+#logo-login {
+    position: fixed;
+    bottom: 100px;
+    right: 40px;
+    width: 300px;
+    height: 100px;
+}
+
+
+
+@media (max-width: 991px) {
+    .i-login {
+        margin: auto;
+        margin-bottom: 10px;
+        width: 280px;
+    }
+
+    #foto-aluno {
+        float: none;
+    }
+
+    #login-conteudo {
+        padding-left: 0;
+    }
+}
+
+@media screen and (max-width: 1366px) {
+    #logo-login {
+        bottom: 60px;
+        right: 30px;
+        width: 250px;
+        height: 83px;
+    }
+
+    #login-conteudo {
+        margin: 170px auto 0;
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    #logo-login {
+        bottom: 60px;
+        right: 30px;
+        width: 220px;
+        height: 73px;
+    }
+
+    #login-conteudo {
+        margin: 200px auto 0;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    #logo-login {
+        bottom: 60px;
+        right: 30px;
+        width: 220px;
+        height: 73px;
+    }
+
+    #login-conteudo {
+        margin: 150px auto 0;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    #footer {
+        display: none;
+    }
+
+    #logo-login {
+        display: none;
+    }
+
+    #login-conteudo {
+        margin: 5px auto 0;
+    }
+}
+
+.smart-form {
+    margin: 0;
+    outline: 0;
+    color: #666;
+    position: relative;
+}
+
+    .smart-form .button, .smart-form .checkbox, .smart-form .input, .smart-form .radio, .smart-form .select, .smart-form .textarea, .smart-form .toggle {
+        position: relative;
+        display: block;
+        font-weight: 400;
+    }
+
+        .smart-form .input input, .smart-form .select select, .smart-form .textarea textarea {
+            display: block;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            width: 100%;
+            height: 32px;
+            padding: 8px 10px;
+            outline: 0;
+            border-width: 1px;
+            border-style: solid;
+            border-radius: 0;
+            background: #fff;
+            font: 13px/16px 'Open Sans',Helvetica,Arial,sans-serif;
+            color: #404040;
+            appearance: normal;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+        }
+
+    .smart-form .icon-append, .smart-form .icon-prepend {
+        position: absolute;
+        top: 5px;
+        width: 22px;
+        height: 22px;
+        font-size: 14px;
+        line-height: 22px;
+        text-align: center;
+    }
+
+    .smart-form .icon-append {
+        right: 5px;
+        padding-left: 3px;
+        border-left-width: 1px;
+        border-left-style: solid;
+    }
+
+    .smart-form .icon-prepend {
+        left: 5px;
+        padding-right: 3px;
+        border-right-width: 1px;
+        border-right-style: solid;
+    }
+
+    .smart-form .input .icon-prepend + input, .smart-form .textarea .icon-prepend + textarea {
+        padding-left: 37px;
+    }
+
+    .smart-form .input .icon-append + input, .smart-form .textarea .icon-append + textarea {
+        padding-right: 37px;
+    }
+
+    .smart-form .input .icon-prepend + .icon-append + input, .smart-form .textarea .icon-prepend + .icon-append + textarea {
+        padding-left: 37px;
+    }
+
+
+.form-signin .input-group-addon, .form-signin .input-group-btn button {
+    height: 44px;
+}

@@ -1,0 +1,22 @@
+﻿/*
+    MAIN CSS
+    AUTOR: Leandro Moreira Curioso de Oliveira
+    ORGANIZAÇÃO: Univag - Centro Universitário (NPD - Núcleo de Processamento de Dados)
+*/
+
+@charset "UTF-8";
+
+.tooltip {
+    z-index: 6000 !important;
+}
+
+
+.panel-color-blue {
+    border-color: #60747C !important;
+}
+
+    .panel-color-blue > .panel-heading {
+        color: #fff !important;
+        background-color: #60747C !important;
+        border-color: #60747C !important;
+    }

@@ -1,0 +1,13 @@
+﻿/*
+    ATENDIMENTO CSS
+    AUTOR: Leandro Moreira Curioso de Oliveira
+    ORGANIZAÇÃO: Univag - Centro Universitário (NTI - Núcleo de Tecnologia da Informação)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+
+/*Import css styles*/
+@import url('main.css');
+@import url('//repositorio.univag.edu.br/View/Css/tablecloth.css');
+@import url('//repositorio.univag.edu.br/View/Css/datepicker.css');

@@ -1,0 +1,110 @@
+﻿/*
+    EDITAL CSS
+    AUTOR: Gustavo Martins da Silva
+    ORGANIZAÇÃO: Univag - Centro Universitário (NPD - Núcleo de Processamento de Dados)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+
+/* Modal Style */
+.modal-header {
+    color: #666; 
+    background: #EEE;
+}
+
+.modal-footer {
+    color: #666; 
+    background: #EDEDED
+}
+
+.hidelight {
+    display: none;
+}
+
+select[disabled]{
+  color: #a9a9a9;
+}
+
+.bs-callout {
+    margin: 20px 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-top-width: 1px!important;
+    border-right-width: 1px!important;
+    border-bottom-width: 1px!important;
+    border-right-color: #e4e4e4;
+    border-top-color: #e4e4e4;
+    border-bottom-color: #e4e4e4;
+}
+
+    .bs-callout h4 {
+        margin-top: 0;
+    }
+
+    .bs-callout p:last-child {
+        margin-bottom: 0;
+    }
+
+    .bs-callout code,
+    .bs-callout .highlight {
+        background-color: #fff;
+    }
+
+/* Themes for different contexts */
+.bs-callout-danger {
+    background-color: #ffffff;
+    border-left-color: #f84843;
+}
+
+.bs-callout-warning {
+    background-color: #fefbed;
+    border-color: #f1e7bc;
+}
+
+.bs-callout-info {
+    background-color: #fff;
+    border-left-color: #02a1f2;
+}
+
+/*Centralizar th*/
+.th-center > th{
+    text-align: center !important
+}
+
+/*Group List*/
+.list-group {
+    padding-left: 0px;
+    margin-bottom: 0px;
+} 
+
+.list-group-item {
+    cursor: pointer;
+    color: #428bca;
+}
+
+.list-group-item.active > a {
+    color: #FFF;
+}
+
+.list-group-item:first-child {
+     border-top-left-radius: 0px; 
+     border-top-right-radius: 0px;  
+}
+
+.list-group-item:focus, .list-group-item:hover {
+    color: #428bca;
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    position: relative;
+    top: 1px;
+    margin-right: 2px;
+    margin-left: 5px;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "sistema-web-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema Web API",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-plumber": "^1.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.5.4",
+    "gulp-uglify": "^0.2.1",
+    "gulp-util": "^3.0.8",
+    "stream-series": "^0.1.1"
+  },
+  "scripts": {},
+  "keywords": [
+    "Api",
+    "Web",
+    "Services"
+  ],
+  "author": {
+    "name": "Giovanni Ramos",
+    "email": "giovannilauro@gmail.com"
+  },
+  "license": "MIT"
+}

@@ -1,0 +1,1812 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BFEA6574-C490-42DA-BC4A-795A640F7027}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sistema.Web.UI.Seguranca</RootNamespace>
+    <AssemblyName>Sistema.Web.UI.Seguranca</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="View\Css\fontawesome-iconpicker.css" />
+    <Content Include="View\Css\fontawesome-iconpicker.min.css" />
+    <Content Include="View\Js\fontawesome-iconpicker.js" />
+    <Content Include="View\Js\fontawesome-iconpicker.min.js" />
+    <Content Include="View\svgs\brands\500px.svg" />
+    <Content Include="View\svgs\brands\accessible-icon.svg" />
+    <Content Include="View\svgs\brands\accusoft.svg" />
+    <Content Include="View\svgs\brands\acquisitions-incorporated.svg" />
+    <Content Include="View\svgs\brands\adn.svg" />
+    <Content Include="View\svgs\brands\adobe.svg" />
+    <Content Include="View\svgs\brands\adversal.svg" />
+    <Content Include="View\svgs\brands\affiliatetheme.svg" />
+    <Content Include="View\svgs\brands\algolia.svg" />
+    <Content Include="View\svgs\brands\alipay.svg" />
+    <Content Include="View\svgs\brands\amazon-pay.svg" />
+    <Content Include="View\svgs\brands\amazon.svg" />
+    <Content Include="View\svgs\brands\amilia.svg" />
+    <Content Include="View\svgs\brands\android.svg" />
+    <Content Include="View\svgs\brands\angellist.svg" />
+    <Content Include="View\svgs\brands\angrycreative.svg" />
+    <Content Include="View\svgs\brands\angular.svg" />
+    <Content Include="View\svgs\brands\app-store-ios.svg" />
+    <Content Include="View\svgs\brands\app-store.svg" />
+    <Content Include="View\svgs\brands\apper.svg" />
+    <Content Include="View\svgs\brands\apple-pay.svg" />
+    <Content Include="View\svgs\brands\apple.svg" />
+    <Content Include="View\svgs\brands\artstation.svg" />
+    <Content Include="View\svgs\brands\asymmetrik.svg" />
+    <Content Include="View\svgs\brands\atlassian.svg" />
+    <Content Include="View\svgs\brands\audible.svg" />
+    <Content Include="View\svgs\brands\autoprefixer.svg" />
+    <Content Include="View\svgs\brands\avianex.svg" />
+    <Content Include="View\svgs\brands\aviato.svg" />
+    <Content Include="View\svgs\brands\aws.svg" />
+    <Content Include="View\svgs\brands\bandcamp.svg" />
+    <Content Include="View\svgs\brands\behance-square.svg" />
+    <Content Include="View\svgs\brands\behance.svg" />
+    <Content Include="View\svgs\brands\bimobject.svg" />
+    <Content Include="View\svgs\brands\bitbucket.svg" />
+    <Content Include="View\svgs\brands\bitcoin.svg" />
+    <Content Include="View\svgs\brands\bity.svg" />
+    <Content Include="View\svgs\brands\black-tie.svg" />
+    <Content Include="View\svgs\brands\blackberry.svg" />
+    <Content Include="View\svgs\brands\blogger-b.svg" />
+    <Content Include="View\svgs\brands\blogger.svg" />
+    <Content Include="View\svgs\brands\bluetooth-b.svg" />
+    <Content Include="View\svgs\brands\bluetooth.svg" />
+    <Content Include="View\svgs\brands\btc.svg" />
+    <Content Include="View\svgs\brands\buromobelexperte.svg" />
+    <Content Include="View\svgs\brands\buysellads.svg" />
+    <Content Include="View\svgs\brands\canadian-maple-leaf.svg" />
+    <Content Include="View\svgs\brands\cc-amazon-pay.svg" />
+    <Content Include="View\svgs\brands\cc-amex.svg" />
+    <Content Include="View\svgs\brands\cc-apple-pay.svg" />
+    <Content Include="View\svgs\brands\cc-diners-club.svg" />
+    <Content Include="View\svgs\brands\cc-discover.svg" />
+    <Content Include="View\svgs\brands\cc-jcb.svg" />
+    <Content Include="View\svgs\brands\cc-mastercard.svg" />
+    <Content Include="View\svgs\brands\cc-paypal.svg" />
+    <Content Include="View\svgs\brands\cc-stripe.svg" />
+    <Content Include="View\svgs\brands\cc-visa.svg" />
+    <Content Include="View\svgs\brands\centercode.svg" />
+    <Content Include="View\svgs\brands\centos.svg" />
+    <Content Include="View\svgs\brands\chrome.svg" />
+    <Content Include="View\svgs\brands\cloudscale.svg" />
+    <Content Include="View\svgs\brands\cloudsmith.svg" />
+    <Content Include="View\svgs\brands\cloudversify.svg" />
+    <Content Include="View\svgs\brands\codepen.svg" />
+    <Content Include="View\svgs\brands\codiepie.svg" />
+    <Content Include="View\svgs\brands\confluence.svg" />
+    <Content Include="View\svgs\brands\connectdevelop.svg" />
+    <Content Include="View\svgs\brands\contao.svg" />
+    <Content Include="View\svgs\brands\cpanel.svg" />
+    <Content Include="View\svgs\brands\creative-commons-by.svg" />
+    <Content Include="View\svgs\brands\creative-commons-nc-eu.svg" />
+    <Content Include="View\svgs\brands\creative-commons-nc-jp.svg" />
+    <Content Include="View\svgs\brands\creative-commons-nc.svg" />
+    <Content Include="View\svgs\brands\creative-commons-nd.svg" />
+    <Content Include="View\svgs\brands\creative-commons-pd-alt.svg" />
+    <Content Include="View\svgs\brands\creative-commons-pd.svg" />
+    <Content Include="View\svgs\brands\creative-commons-remix.svg" />
+    <Content Include="View\svgs\brands\creative-commons-sa.svg" />
+    <Content Include="View\svgs\brands\creative-commons-sampling-plus.svg" />
+    <Content Include="View\svgs\brands\creative-commons-sampling.svg" />
+    <Content Include="View\svgs\brands\creative-commons-share.svg" />
+    <Content Include="View\svgs\brands\creative-commons-zero.svg" />
+    <Content Include="View\svgs\brands\creative-commons.svg" />
+    <Content Include="View\svgs\brands\critical-role.svg" />
+    <Content Include="View\svgs\brands\css3-alt.svg" />
+    <Content Include="View\svgs\brands\css3.svg" />
+    <Content Include="View\svgs\brands\cuttlefish.svg" />
+    <Content Include="View\svgs\brands\d-and-d-beyond.svg" />
+    <Content Include="View\svgs\brands\d-and-d.svg" />
+    <Content Include="View\svgs\brands\dashcube.svg" />
+    <Content Include="View\svgs\brands\delicious.svg" />
+    <Content Include="View\svgs\brands\deploydog.svg" />
+    <Content Include="View\svgs\brands\deskpro.svg" />
+    <Content Include="View\svgs\brands\dev.svg" />
+    <Content Include="View\svgs\brands\deviantart.svg" />
+    <Content Include="View\svgs\brands\dhl.svg" />
+    <Content Include="View\svgs\brands\diaspora.svg" />
+    <Content Include="View\svgs\brands\digg.svg" />
+    <Content Include="View\svgs\brands\digital-ocean.svg" />
+    <Content Include="View\svgs\brands\discord.svg" />
+    <Content Include="View\svgs\brands\discourse.svg" />
+    <Content Include="View\svgs\brands\dochub.svg" />
+    <Content Include="View\svgs\brands\docker.svg" />
+    <Content Include="View\svgs\brands\draft2digital.svg" />
+    <Content Include="View\svgs\brands\dribbble-square.svg" />
+    <Content Include="View\svgs\brands\dribbble.svg" />
+    <Content Include="View\svgs\brands\dropbox.svg" />
+    <Content Include="View\svgs\brands\drupal.svg" />
+    <Content Include="View\svgs\brands\dyalog.svg" />
+    <Content Include="View\svgs\brands\earlybirds.svg" />
+    <Content Include="View\svgs\brands\ebay.svg" />
+    <Content Include="View\svgs\brands\edge.svg" />
+    <Content Include="View\svgs\brands\elementor.svg" />
+    <Content Include="View\svgs\brands\ello.svg" />
+    <Content Include="View\svgs\brands\ember.svg" />
+    <Content Include="View\svgs\brands\empire.svg" />
+    <Content Include="View\svgs\brands\envira.svg" />
+    <Content Include="View\svgs\brands\erlang.svg" />
+    <Content Include="View\svgs\brands\ethereum.svg" />
+    <Content Include="View\svgs\brands\etsy.svg" />
+    <Content Include="View\svgs\brands\expeditedssl.svg" />
+    <Content Include="View\svgs\brands\facebook-f.svg" />
+    <Content Include="View\svgs\brands\facebook-messenger.svg" />
+    <Content Include="View\svgs\brands\facebook-square.svg" />
+    <Content Include="View\svgs\brands\facebook.svg" />
+    <Content Include="View\svgs\brands\fantasy-flight-games.svg" />
+    <Content Include="View\svgs\brands\fedex.svg" />
+    <Content Include="View\svgs\brands\fedora.svg" />
+    <Content Include="View\svgs\brands\figma.svg" />
+    <Content Include="View\svgs\brands\firefox.svg" />
+    <Content Include="View\svgs\brands\first-order-alt.svg" />
+    <Content Include="View\svgs\brands\first-order.svg" />
+    <Content Include="View\svgs\brands\firstdraft.svg" />
+    <Content Include="View\svgs\brands\flickr.svg" />
+    <Content Include="View\svgs\brands\flipboard.svg" />
+    <Content Include="View\svgs\brands\fly.svg" />
+    <Content Include="View\svgs\brands\font-awesome-alt.svg" />
+    <Content Include="View\svgs\brands\font-awesome-flag.svg" />
+    <Content Include="View\svgs\brands\font-awesome-logo-full.svg" />
+    <Content Include="View\svgs\brands\font-awesome.svg" />
+    <Content Include="View\svgs\brands\fonticons-fi.svg" />
+    <Content Include="View\svgs\brands\fonticons.svg" />
+    <Content Include="View\svgs\brands\fort-awesome-alt.svg" />
+    <Content Include="View\svgs\brands\fort-awesome.svg" />
+    <Content Include="View\svgs\brands\forumbee.svg" />
+    <Content Include="View\svgs\brands\foursquare.svg" />
+    <Content Include="View\svgs\brands\free-code-camp.svg" />
+    <Content Include="View\svgs\brands\freebsd.svg" />
+    <Content Include="View\svgs\brands\fulcrum.svg" />
+    <Content Include="View\svgs\brands\galactic-republic.svg" />
+    <Content Include="View\svgs\brands\galactic-senate.svg" />
+    <Content Include="View\svgs\brands\get-pocket.svg" />
+    <Content Include="View\svgs\brands\gg-circle.svg" />
+    <Content Include="View\svgs\brands\gg.svg" />
+    <Content Include="View\svgs\brands\git-square.svg" />
+    <Content Include="View\svgs\brands\git.svg" />
+    <Content Include="View\svgs\brands\github-alt.svg" />
+    <Content Include="View\svgs\brands\github-square.svg" />
+    <Content Include="View\svgs\brands\github.svg" />
+    <Content Include="View\svgs\brands\gitkraken.svg" />
+    <Content Include="View\svgs\brands\gitlab.svg" />
+    <Content Include="View\svgs\brands\gitter.svg" />
+    <Content Include="View\svgs\brands\glide-g.svg" />
+    <Content Include="View\svgs\brands\glide.svg" />
+    <Content Include="View\svgs\brands\gofore.svg" />
+    <Content Include="View\svgs\brands\goodreads-g.svg" />
+    <Content Include="View\svgs\brands\goodreads.svg" />
+    <Content Include="View\svgs\brands\google-drive.svg" />
+    <Content Include="View\svgs\brands\google-play.svg" />
+    <Content Include="View\svgs\brands\google-plus-g.svg" />
+    <Content Include="View\svgs\brands\google-plus-square.svg" />
+    <Content Include="View\svgs\brands\google-plus.svg" />
+    <Content Include="View\svgs\brands\google-wallet.svg" />
+    <Content Include="View\svgs\brands\google.svg" />
+    <Content Include="View\svgs\brands\gratipay.svg" />
+    <Content Include="View\svgs\brands\grav.svg" />
+    <Content Include="View\svgs\brands\gripfire.svg" />
+    <Content Include="View\svgs\brands\grunt.svg" />
+    <Content Include="View\svgs\brands\gulp.svg" />
+    <Content Include="View\svgs\brands\hacker-news-square.svg" />
+    <Content Include="View\svgs\brands\hacker-news.svg" />
+    <Content Include="View\svgs\brands\hackerrank.svg" />
+    <Content Include="View\svgs\brands\hips.svg" />
+    <Content Include="View\svgs\brands\hire-a-helper.svg" />
+    <Content Include="View\svgs\brands\hooli.svg" />
+    <Content Include="View\svgs\brands\hornbill.svg" />
+    <Content Include="View\svgs\brands\hotjar.svg" />
+    <Content Include="View\svgs\brands\houzz.svg" />
+    <Content Include="View\svgs\brands\html5.svg" />
+    <Content Include="View\svgs\brands\hubspot.svg" />
+    <Content Include="View\svgs\brands\imdb.svg" />
+    <Content Include="View\svgs\brands\instagram.svg" />
+    <Content Include="View\svgs\brands\intercom.svg" />
+    <Content Include="View\svgs\brands\internet-explorer.svg" />
+    <Content Include="View\svgs\brands\invision.svg" />
+    <Content Include="View\svgs\brands\ioxhost.svg" />
+    <Content Include="View\svgs\brands\itunes-note.svg" />
+    <Content Include="View\svgs\brands\itunes.svg" />
+    <Content Include="View\svgs\brands\java.svg" />
+    <Content Include="View\svgs\brands\jedi-order.svg" />
+    <Content Include="View\svgs\brands\jenkins.svg" />
+    <Content Include="View\svgs\brands\jira.svg" />
+    <Content Include="View\svgs\brands\joget.svg" />
+    <Content Include="View\svgs\brands\joomla.svg" />
+    <Content Include="View\svgs\brands\js-square.svg" />
+    <Content Include="View\svgs\brands\js.svg" />
+    <Content Include="View\svgs\brands\jsfiddle.svg" />
+    <Content Include="View\svgs\brands\kaggle.svg" />
+    <Content Include="View\svgs\brands\keybase.svg" />
+    <Content Include="View\svgs\brands\keycdn.svg" />
+    <Content Include="View\svgs\brands\kickstarter-k.svg" />
+    <Content Include="View\svgs\brands\kickstarter.svg" />
+    <Content Include="View\svgs\brands\korvue.svg" />
+    <Content Include="View\svgs\brands\laravel.svg" />
+    <Content Include="View\svgs\brands\lastfm-square.svg" />
+    <Content Include="View\svgs\brands\lastfm.svg" />
+    <Content Include="View\svgs\brands\leanpub.svg" />
+    <Content Include="View\svgs\brands\less.svg" />
+    <Content Include="View\svgs\brands\line.svg" />
+    <Content Include="View\svgs\brands\linkedin-in.svg" />
+    <Content Include="View\svgs\brands\linkedin.svg" />
+    <Content Include="View\svgs\brands\linode.svg" />
+    <Content Include="View\svgs\brands\linux.svg" />
+    <Content Include="View\svgs\brands\lyft.svg" />
+    <Content Include="View\svgs\brands\magento.svg" />
+    <Content Include="View\svgs\brands\mailchimp.svg" />
+    <Content Include="View\svgs\brands\mandalorian.svg" />
+    <Content Include="View\svgs\brands\markdown.svg" />
+    <Content Include="View\svgs\brands\mastodon.svg" />
+    <Content Include="View\svgs\brands\maxcdn.svg" />
+    <Content Include="View\svgs\brands\medapps.svg" />
+    <Content Include="View\svgs\brands\medium-m.svg" />
+    <Content Include="View\svgs\brands\medium.svg" />
+    <Content Include="View\svgs\brands\medrt.svg" />
+    <Content Include="View\svgs\brands\meetup.svg" />
+    <Content Include="View\svgs\brands\megaport.svg" />
+    <Content Include="View\svgs\brands\mendeley.svg" />
+    <Content Include="View\svgs\brands\microsoft.svg" />
+    <Content Include="View\svgs\brands\mix.svg" />
+    <Content Include="View\svgs\brands\mixcloud.svg" />
+    <Content Include="View\svgs\brands\mizuni.svg" />
+    <Content Include="View\svgs\brands\modx.svg" />
+    <Content Include="View\svgs\brands\monero.svg" />
+    <Content Include="View\svgs\brands\napster.svg" />
+    <Content Include="View\svgs\brands\neos.svg" />
+    <Content Include="View\svgs\brands\nimblr.svg" />
+    <Content Include="View\svgs\brands\nintendo-switch.svg" />
+    <Content Include="View\svgs\brands\node-js.svg" />
+    <Content Include="View\svgs\brands\node.svg" />
+    <Content Include="View\svgs\brands\npm.svg" />
+    <Content Include="View\svgs\brands\ns8.svg" />
+    <Content Include="View\svgs\brands\nutritionix.svg" />
+    <Content Include="View\svgs\brands\odnoklassniki-square.svg" />
+    <Content Include="View\svgs\brands\odnoklassniki.svg" />
+    <Content Include="View\svgs\brands\old-republic.svg" />
+    <Content Include="View\svgs\brands\opencart.svg" />
+    <Content Include="View\svgs\brands\openid.svg" />
+    <Content Include="View\svgs\brands\opera.svg" />
+    <Content Include="View\svgs\brands\optin-monster.svg" />
+    <Content Include="View\svgs\brands\osi.svg" />
+    <Content Include="View\svgs\brands\page4.svg" />
+    <Content Include="View\svgs\brands\pagelines.svg" />
+    <Content Include="View\svgs\brands\palfed.svg" />
+    <Content Include="View\svgs\brands\patreon.svg" />
+    <Content Include="View\svgs\brands\paypal.svg" />
+    <Content Include="View\svgs\brands\penny-arcade.svg" />
+    <Content Include="View\svgs\brands\periscope.svg" />
+    <Content Include="View\svgs\brands\phabricator.svg" />
+    <Content Include="View\svgs\brands\phoenix-framework.svg" />
+    <Content Include="View\svgs\brands\phoenix-squadron.svg" />
+    <Content Include="View\svgs\brands\php.svg" />
+    <Content Include="View\svgs\brands\pied-piper-alt.svg" />
+    <Content Include="View\svgs\brands\pied-piper-hat.svg" />
+    <Content Include="View\svgs\brands\pied-piper-pp.svg" />
+    <Content Include="View\svgs\brands\pied-piper.svg" />
+    <Content Include="View\svgs\brands\pinterest-p.svg" />
+    <Content Include="View\svgs\brands\pinterest-square.svg" />
+    <Content Include="View\svgs\brands\pinterest.svg" />
+    <Content Include="View\svgs\brands\playstation.svg" />
+    <Content Include="View\svgs\brands\product-hunt.svg" />
+    <Content Include="View\svgs\brands\pushed.svg" />
+    <Content Include="View\svgs\brands\python.svg" />
+    <Content Include="View\svgs\brands\qq.svg" />
+    <Content Include="View\svgs\brands\quinscape.svg" />
+    <Content Include="View\svgs\brands\quora.svg" />
+    <Content Include="View\svgs\brands\r-project.svg" />
+    <Content Include="View\svgs\brands\raspberry-pi.svg" />
+    <Content Include="View\svgs\brands\ravelry.svg" />
+    <Content Include="View\svgs\brands\react.svg" />
+    <Content Include="View\svgs\brands\reacteurope.svg" />
+    <Content Include="View\svgs\brands\readme.svg" />
+    <Content Include="View\svgs\brands\rebel.svg" />
+    <Content Include="View\svgs\brands\red-river.svg" />
+    <Content Include="View\svgs\brands\reddit-alien.svg" />
+    <Content Include="View\svgs\brands\reddit-square.svg" />
+    <Content Include="View\svgs\brands\reddit.svg" />
+    <Content Include="View\svgs\brands\redhat.svg" />
+    <Content Include="View\svgs\brands\renren.svg" />
+    <Content Include="View\svgs\brands\replyd.svg" />
+    <Content Include="View\svgs\brands\researchgate.svg" />
+    <Content Include="View\svgs\brands\resolving.svg" />
+    <Content Include="View\svgs\brands\rev.svg" />
+    <Content Include="View\svgs\brands\rocketchat.svg" />
+    <Content Include="View\svgs\brands\rockrms.svg" />
+    <Content Include="View\svgs\brands\safari.svg" />
+    <Content Include="View\svgs\brands\sass.svg" />
+    <Content Include="View\svgs\brands\schlix.svg" />
+    <Content Include="View\svgs\brands\scribd.svg" />
+    <Content Include="View\svgs\brands\searchengin.svg" />
+    <Content Include="View\svgs\brands\sellcast.svg" />
+    <Content Include="View\svgs\brands\sellsy.svg" />
+    <Content Include="View\svgs\brands\servicestack.svg" />
+    <Content Include="View\svgs\brands\shirtsinbulk.svg" />
+    <Content Include="View\svgs\brands\shopware.svg" />
+    <Content Include="View\svgs\brands\simplybuilt.svg" />
+    <Content Include="View\svgs\brands\sistrix.svg" />
+    <Content Include="View\svgs\brands\sith.svg" />
+    <Content Include="View\svgs\brands\sketch.svg" />
+    <Content Include="View\svgs\brands\skyatlas.svg" />
+    <Content Include="View\svgs\brands\skype.svg" />
+    <Content Include="View\svgs\brands\slack-hash.svg" />
+    <Content Include="View\svgs\brands\slack.svg" />
+    <Content Include="View\svgs\brands\slideshare.svg" />
+    <Content Include="View\svgs\brands\snapchat-ghost.svg" />
+    <Content Include="View\svgs\brands\snapchat-square.svg" />
+    <Content Include="View\svgs\brands\snapchat.svg" />
+    <Content Include="View\svgs\brands\soundcloud.svg" />
+    <Content Include="View\svgs\brands\sourcetree.svg" />
+    <Content Include="View\svgs\brands\speakap.svg" />
+    <Content Include="View\svgs\brands\spotify.svg" />
+    <Content Include="View\svgs\brands\squarespace.svg" />
+    <Content Include="View\svgs\brands\stack-exchange.svg" />
+    <Content Include="View\svgs\brands\stack-overflow.svg" />
+    <Content Include="View\svgs\brands\staylinked.svg" />
+    <Content Include="View\svgs\brands\steam-square.svg" />
+    <Content Include="View\svgs\brands\steam-symbol.svg" />
+    <Content Include="View\svgs\brands\steam.svg" />
+    <Content Include="View\svgs\brands\sticker-mule.svg" />
+    <Content Include="View\svgs\brands\strava.svg" />
+    <Content Include="View\svgs\brands\stripe-s.svg" />
+    <Content Include="View\svgs\brands\stripe.svg" />
+    <Content Include="View\svgs\brands\studiovinari.svg" />
+    <Content Include="View\svgs\brands\stumbleupon-circle.svg" />
+    <Content Include="View\svgs\brands\stumbleupon.svg" />
+    <Content Include="View\svgs\brands\superpowers.svg" />
+    <Content Include="View\svgs\brands\supple.svg" />
+    <Content Include="View\svgs\brands\suse.svg" />
+    <Content Include="View\svgs\brands\teamspeak.svg" />
+    <Content Include="View\svgs\brands\telegram-plane.svg" />
+    <Content Include="View\svgs\brands\telegram.svg" />
+    <Content Include="View\svgs\brands\tencent-weibo.svg" />
+    <Content Include="View\svgs\brands\the-red-yeti.svg" />
+    <Content Include="View\svgs\brands\themeco.svg" />
+    <Content Include="View\svgs\brands\themeisle.svg" />
+    <Content Include="View\svgs\brands\think-peaks.svg" />
+    <Content Include="View\svgs\brands\trade-federation.svg" />
+    <Content Include="View\svgs\brands\trello.svg" />
+    <Content Include="View\svgs\brands\tripadvisor.svg" />
+    <Content Include="View\svgs\brands\tumblr-square.svg" />
+    <Content Include="View\svgs\brands\tumblr.svg" />
+    <Content Include="View\svgs\brands\twitch.svg" />
+    <Content Include="View\svgs\brands\twitter-square.svg" />
+    <Content Include="View\svgs\brands\twitter.svg" />
+    <Content Include="View\svgs\brands\typo3.svg" />
+    <Content Include="View\svgs\brands\uber.svg" />
+    <Content Include="View\svgs\brands\ubuntu.svg" />
+    <Content Include="View\svgs\brands\uikit.svg" />
+    <Content Include="View\svgs\brands\uniregistry.svg" />
+    <Content Include="View\svgs\brands\untappd.svg" />
+    <Content Include="View\svgs\brands\ups.svg" />
+    <Content Include="View\svgs\brands\usb.svg" />
+    <Content Include="View\svgs\brands\usps.svg" />
+    <Content Include="View\svgs\brands\ussunnah.svg" />
+    <Content Include="View\svgs\brands\vaadin.svg" />
+    <Content Include="View\svgs\brands\viacoin.svg" />
+    <Content Include="View\svgs\brands\viadeo-square.svg" />
+    <Content Include="View\svgs\brands\viadeo.svg" />
+    <Content Include="View\svgs\brands\viber.svg" />
+    <Content Include="View\svgs\brands\vimeo-square.svg" />
+    <Content Include="View\svgs\brands\vimeo-v.svg" />
+    <Content Include="View\svgs\brands\vimeo.svg" />
+    <Content Include="View\svgs\brands\vine.svg" />
+    <Content Include="View\svgs\brands\vk.svg" />
+    <Content Include="View\svgs\brands\vnv.svg" />
+    <Content Include="View\svgs\brands\vuejs.svg" />
+    <Content Include="View\svgs\brands\weebly.svg" />
+    <Content Include="View\svgs\brands\weibo.svg" />
+    <Content Include="View\svgs\brands\weixin.svg" />
+    <Content Include="View\svgs\brands\whatsapp-square.svg" />
+    <Content Include="View\svgs\brands\whatsapp.svg" />
+    <Content Include="View\svgs\brands\whmcs.svg" />
+    <Content Include="View\svgs\brands\wikipedia-w.svg" />
+    <Content Include="View\svgs\brands\windows.svg" />
+    <Content Include="View\svgs\brands\wix.svg" />
+    <Content Include="View\svgs\brands\wizards-of-the-coast.svg" />
+    <Content Include="View\svgs\brands\wolf-pack-battalion.svg" />
+    <Content Include="View\svgs\brands\wordpress-simple.svg" />
+    <Content Include="View\svgs\brands\wordpress.svg" />
+    <Content Include="View\svgs\brands\wpbeginner.svg" />
+    <Content Include="View\svgs\brands\wpexplorer.svg" />
+    <Content Include="View\svgs\brands\wpforms.svg" />
+    <Content Include="View\svgs\brands\wpressr.svg" />
+    <Content Include="View\svgs\brands\xbox.svg" />
+    <Content Include="View\svgs\brands\xing-square.svg" />
+    <Content Include="View\svgs\brands\xing.svg" />
+    <Content Include="View\svgs\brands\y-combinator.svg" />
+    <Content Include="View\svgs\brands\yahoo.svg" />
+    <Content Include="View\svgs\brands\yandex-international.svg" />
+    <Content Include="View\svgs\brands\yandex.svg" />
+    <Content Include="View\svgs\brands\yarn.svg" />
+    <Content Include="View\svgs\brands\yelp.svg" />
+    <Content Include="View\svgs\brands\yoast.svg" />
+    <Content Include="View\svgs\brands\youtube-square.svg" />
+    <Content Include="View\svgs\brands\youtube.svg" />
+    <Content Include="View\svgs\brands\zhihu.svg" />
+    <Content Include="View\svgs\regular\address-book.svg" />
+    <Content Include="View\svgs\regular\address-card.svg" />
+    <Content Include="View\svgs\regular\angry.svg" />
+    <Content Include="View\svgs\regular\arrow-alt-circle-down.svg" />
+    <Content Include="View\svgs\regular\arrow-alt-circle-left.svg" />
+    <Content Include="View\svgs\regular\arrow-alt-circle-right.svg" />
+    <Content Include="View\svgs\regular\arrow-alt-circle-up.svg" />
+    <Content Include="View\svgs\regular\bell-slash.svg" />
+    <Content Include="View\svgs\regular\bell.svg" />
+    <Content Include="View\svgs\regular\bookmark.svg" />
+    <Content Include="View\svgs\regular\building.svg" />
+    <Content Include="View\svgs\regular\calendar-alt.svg" />
+    <Content Include="View\svgs\regular\calendar-check.svg" />
+    <Content Include="View\svgs\regular\calendar-minus.svg" />
+    <Content Include="View\svgs\regular\calendar-plus.svg" />
+    <Content Include="View\svgs\regular\calendar-times.svg" />
+    <Content Include="View\svgs\regular\calendar.svg" />
+    <Content Include="View\svgs\regular\caret-square-down.svg" />
+    <Content Include="View\svgs\regular\caret-square-left.svg" />
+    <Content Include="View\svgs\regular\caret-square-right.svg" />
+    <Content Include="View\svgs\regular\caret-square-up.svg" />
+    <Content Include="View\svgs\regular\chart-bar.svg" />
+    <Content Include="View\svgs\regular\check-circle.svg" />
+    <Content Include="View\svgs\regular\check-square.svg" />
+    <Content Include="View\svgs\regular\circle.svg" />
+    <Content Include="View\svgs\regular\clipboard.svg" />
+    <Content Include="View\svgs\regular\clock.svg" />
+    <Content Include="View\svgs\regular\clone.svg" />
+    <Content Include="View\svgs\regular\closed-captioning.svg" />
+    <Content Include="View\svgs\regular\comment-alt.svg" />
+    <Content Include="View\svgs\regular\comment-dots.svg" />
+    <Content Include="View\svgs\regular\comment.svg" />
+    <Content Include="View\svgs\regular\comments.svg" />
+    <Content Include="View\svgs\regular\compass.svg" />
+    <Content Include="View\svgs\regular\copy.svg" />
+    <Content Include="View\svgs\regular\copyright.svg" />
+    <Content Include="View\svgs\regular\credit-card.svg" />
+    <Content Include="View\svgs\regular\dizzy.svg" />
+    <Content Include="View\svgs\regular\dot-circle.svg" />
+    <Content Include="View\svgs\regular\edit.svg" />
+    <Content Include="View\svgs\regular\envelope-open.svg" />
+    <Content Include="View\svgs\regular\envelope.svg" />
+    <Content Include="View\svgs\regular\eye-slash.svg" />
+    <Content Include="View\svgs\regular\eye.svg" />
+    <Content Include="View\svgs\regular\file-alt.svg" />
+    <Content Include="View\svgs\regular\file-archive.svg" />
+    <Content Include="View\svgs\regular\file-audio.svg" />
+    <Content Include="View\svgs\regular\file-code.svg" />
+    <Content Include="View\svgs\regular\file-excel.svg" />
+    <Content Include="View\svgs\regular\file-image.svg" />
+    <Content Include="View\svgs\regular\file-pdf.svg" />
+    <Content Include="View\svgs\regular\file-powerpoint.svg" />
+    <Content Include="View\svgs\regular\file-video.svg" />
+    <Content Include="View\svgs\regular\file-word.svg" />
+    <Content Include="View\svgs\regular\file.svg" />
+    <Content Include="View\svgs\regular\flag.svg" />
+    <Content Include="View\svgs\regular\flushed.svg" />
+    <Content Include="View\svgs\regular\folder-open.svg" />
+    <Content Include="View\svgs\regular\folder.svg" />
+    <Content Include="View\svgs\regular\font-awesome-logo-full.svg" />
+    <Content Include="View\svgs\regular\frown-open.svg" />
+    <Content Include="View\svgs\regular\frown.svg" />
+    <Content Include="View\svgs\regular\futbol.svg" />
+    <Content Include="View\svgs\regular\gem.svg" />
+    <Content Include="View\svgs\regular\grimace.svg" />
+    <Content Include="View\svgs\regular\grin-alt.svg" />
+    <Content Include="View\svgs\regular\grin-beam-sweat.svg" />
+    <Content Include="View\svgs\regular\grin-beam.svg" />
+    <Content Include="View\svgs\regular\grin-hearts.svg" />
+    <Content Include="View\svgs\regular\grin-squint-tears.svg" />
+    <Content Include="View\svgs\regular\grin-squint.svg" />
+    <Content Include="View\svgs\regular\grin-stars.svg" />
+    <Content Include="View\svgs\regular\grin-tears.svg" />
+    <Content Include="View\svgs\regular\grin-tongue-squint.svg" />
+    <Content Include="View\svgs\regular\grin-tongue-wink.svg" />
+    <Content Include="View\svgs\regular\grin-tongue.svg" />
+    <Content Include="View\svgs\regular\grin-wink.svg" />
+    <Content Include="View\svgs\regular\grin.svg" />
+    <Content Include="View\svgs\regular\hand-lizard.svg" />
+    <Content Include="View\svgs\regular\hand-paper.svg" />
+    <Content Include="View\svgs\regular\hand-peace.svg" />
+    <Content Include="View\svgs\regular\hand-point-down.svg" />
+    <Content Include="View\svgs\regular\hand-point-left.svg" />
+    <Content Include="View\svgs\regular\hand-point-right.svg" />
+    <Content Include="View\svgs\regular\hand-point-up.svg" />
+    <Content Include="View\svgs\regular\hand-pointer.svg" />
+    <Content Include="View\svgs\regular\hand-rock.svg" />
+    <Content Include="View\svgs\regular\hand-scissors.svg" />
+    <Content Include="View\svgs\regular\hand-spock.svg" />
+    <Content Include="View\svgs\regular\handshake.svg" />
+    <Content Include="View\svgs\regular\hdd.svg" />
+    <Content Include="View\svgs\regular\heart.svg" />
+    <Content Include="View\svgs\regular\hospital.svg" />
+    <Content Include="View\svgs\regular\hourglass.svg" />
+    <Content Include="View\svgs\regular\id-badge.svg" />
+    <Content Include="View\svgs\regular\id-card.svg" />
+    <Content Include="View\svgs\regular\image.svg" />
+    <Content Include="View\svgs\regular\images.svg" />
+    <Content Include="View\svgs\regular\keyboard.svg" />
+    <Content Include="View\svgs\regular\kiss-beam.svg" />
+    <Content Include="View\svgs\regular\kiss-wink-heart.svg" />
+    <Content Include="View\svgs\regular\kiss.svg" />
+    <Content Include="View\svgs\regular\laugh-beam.svg" />
+    <Content Include="View\svgs\regular\laugh-squint.svg" />
+    <Content Include="View\svgs\regular\laugh-wink.svg" />
+    <Content Include="View\svgs\regular\laugh.svg" />
+    <Content Include="View\svgs\regular\lemon.svg" />
+    <Content Include="View\svgs\regular\life-ring.svg" />
+    <Content Include="View\svgs\regular\lightbulb.svg" />
+    <Content Include="View\svgs\regular\list-alt.svg" />
+    <Content Include="View\svgs\regular\map.svg" />
+    <Content Include="View\svgs\regular\meh-blank.svg" />
+    <Content Include="View\svgs\regular\meh-rolling-eyes.svg" />
+    <Content Include="View\svgs\regular\meh.svg" />
+    <Content Include="View\svgs\regular\minus-square.svg" />
+    <Content Include="View\svgs\regular\money-bill-alt.svg" />
+    <Content Include="View\svgs\regular\moon.svg" />
+    <Content Include="View\svgs\regular\newspaper.svg" />
+    <Content Include="View\svgs\regular\object-group.svg" />
+    <Content Include="View\svgs\regular\object-ungroup.svg" />
+    <Content Include="View\svgs\regular\paper-plane.svg" />
+    <Content Include="View\svgs\regular\pause-circle.svg" />
+    <Content Include="View\svgs\regular\play-circle.svg" />
+    <Content Include="View\svgs\regular\plus-square.svg" />
+    <Content Include="View\svgs\regular\question-circle.svg" />
+    <Content Include="View\svgs\regular\registered.svg" />
+    <Content Include="View\svgs\regular\sad-cry.svg" />
+    <Content Include="View\svgs\regular\sad-tear.svg" />
+    <Content Include="View\svgs\regular\save.svg" />
+    <Content Include="View\svgs\regular\share-square.svg" />
+    <Content Include="View\svgs\regular\smile-beam.svg" />
+    <Content Include="View\svgs\regular\smile-wink.svg" />
+    <Content Include="View\svgs\regular\smile.svg" />
+    <Content Include="View\svgs\regular\snowflake.svg" />
+    <Content Include="View\svgs\regular\square.svg" />
+    <Content Include="View\svgs\regular\star-half.svg" />
+    <Content Include="View\svgs\regular\star.svg" />
+    <Content Include="View\svgs\regular\sticky-note.svg" />
+    <Content Include="View\svgs\regular\stop-circle.svg" />
+    <Content Include="View\svgs\regular\sun.svg" />
+    <Content Include="View\svgs\regular\surprise.svg" />
+    <Content Include="View\svgs\regular\thumbs-down.svg" />
+    <Content Include="View\svgs\regular\thumbs-up.svg" />
+    <Content Include="View\svgs\regular\times-circle.svg" />
+    <Content Include="View\svgs\regular\tired.svg" />
+    <Content Include="View\svgs\regular\trash-alt.svg" />
+    <Content Include="View\svgs\regular\user-circle.svg" />
+    <Content Include="View\svgs\regular\user.svg" />
+    <Content Include="View\svgs\regular\window-close.svg" />
+    <Content Include="View\svgs\regular\window-maximize.svg" />
+    <Content Include="View\svgs\regular\window-minimize.svg" />
+    <Content Include="View\svgs\regular\window-restore.svg" />
+    <Content Include="View\svgs\solid\ad.svg" />
+    <Content Include="View\svgs\solid\address-book.svg" />
+    <Content Include="View\svgs\solid\address-card.svg" />
+    <Content Include="View\svgs\solid\adjust.svg" />
+    <Content Include="View\svgs\solid\air-freshener.svg" />
+    <Content Include="View\svgs\solid\align-center.svg" />
+    <Content Include="View\svgs\solid\align-justify.svg" />
+    <Content Include="View\svgs\solid\align-left.svg" />
+    <Content Include="View\svgs\solid\align-right.svg" />
+    <Content Include="View\svgs\solid\allergies.svg" />
+    <Content Include="View\svgs\solid\ambulance.svg" />
+    <Content Include="View\svgs\solid\american-sign-language-interpreting.svg" />
+    <Content Include="View\svgs\solid\anchor.svg" />
+    <Content Include="View\svgs\solid\angle-double-down.svg" />
+    <Content Include="View\svgs\solid\angle-double-left.svg" />
+    <Content Include="View\svgs\solid\angle-double-right.svg" />
+    <Content Include="View\svgs\solid\angle-double-up.svg" />
+    <Content Include="View\svgs\solid\angle-down.svg" />
+    <Content Include="View\svgs\solid\angle-left.svg" />
+    <Content Include="View\svgs\solid\angle-right.svg" />
+    <Content Include="View\svgs\solid\angle-up.svg" />
+    <Content Include="View\svgs\solid\angry.svg" />
+    <Content Include="View\svgs\solid\ankh.svg" />
+    <Content Include="View\svgs\solid\apple-alt.svg" />
+    <Content Include="View\svgs\solid\archive.svg" />
+    <Content Include="View\svgs\solid\archway.svg" />
+    <Content Include="View\svgs\solid\arrow-alt-circle-down.svg" />
+    <Content Include="View\svgs\solid\arrow-alt-circle-left.svg" />
+    <Content Include="View\svgs\solid\arrow-alt-circle-right.svg" />
+    <Content Include="View\svgs\solid\arrow-alt-circle-up.svg" />
+    <Content Include="View\svgs\solid\arrow-circle-down.svg" />
+    <Content Include="View\svgs\solid\arrow-circle-left.svg" />
+    <Content Include="View\svgs\solid\arrow-circle-right.svg" />
+    <Content Include="View\svgs\solid\arrow-circle-up.svg" />
+    <Content Include="View\svgs\solid\arrow-down.svg" />
+    <Content Include="View\svgs\solid\arrow-left.svg" />
+    <Content Include="View\svgs\solid\arrow-right.svg" />
+    <Content Include="View\svgs\solid\arrow-up.svg" />
+    <Content Include="View\svgs\solid\arrows-alt-h.svg" />
+    <Content Include="View\svgs\solid\arrows-alt-v.svg" />
+    <Content Include="View\svgs\solid\arrows-alt.svg" />
+    <Content Include="View\svgs\solid\assistive-listening-systems.svg" />
+    <Content Include="View\svgs\solid\asterisk.svg" />
+    <Content Include="View\svgs\solid\at.svg" />
+    <Content Include="View\svgs\solid\atlas.svg" />
+    <Content Include="View\svgs\solid\atom.svg" />
+    <Content Include="View\svgs\solid\audio-description.svg" />
+    <Content Include="View\svgs\solid\award.svg" />
+    <Content Include="View\svgs\solid\baby-carriage.svg" />
+    <Content Include="View\svgs\solid\baby.svg" />
+    <Content Include="View\svgs\solid\backspace.svg" />
+    <Content Include="View\svgs\solid\backward.svg" />
+    <Content Include="View\svgs\solid\balance-scale.svg" />
+    <Content Include="View\svgs\solid\ban.svg" />
+    <Content Include="View\svgs\solid\band-aid.svg" />
+    <Content Include="View\svgs\solid\barcode.svg" />
+    <Content Include="View\svgs\solid\bars.svg" />
+    <Content Include="View\svgs\solid\baseball-ball.svg" />
+    <Content Include="View\svgs\solid\basketball-ball.svg" />
+    <Content Include="View\svgs\solid\bath.svg" />
+    <Content Include="View\svgs\solid\battery-empty.svg" />
+    <Content Include="View\svgs\solid\battery-full.svg" />
+    <Content Include="View\svgs\solid\battery-half.svg" />
+    <Content Include="View\svgs\solid\battery-quarter.svg" />
+    <Content Include="View\svgs\solid\battery-three-quarters.svg" />
+    <Content Include="View\svgs\solid\bed.svg" />
+    <Content Include="View\svgs\solid\beer.svg" />
+    <Content Include="View\svgs\solid\bell-slash.svg" />
+    <Content Include="View\svgs\solid\bell.svg" />
+    <Content Include="View\svgs\solid\bezier-curve.svg" />
+    <Content Include="View\svgs\solid\bible.svg" />
+    <Content Include="View\svgs\solid\bicycle.svg" />
+    <Content Include="View\svgs\solid\binoculars.svg" />
+    <Content Include="View\svgs\solid\biohazard.svg" />
+    <Content Include="View\svgs\solid\birthday-cake.svg" />
+    <Content Include="View\svgs\solid\blender-phone.svg" />
+    <Content Include="View\svgs\solid\blender.svg" />
+    <Content Include="View\svgs\solid\blind.svg" />
+    <Content Include="View\svgs\solid\blog.svg" />
+    <Content Include="View\svgs\solid\bold.svg" />
+    <Content Include="View\svgs\solid\bolt.svg" />
+    <Content Include="View\svgs\solid\bomb.svg" />
+    <Content Include="View\svgs\solid\bone.svg" />
+    <Content Include="View\svgs\solid\bong.svg" />
+    <Content Include="View\svgs\solid\book-dead.svg" />
+    <Content Include="View\svgs\solid\book-open.svg" />
+    <Content Include="View\svgs\solid\book-reader.svg" />
+    <Content Include="View\svgs\solid\book.svg" />
+    <Content Include="View\svgs\solid\bookmark.svg" />
+    <Content Include="View\svgs\solid\bowling-ball.svg" />
+    <Content Include="View\svgs\solid\box-open.svg" />
+    <Content Include="View\svgs\solid\box.svg" />
+    <Content Include="View\svgs\solid\boxes.svg" />
+    <Content Include="View\svgs\solid\braille.svg" />
+    <Content Include="View\svgs\solid\brain.svg" />
+    <Content Include="View\svgs\solid\briefcase-medical.svg" />
+    <Content Include="View\svgs\solid\briefcase.svg" />
+    <Content Include="View\svgs\solid\broadcast-tower.svg" />
+    <Content Include="View\svgs\solid\broom.svg" />
+    <Content Include="View\svgs\solid\brush.svg" />
+    <Content Include="View\svgs\solid\bug.svg" />
+    <Content Include="View\svgs\solid\building.svg" />
+    <Content Include="View\svgs\solid\bullhorn.svg" />
+    <Content Include="View\svgs\solid\bullseye.svg" />
+    <Content Include="View\svgs\solid\burn.svg" />
+    <Content Include="View\svgs\solid\bus-alt.svg" />
+    <Content Include="View\svgs\solid\bus.svg" />
+    <Content Include="View\svgs\solid\business-time.svg" />
+    <Content Include="View\svgs\solid\calculator.svg" />
+    <Content Include="View\svgs\solid\calendar-alt.svg" />
+    <Content Include="View\svgs\solid\calendar-check.svg" />
+    <Content Include="View\svgs\solid\calendar-day.svg" />
+    <Content Include="View\svgs\solid\calendar-minus.svg" />
+    <Content Include="View\svgs\solid\calendar-plus.svg" />
+    <Content Include="View\svgs\solid\calendar-times.svg" />
+    <Content Include="View\svgs\solid\calendar-week.svg" />
+    <Content Include="View\svgs\solid\calendar.svg" />
+    <Content Include="View\svgs\solid\camera-retro.svg" />
+    <Content Include="View\svgs\solid\camera.svg" />
+    <Content Include="View\svgs\solid\campground.svg" />
+    <Content Include="View\svgs\solid\candy-cane.svg" />
+    <Content Include="View\svgs\solid\cannabis.svg" />
+    <Content Include="View\svgs\solid\capsules.svg" />
+    <Content Include="View\svgs\solid\car-alt.svg" />
+    <Content Include="View\svgs\solid\car-battery.svg" />
+    <Content Include="View\svgs\solid\car-crash.svg" />
+    <Content Include="View\svgs\solid\car-side.svg" />
+    <Content Include="View\svgs\solid\car.svg" />
+    <Content Include="View\svgs\solid\caret-down.svg" />
+    <Content Include="View\svgs\solid\caret-left.svg" />
+    <Content Include="View\svgs\solid\caret-right.svg" />
+    <Content Include="View\svgs\solid\caret-square-down.svg" />
+    <Content Include="View\svgs\solid\caret-square-left.svg" />
+    <Content Include="View\svgs\solid\caret-square-right.svg" />
+    <Content Include="View\svgs\solid\caret-square-up.svg" />
+    <Content Include="View\svgs\solid\caret-up.svg" />
+    <Content Include="View\svgs\solid\carrot.svg" />
+    <Content Include="View\svgs\solid\cart-arrow-down.svg" />
+    <Content Include="View\svgs\solid\cart-plus.svg" />
+    <Content Include="View\svgs\solid\cash-register.svg" />
+    <Content Include="View\svgs\solid\cat.svg" />
+    <Content Include="View\svgs\solid\certificate.svg" />
+    <Content Include="View\svgs\solid\chair.svg" />
+    <Content Include="View\svgs\solid\chalkboard-teacher.svg" />
+    <Content Include="View\svgs\solid\chalkboard.svg" />
+    <Content Include="View\svgs\solid\charging-station.svg" />
+    <Content Include="View\svgs\solid\chart-area.svg" />
+    <Content Include="View\svgs\solid\chart-bar.svg" />
+    <Content Include="View\svgs\solid\chart-line.svg" />
+    <Content Include="View\svgs\solid\chart-pie.svg" />
+    <Content Include="View\svgs\solid\check-circle.svg" />
+    <Content Include="View\svgs\solid\check-double.svg" />
+    <Content Include="View\svgs\solid\check-square.svg" />
+    <Content Include="View\svgs\solid\check.svg" />
+    <Content Include="View\svgs\solid\chess-bishop.svg" />
+    <Content Include="View\svgs\solid\chess-board.svg" />
+    <Content Include="View\svgs\solid\chess-king.svg" />
+    <Content Include="View\svgs\solid\chess-knight.svg" />
+    <Content Include="View\svgs\solid\chess-pawn.svg" />
+    <Content Include="View\svgs\solid\chess-queen.svg" />
+    <Content Include="View\svgs\solid\chess-rook.svg" />
+    <Content Include="View\svgs\solid\chess.svg" />
+    <Content Include="View\svgs\solid\chevron-circle-down.svg" />
+    <Content Include="View\svgs\solid\chevron-circle-left.svg" />
+    <Content Include="View\svgs\solid\chevron-circle-right.svg" />
+    <Content Include="View\svgs\solid\chevron-circle-up.svg" />
+    <Content Include="View\svgs\solid\chevron-down.svg" />
+    <Content Include="View\svgs\solid\chevron-left.svg" />
+    <Content Include="View\svgs\solid\chevron-right.svg" />
+    <Content Include="View\svgs\solid\chevron-up.svg" />
+    <Content Include="View\svgs\solid\child.svg" />
+    <Content Include="View\svgs\solid\church.svg" />
+    <Content Include="View\svgs\solid\circle-notch.svg" />
+    <Content Include="View\svgs\solid\circle.svg" />
+    <Content Include="View\svgs\solid\city.svg" />
+    <Content Include="View\svgs\solid\clipboard-check.svg" />
+    <Content Include="View\svgs\solid\clipboard-list.svg" />
+    <Content Include="View\svgs\solid\clipboard.svg" />
+    <Content Include="View\svgs\solid\clock.svg" />
+    <Content Include="View\svgs\solid\clone.svg" />
+    <Content Include="View\svgs\solid\closed-captioning.svg" />
+    <Content Include="View\svgs\solid\cloud-download-alt.svg" />
+    <Content Include="View\svgs\solid\cloud-meatball.svg" />
+    <Content Include="View\svgs\solid\cloud-moon-rain.svg" />
+    <Content Include="View\svgs\solid\cloud-moon.svg" />
+    <Content Include="View\svgs\solid\cloud-rain.svg" />
+    <Content Include="View\svgs\solid\cloud-showers-heavy.svg" />
+    <Content Include="View\svgs\solid\cloud-sun-rain.svg" />
+    <Content Include="View\svgs\solid\cloud-sun.svg" />
+    <Content Include="View\svgs\solid\cloud-upload-alt.svg" />
+    <Content Include="View\svgs\solid\cloud.svg" />
+    <Content Include="View\svgs\solid\cocktail.svg" />
+    <Content Include="View\svgs\solid\code-branch.svg" />
+    <Content Include="View\svgs\solid\code.svg" />
+    <Content Include="View\svgs\solid\coffee.svg" />
+    <Content Include="View\svgs\solid\cog.svg" />
+    <Content Include="View\svgs\solid\cogs.svg" />
+    <Content Include="View\svgs\solid\coins.svg" />
+    <Content Include="View\svgs\solid\columns.svg" />
+    <Content Include="View\svgs\solid\comment-alt.svg" />
+    <Content Include="View\svgs\solid\comment-dollar.svg" />
+    <Content Include="View\svgs\solid\comment-dots.svg" />
+    <Content Include="View\svgs\solid\comment-slash.svg" />
+    <Content Include="View\svgs\solid\comment.svg" />
+    <Content Include="View\svgs\solid\comments-dollar.svg" />
+    <Content Include="View\svgs\solid\comments.svg" />
+    <Content Include="View\svgs\solid\compact-disc.svg" />
+    <Content Include="View\svgs\solid\compass.svg" />
+    <Content Include="View\svgs\solid\compress-arrows-alt.svg" />
+    <Content Include="View\svgs\solid\compress.svg" />
+    <Content Include="View\svgs\solid\concierge-bell.svg" />
+    <Content Include="View\svgs\solid\cookie-bite.svg" />
+    <Content Include="View\svgs\solid\cookie.svg" />
+    <Content Include="View\svgs\solid\copy.svg" />
+    <Content Include="View\svgs\solid\copyright.svg" />
+    <Content Include="View\svgs\solid\couch.svg" />
+    <Content Include="View\svgs\solid\credit-card.svg" />
+    <Content Include="View\svgs\solid\crop-alt.svg" />
+    <Content Include="View\svgs\solid\crop.svg" />
+    <Content Include="View\svgs\solid\cross.svg" />
+    <Content Include="View\svgs\solid\crosshairs.svg" />
+    <Content Include="View\svgs\solid\crow.svg" />
+    <Content Include="View\svgs\solid\crown.svg" />
+    <Content Include="View\svgs\solid\cube.svg" />
+    <Content Include="View\svgs\solid\cubes.svg" />
+    <Content Include="View\svgs\solid\cut.svg" />
+    <Content Include="View\svgs\solid\database.svg" />
+    <Content Include="View\svgs\solid\deaf.svg" />
+    <Content Include="View\svgs\solid\democrat.svg" />
+    <Content Include="View\svgs\solid\desktop.svg" />
+    <Content Include="View\svgs\solid\dharmachakra.svg" />
+    <Content Include="View\svgs\solid\diagnoses.svg" />
+    <Content Include="View\svgs\solid\dice-d20.svg" />
+    <Content Include="View\svgs\solid\dice-d6.svg" />
+    <Content Include="View\svgs\solid\dice-five.svg" />
+    <Content Include="View\svgs\solid\dice-four.svg" />
+    <Content Include="View\svgs\solid\dice-one.svg" />
+    <Content Include="View\svgs\solid\dice-six.svg" />
+    <Content Include="View\svgs\solid\dice-three.svg" />
+    <Content Include="View\svgs\solid\dice-two.svg" />
+    <Content Include="View\svgs\solid\dice.svg" />
+    <Content Include="View\svgs\solid\digital-tachograph.svg" />
+    <Content Include="View\svgs\solid\directions.svg" />
+    <Content Include="View\svgs\solid\divide.svg" />
+    <Content Include="View\svgs\solid\dizzy.svg" />
+    <Content Include="View\svgs\solid\dna.svg" />
+    <Content Include="View\svgs\solid\dog.svg" />
+    <Content Include="View\svgs\solid\dollar-sign.svg" />
+    <Content Include="View\svgs\solid\dolly-flatbed.svg" />
+    <Content Include="View\svgs\solid\dolly.svg" />
+    <Content Include="View\svgs\solid\donate.svg" />
+    <Content Include="View\svgs\solid\door-closed.svg" />
+    <Content Include="View\svgs\solid\door-open.svg" />
+    <Content Include="View\svgs\solid\dot-circle.svg" />
+    <Content Include="View\svgs\solid\dove.svg" />
+    <Content Include="View\svgs\solid\download.svg" />
+    <Content Include="View\svgs\solid\drafting-compass.svg" />
+    <Content Include="View\svgs\solid\dragon.svg" />
+    <Content Include="View\svgs\solid\draw-polygon.svg" />
+    <Content Include="View\svgs\solid\drum-steelpan.svg" />
+    <Content Include="View\svgs\solid\drum.svg" />
+    <Content Include="View\svgs\solid\drumstick-bite.svg" />
+    <Content Include="View\svgs\solid\dumbbell.svg" />
+    <Content Include="View\svgs\solid\dumpster-fire.svg" />
+    <Content Include="View\svgs\solid\dumpster.svg" />
+    <Content Include="View\svgs\solid\dungeon.svg" />
+    <Content Include="View\svgs\solid\edit.svg" />
+    <Content Include="View\svgs\solid\eject.svg" />
+    <Content Include="View\svgs\solid\ellipsis-h.svg" />
+    <Content Include="View\svgs\solid\ellipsis-v.svg" />
+    <Content Include="View\svgs\solid\envelope-open-text.svg" />
+    <Content Include="View\svgs\solid\envelope-open.svg" />
+    <Content Include="View\svgs\solid\envelope-square.svg" />
+    <Content Include="View\svgs\solid\envelope.svg" />
+    <Content Include="View\svgs\solid\equals.svg" />
+    <Content Include="View\svgs\solid\eraser.svg" />
+    <Content Include="View\svgs\solid\ethernet.svg" />
+    <Content Include="View\svgs\solid\euro-sign.svg" />
+    <Content Include="View\svgs\solid\exchange-alt.svg" />
+    <Content Include="View\svgs\solid\exclamation-circle.svg" />
+    <Content Include="View\svgs\solid\exclamation-triangle.svg" />
+    <Content Include="View\svgs\solid\exclamation.svg" />
+    <Content Include="View\svgs\solid\expand-arrows-alt.svg" />
+    <Content Include="View\svgs\solid\expand.svg" />
+    <Content Include="View\svgs\solid\external-link-alt.svg" />
+    <Content Include="View\svgs\solid\external-link-square-alt.svg" />
+    <Content Include="View\svgs\solid\eye-dropper.svg" />
+    <Content Include="View\svgs\solid\eye-slash.svg" />
+    <Content Include="View\svgs\solid\eye.svg" />
+    <Content Include="View\svgs\solid\fast-backward.svg" />
+    <Content Include="View\svgs\solid\fast-forward.svg" />
+    <Content Include="View\svgs\solid\fax.svg" />
+    <Content Include="View\svgs\solid\feather-alt.svg" />
+    <Content Include="View\svgs\solid\feather.svg" />
+    <Content Include="View\svgs\solid\female.svg" />
+    <Content Include="View\svgs\solid\fighter-jet.svg" />
+    <Content Include="View\svgs\solid\file-alt.svg" />
+    <Content Include="View\svgs\solid\file-archive.svg" />
+    <Content Include="View\svgs\solid\file-audio.svg" />
+    <Content Include="View\svgs\solid\file-code.svg" />
+    <Content Include="View\svgs\solid\file-contract.svg" />
+    <Content Include="View\svgs\solid\file-csv.svg" />
+    <Content Include="View\svgs\solid\file-download.svg" />
+    <Content Include="View\svgs\solid\file-excel.svg" />
+    <Content Include="View\svgs\solid\file-export.svg" />
+    <Content Include="View\svgs\solid\file-image.svg" />
+    <Content Include="View\svgs\solid\file-import.svg" />
+    <Content Include="View\svgs\solid\file-invoice-dollar.svg" />
+    <Content Include="View\svgs\solid\file-invoice.svg" />
+    <Content Include="View\svgs\solid\file-medical-alt.svg" />
+    <Content Include="View\svgs\solid\file-medical.svg" />
+    <Content Include="View\svgs\solid\file-pdf.svg" />
+    <Content Include="View\svgs\solid\file-powerpoint.svg" />
+    <Content Include="View\svgs\solid\file-prescription.svg" />
+    <Content Include="View\svgs\solid\file-signature.svg" />
+    <Content Include="View\svgs\solid\file-upload.svg" />
+    <Content Include="View\svgs\solid\file-video.svg" />
+    <Content Include="View\svgs\solid\file-word.svg" />
+    <Content Include="View\svgs\solid\file.svg" />
+    <Content Include="View\svgs\solid\fill-drip.svg" />
+    <Content Include="View\svgs\solid\fill.svg" />
+    <Content Include="View\svgs\solid\film.svg" />
+    <Content Include="View\svgs\solid\filter.svg" />
+    <Content Include="View\svgs\solid\fingerprint.svg" />
+    <Content Include="View\svgs\solid\fire-extinguisher.svg" />
+    <Content Include="View\svgs\solid\fire.svg" />
+    <Content Include="View\svgs\solid\first-aid.svg" />
+    <Content Include="View\svgs\solid\fish.svg" />
+    <Content Include="View\svgs\solid\fist-raised.svg" />
+    <Content Include="View\svgs\solid\flag-checkered.svg" />
+    <Content Include="View\svgs\solid\flag-usa.svg" />
+    <Content Include="View\svgs\solid\flag.svg" />
+    <Content Include="View\svgs\solid\flask.svg" />
+    <Content Include="View\svgs\solid\flushed.svg" />
+    <Content Include="View\svgs\solid\folder-minus.svg" />
+    <Content Include="View\svgs\solid\folder-open.svg" />
+    <Content Include="View\svgs\solid\folder-plus.svg" />
+    <Content Include="View\svgs\solid\folder.svg" />
+    <Content Include="View\svgs\solid\font-awesome-logo-full.svg" />
+    <Content Include="View\svgs\solid\font.svg" />
+    <Content Include="View\svgs\solid\football-ball.svg" />
+    <Content Include="View\svgs\solid\forward.svg" />
+    <Content Include="View\svgs\solid\frog.svg" />
+    <Content Include="View\svgs\solid\frown-open.svg" />
+    <Content Include="View\svgs\solid\frown.svg" />
+    <Content Include="View\svgs\solid\funnel-dollar.svg" />
+    <Content Include="View\svgs\solid\futbol.svg" />
+    <Content Include="View\svgs\solid\gamepad.svg" />
+    <Content Include="View\svgs\solid\gas-pump.svg" />
+    <Content Include="View\svgs\solid\gavel.svg" />
+    <Content Include="View\svgs\solid\gem.svg" />
+    <Content Include="View\svgs\solid\genderless.svg" />
+    <Content Include="View\svgs\solid\ghost.svg" />
+    <Content Include="View\svgs\solid\gift.svg" />
+    <Content Include="View\svgs\solid\gifts.svg" />
+    <Content Include="View\svgs\solid\glass-cheers.svg" />
+    <Content Include="View\svgs\solid\glass-martini-alt.svg" />
+    <Content Include="View\svgs\solid\glass-martini.svg" />
+    <Content Include="View\svgs\solid\glass-whiskey.svg" />
+    <Content Include="View\svgs\solid\glasses.svg" />
+    <Content Include="View\svgs\solid\globe-africa.svg" />
+    <Content Include="View\svgs\solid\globe-americas.svg" />
+    <Content Include="View\svgs\solid\globe-asia.svg" />
+    <Content Include="View\svgs\solid\globe-europe.svg" />
+    <Content Include="View\svgs\solid\globe.svg" />
+    <Content Include="View\svgs\solid\golf-ball.svg" />
+    <Content Include="View\svgs\solid\gopuram.svg" />
+    <Content Include="View\svgs\solid\graduation-cap.svg" />
+    <Content Include="View\svgs\solid\greater-than-equal.svg" />
+    <Content Include="View\svgs\solid\greater-than.svg" />
+    <Content Include="View\svgs\solid\grimace.svg" />
+    <Content Include="View\svgs\solid\grin-alt.svg" />
+    <Content Include="View\svgs\solid\grin-beam-sweat.svg" />
+    <Content Include="View\svgs\solid\grin-beam.svg" />
+    <Content Include="View\svgs\solid\grin-hearts.svg" />
+    <Content Include="View\svgs\solid\grin-squint-tears.svg" />
+    <Content Include="View\svgs\solid\grin-squint.svg" />
+    <Content Include="View\svgs\solid\grin-stars.svg" />
+    <Content Include="View\svgs\solid\grin-tears.svg" />
+    <Content Include="View\svgs\solid\grin-tongue-squint.svg" />
+    <Content Include="View\svgs\solid\grin-tongue-wink.svg" />
+    <Content Include="View\svgs\solid\grin-tongue.svg" />
+    <Content Include="View\svgs\solid\grin-wink.svg" />
+    <Content Include="View\svgs\solid\grin.svg" />
+    <Content Include="View\svgs\solid\grip-horizontal.svg" />
+    <Content Include="View\svgs\solid\grip-lines-vertical.svg" />
+    <Content Include="View\svgs\solid\grip-lines.svg" />
+    <Content Include="View\svgs\solid\grip-vertical.svg" />
+    <Content Include="View\svgs\solid\guitar.svg" />
+    <Content Include="View\svgs\solid\h-square.svg" />
+    <Content Include="View\svgs\solid\hammer.svg" />
+    <Content Include="View\svgs\solid\hamsa.svg" />
+    <Content Include="View\svgs\solid\hand-holding-heart.svg" />
+    <Content Include="View\svgs\solid\hand-holding-usd.svg" />
+    <Content Include="View\svgs\solid\hand-holding.svg" />
+    <Content Include="View\svgs\solid\hand-lizard.svg" />
+    <Content Include="View\svgs\solid\hand-paper.svg" />
+    <Content Include="View\svgs\solid\hand-peace.svg" />
+    <Content Include="View\svgs\solid\hand-point-down.svg" />
+    <Content Include="View\svgs\solid\hand-point-left.svg" />
+    <Content Include="View\svgs\solid\hand-point-right.svg" />
+    <Content Include="View\svgs\solid\hand-point-up.svg" />
+    <Content Include="View\svgs\solid\hand-pointer.svg" />
+    <Content Include="View\svgs\solid\hand-rock.svg" />
+    <Content Include="View\svgs\solid\hand-scissors.svg" />
+    <Content Include="View\svgs\solid\hand-spock.svg" />
+    <Content Include="View\svgs\solid\hands-helping.svg" />
+    <Content Include="View\svgs\solid\hands.svg" />
+    <Content Include="View\svgs\solid\handshake.svg" />
+    <Content Include="View\svgs\solid\hanukiah.svg" />
+    <Content Include="View\svgs\solid\hashtag.svg" />
+    <Content Include="View\svgs\solid\hat-wizard.svg" />
+    <Content Include="View\svgs\solid\haykal.svg" />
+    <Content Include="View\svgs\solid\hdd.svg" />
+    <Content Include="View\svgs\solid\heading.svg" />
+    <Content Include="View\svgs\solid\headphones-alt.svg" />
+    <Content Include="View\svgs\solid\headphones.svg" />
+    <Content Include="View\svgs\solid\headset.svg" />
+    <Content Include="View\svgs\solid\heart-broken.svg" />
+    <Content Include="View\svgs\solid\heart.svg" />
+    <Content Include="View\svgs\solid\heartbeat.svg" />
+    <Content Include="View\svgs\solid\helicopter.svg" />
+    <Content Include="View\svgs\solid\highlighter.svg" />
+    <Content Include="View\svgs\solid\hiking.svg" />
+    <Content Include="View\svgs\solid\hippo.svg" />
+    <Content Include="View\svgs\solid\history.svg" />
+    <Content Include="View\svgs\solid\hockey-puck.svg" />
+    <Content Include="View\svgs\solid\holly-berry.svg" />
+    <Content Include="View\svgs\solid\home.svg" />
+    <Content Include="View\svgs\solid\horse-head.svg" />
+    <Content Include="View\svgs\solid\horse.svg" />
+    <Content Include="View\svgs\solid\hospital-alt.svg" />
+    <Content Include="View\svgs\solid\hospital-symbol.svg" />
+    <Content Include="View\svgs\solid\hospital.svg" />
+    <Content Include="View\svgs\solid\hot-tub.svg" />
+    <Content Include="View\svgs\solid\hotel.svg" />
+    <Content Include="View\svgs\solid\hourglass-end.svg" />
+    <Content Include="View\svgs\solid\hourglass-half.svg" />
+    <Content Include="View\svgs\solid\hourglass-start.svg" />
+    <Content Include="View\svgs\solid\hourglass.svg" />
+    <Content Include="View\svgs\solid\house-damage.svg" />
+    <Content Include="View\svgs\solid\hryvnia.svg" />
+    <Content Include="View\svgs\solid\i-cursor.svg" />
+    <Content Include="View\svgs\solid\icicles.svg" />
+    <Content Include="View\svgs\solid\id-badge.svg" />
+    <Content Include="View\svgs\solid\id-card-alt.svg" />
+    <Content Include="View\svgs\solid\id-card.svg" />
+    <Content Include="View\svgs\solid\igloo.svg" />
+    <Content Include="View\svgs\solid\image.svg" />
+    <Content Include="View\svgs\solid\images.svg" />
+    <Content Include="View\svgs\solid\inbox.svg" />
+    <Content Include="View\svgs\solid\indent.svg" />
+    <Content Include="View\svgs\solid\industry.svg" />
+    <Content Include="View\svgs\solid\infinity.svg" />
+    <Content Include="View\svgs\solid\info-circle.svg" />
+    <Content Include="View\svgs\solid\info.svg" />
+    <Content Include="View\svgs\solid\italic.svg" />
+    <Content Include="View\svgs\solid\jedi.svg" />
+    <Content Include="View\svgs\solid\joint.svg" />
+    <Content Include="View\svgs\solid\journal-whills.svg" />
+    <Content Include="View\svgs\solid\kaaba.svg" />
+    <Content Include="View\svgs\solid\key.svg" />
+    <Content Include="View\svgs\solid\keyboard.svg" />
+    <Content Include="View\svgs\solid\khanda.svg" />
+    <Content Include="View\svgs\solid\kiss-beam.svg" />
+    <Content Include="View\svgs\solid\kiss-wink-heart.svg" />
+    <Content Include="View\svgs\solid\kiss.svg" />
+    <Content Include="View\svgs\solid\kiwi-bird.svg" />
+    <Content Include="View\svgs\solid\landmark.svg" />
+    <Content Include="View\svgs\solid\language.svg" />
+    <Content Include="View\svgs\solid\laptop-code.svg" />
+    <Content Include="View\svgs\solid\laptop.svg" />
+    <Content Include="View\svgs\solid\laugh-beam.svg" />
+    <Content Include="View\svgs\solid\laugh-squint.svg" />
+    <Content Include="View\svgs\solid\laugh-wink.svg" />
+    <Content Include="View\svgs\solid\laugh.svg" />
+    <Content Include="View\svgs\solid\layer-group.svg" />
+    <Content Include="View\svgs\solid\leaf.svg" />
+    <Content Include="View\svgs\solid\lemon.svg" />
+    <Content Include="View\svgs\solid\less-than-equal.svg" />
+    <Content Include="View\svgs\solid\less-than.svg" />
+    <Content Include="View\svgs\solid\level-down-alt.svg" />
+    <Content Include="View\svgs\solid\level-up-alt.svg" />
+    <Content Include="View\svgs\solid\life-ring.svg" />
+    <Content Include="View\svgs\solid\lightbulb.svg" />
+    <Content Include="View\svgs\solid\link.svg" />
+    <Content Include="View\svgs\solid\lira-sign.svg" />
+    <Content Include="View\svgs\solid\list-alt.svg" />
+    <Content Include="View\svgs\solid\list-ol.svg" />
+    <Content Include="View\svgs\solid\list-ul.svg" />
+    <Content Include="View\svgs\solid\list.svg" />
+    <Content Include="View\svgs\solid\location-arrow.svg" />
+    <Content Include="View\svgs\solid\lock-open.svg" />
+    <Content Include="View\svgs\solid\lock.svg" />
+    <Content Include="View\svgs\solid\long-arrow-alt-down.svg" />
+    <Content Include="View\svgs\solid\long-arrow-alt-left.svg" />
+    <Content Include="View\svgs\solid\long-arrow-alt-right.svg" />
+    <Content Include="View\svgs\solid\long-arrow-alt-up.svg" />
+    <Content Include="View\svgs\solid\low-vision.svg" />
+    <Content Include="View\svgs\solid\luggage-cart.svg" />
+    <Content Include="View\svgs\solid\magic.svg" />
+    <Content Include="View\svgs\solid\magnet.svg" />
+    <Content Include="View\svgs\solid\mail-bulk.svg" />
+    <Content Include="View\svgs\solid\male.svg" />
+    <Content Include="View\svgs\solid\map-marked-alt.svg" />
+    <Content Include="View\svgs\solid\map-marked.svg" />
+    <Content Include="View\svgs\solid\map-marker-alt.svg" />
+    <Content Include="View\svgs\solid\map-marker.svg" />
+    <Content Include="View\svgs\solid\map-pin.svg" />
+    <Content Include="View\svgs\solid\map-signs.svg" />
+    <Content Include="View\svgs\solid\map.svg" />
+    <Content Include="View\svgs\solid\marker.svg" />
+    <Content Include="View\svgs\solid\mars-double.svg" />
+    <Content Include="View\svgs\solid\mars-stroke-h.svg" />
+    <Content Include="View\svgs\solid\mars-stroke-v.svg" />
+    <Content Include="View\svgs\solid\mars-stroke.svg" />
+    <Content Include="View\svgs\solid\mars.svg" />
+    <Content Include="View\svgs\solid\mask.svg" />
+    <Content Include="View\svgs\solid\medal.svg" />
+    <Content Include="View\svgs\solid\medkit.svg" />
+    <Content Include="View\svgs\solid\meh-blank.svg" />
+    <Content Include="View\svgs\solid\meh-rolling-eyes.svg" />
+    <Content Include="View\svgs\solid\meh.svg" />
+    <Content Include="View\svgs\solid\memory.svg" />
+    <Content Include="View\svgs\solid\menorah.svg" />
+    <Content Include="View\svgs\solid\mercury.svg" />
+    <Content Include="View\svgs\solid\meteor.svg" />
+    <Content Include="View\svgs\solid\microchip.svg" />
+    <Content Include="View\svgs\solid\microphone-alt-slash.svg" />
+    <Content Include="View\svgs\solid\microphone-alt.svg" />
+    <Content Include="View\svgs\solid\microphone-slash.svg" />
+    <Content Include="View\svgs\solid\microphone.svg" />
+    <Content Include="View\svgs\solid\microscope.svg" />
+    <Content Include="View\svgs\solid\minus-circle.svg" />
+    <Content Include="View\svgs\solid\minus-square.svg" />
+    <Content Include="View\svgs\solid\minus.svg" />
+    <Content Include="View\svgs\solid\mitten.svg" />
+    <Content Include="View\svgs\solid\mobile-alt.svg" />
+    <Content Include="View\svgs\solid\mobile.svg" />
+    <Content Include="View\svgs\solid\money-bill-alt.svg" />
+    <Content Include="View\svgs\solid\money-bill-wave-alt.svg" />
+    <Content Include="View\svgs\solid\money-bill-wave.svg" />
+    <Content Include="View\svgs\solid\money-bill.svg" />
+    <Content Include="View\svgs\solid\money-check-alt.svg" />
+    <Content Include="View\svgs\solid\money-check.svg" />
+    <Content Include="View\svgs\solid\monument.svg" />
+    <Content Include="View\svgs\solid\moon.svg" />
+    <Content Include="View\svgs\solid\mortar-pestle.svg" />
+    <Content Include="View\svgs\solid\mosque.svg" />
+    <Content Include="View\svgs\solid\motorcycle.svg" />
+    <Content Include="View\svgs\solid\mountain.svg" />
+    <Content Include="View\svgs\solid\mouse-pointer.svg" />
+    <Content Include="View\svgs\solid\mug-hot.svg" />
+    <Content Include="View\svgs\solid\music.svg" />
+    <Content Include="View\svgs\solid\network-wired.svg" />
+    <Content Include="View\svgs\solid\neuter.svg" />
+    <Content Include="View\svgs\solid\newspaper.svg" />
+    <Content Include="View\svgs\solid\not-equal.svg" />
+    <Content Include="View\svgs\solid\notes-medical.svg" />
+    <Content Include="View\svgs\solid\object-group.svg" />
+    <Content Include="View\svgs\solid\object-ungroup.svg" />
+    <Content Include="View\svgs\solid\oil-can.svg" />
+    <Content Include="View\svgs\solid\om.svg" />
+    <Content Include="View\svgs\solid\otter.svg" />
+    <Content Include="View\svgs\solid\outdent.svg" />
+    <Content Include="View\svgs\solid\paint-brush.svg" />
+    <Content Include="View\svgs\solid\paint-roller.svg" />
+    <Content Include="View\svgs\solid\palette.svg" />
+    <Content Include="View\svgs\solid\pallet.svg" />
+    <Content Include="View\svgs\solid\paper-plane.svg" />
+    <Content Include="View\svgs\solid\paperclip.svg" />
+    <Content Include="View\svgs\solid\parachute-box.svg" />
+    <Content Include="View\svgs\solid\paragraph.svg" />
+    <Content Include="View\svgs\solid\parking.svg" />
+    <Content Include="View\svgs\solid\passport.svg" />
+    <Content Include="View\svgs\solid\pastafarianism.svg" />
+    <Content Include="View\svgs\solid\paste.svg" />
+    <Content Include="View\svgs\solid\pause-circle.svg" />
+    <Content Include="View\svgs\solid\pause.svg" />
+    <Content Include="View\svgs\solid\paw.svg" />
+    <Content Include="View\svgs\solid\peace.svg" />
+    <Content Include="View\svgs\solid\pen-alt.svg" />
+    <Content Include="View\svgs\solid\pen-fancy.svg" />
+    <Content Include="View\svgs\solid\pen-nib.svg" />
+    <Content Include="View\svgs\solid\pen-square.svg" />
+    <Content Include="View\svgs\solid\pen.svg" />
+    <Content Include="View\svgs\solid\pencil-alt.svg" />
+    <Content Include="View\svgs\solid\pencil-ruler.svg" />
+    <Content Include="View\svgs\solid\people-carry.svg" />
+    <Content Include="View\svgs\solid\percent.svg" />
+    <Content Include="View\svgs\solid\percentage.svg" />
+    <Content Include="View\svgs\solid\person-booth.svg" />
+    <Content Include="View\svgs\solid\phone-slash.svg" />
+    <Content Include="View\svgs\solid\phone-square.svg" />
+    <Content Include="View\svgs\solid\phone-volume.svg" />
+    <Content Include="View\svgs\solid\phone.svg" />
+    <Content Include="View\svgs\solid\piggy-bank.svg" />
+    <Content Include="View\svgs\solid\pills.svg" />
+    <Content Include="View\svgs\solid\place-of-worship.svg" />
+    <Content Include="View\svgs\solid\plane-arrival.svg" />
+    <Content Include="View\svgs\solid\plane-departure.svg" />
+    <Content Include="View\svgs\solid\plane.svg" />
+    <Content Include="View\svgs\solid\play-circle.svg" />
+    <Content Include="View\svgs\solid\play.svg" />
+    <Content Include="View\svgs\solid\plug.svg" />
+    <Content Include="View\svgs\solid\plus-circle.svg" />
+    <Content Include="View\svgs\solid\plus-square.svg" />
+    <Content Include="View\svgs\solid\plus.svg" />
+    <Content Include="View\svgs\solid\podcast.svg" />
+    <Content Include="View\svgs\solid\poll-h.svg" />
+    <Content Include="View\svgs\solid\poll.svg" />
+    <Content Include="View\svgs\solid\poo-storm.svg" />
+    <Content Include="View\svgs\solid\poo.svg" />
+    <Content Include="View\svgs\solid\poop.svg" />
+    <Content Include="View\svgs\solid\portrait.svg" />
+    <Content Include="View\svgs\solid\pound-sign.svg" />
+    <Content Include="View\svgs\solid\power-off.svg" />
+    <Content Include="View\svgs\solid\pray.svg" />
+    <Content Include="View\svgs\solid\praying-hands.svg" />
+    <Content Include="View\svgs\solid\prescription-bottle-alt.svg" />
+    <Content Include="View\svgs\solid\prescription-bottle.svg" />
+    <Content Include="View\svgs\solid\prescription.svg" />
+    <Content Include="View\svgs\solid\print.svg" />
+    <Content Include="View\svgs\solid\procedures.svg" />
+    <Content Include="View\svgs\solid\project-diagram.svg" />
+    <Content Include="View\svgs\solid\puzzle-piece.svg" />
+    <Content Include="View\svgs\solid\qrcode.svg" />
+    <Content Include="View\svgs\solid\question-circle.svg" />
+    <Content Include="View\svgs\solid\question.svg" />
+    <Content Include="View\svgs\solid\quidditch.svg" />
+    <Content Include="View\svgs\solid\quote-left.svg" />
+    <Content Include="View\svgs\solid\quote-right.svg" />
+    <Content Include="View\svgs\solid\quran.svg" />
+    <Content Include="View\svgs\solid\radiation-alt.svg" />
+    <Content Include="View\svgs\solid\radiation.svg" />
+    <Content Include="View\svgs\solid\rainbow.svg" />
+    <Content Include="View\svgs\solid\random.svg" />
+    <Content Include="View\svgs\solid\receipt.svg" />
+    <Content Include="View\svgs\solid\recycle.svg" />
+    <Content Include="View\svgs\solid\redo-alt.svg" />
+    <Content Include="View\svgs\solid\redo.svg" />
+    <Content Include="View\svgs\solid\registered.svg" />
+    <Content Include="View\svgs\solid\reply-all.svg" />
+    <Content Include="View\svgs\solid\reply.svg" />
+    <Content Include="View\svgs\solid\republican.svg" />
+    <Content Include="View\svgs\solid\restroom.svg" />
+    <Content Include="View\svgs\solid\retweet.svg" />
+    <Content Include="View\svgs\solid\ribbon.svg" />
+    <Content Include="View\svgs\solid\ring.svg" />
+    <Content Include="View\svgs\solid\road.svg" />
+    <Content Include="View\svgs\solid\robot.svg" />
+    <Content Include="View\svgs\solid\rocket.svg" />
+    <Content Include="View\svgs\solid\route.svg" />
+    <Content Include="View\svgs\solid\rss-square.svg" />
+    <Content Include="View\svgs\solid\rss.svg" />
+    <Content Include="View\svgs\solid\ruble-sign.svg" />
+    <Content Include="View\svgs\solid\ruler-combined.svg" />
+    <Content Include="View\svgs\solid\ruler-horizontal.svg" />
+    <Content Include="View\svgs\solid\ruler-vertical.svg" />
+    <Content Include="View\svgs\solid\ruler.svg" />
+    <Content Include="View\svgs\solid\running.svg" />
+    <Content Include="View\svgs\solid\rupee-sign.svg" />
+    <Content Include="View\svgs\solid\sad-cry.svg" />
+    <Content Include="View\svgs\solid\sad-tear.svg" />
+    <Content Include="View\svgs\solid\satellite-dish.svg" />
+    <Content Include="View\svgs\solid\satellite.svg" />
+    <Content Include="View\svgs\solid\save.svg" />
+    <Content Include="View\svgs\solid\school.svg" />
+    <Content Include="View\svgs\solid\screwdriver.svg" />
+    <Content Include="View\svgs\solid\scroll.svg" />
+    <Content Include="View\svgs\solid\sd-card.svg" />
+    <Content Include="View\svgs\solid\search-dollar.svg" />
+    <Content Include="View\svgs\solid\search-location.svg" />
+    <Content Include="View\svgs\solid\search-minus.svg" />
+    <Content Include="View\svgs\solid\search-plus.svg" />
+    <Content Include="View\svgs\solid\search.svg" />
+    <Content Include="View\svgs\solid\seedling.svg" />
+    <Content Include="View\svgs\solid\server.svg" />
+    <Content Include="View\svgs\solid\shapes.svg" />
+    <Content Include="View\svgs\solid\share-alt-square.svg" />
+    <Content Include="View\svgs\solid\share-alt.svg" />
+    <Content Include="View\svgs\solid\share-square.svg" />
+    <Content Include="View\svgs\solid\share.svg" />
+    <Content Include="View\svgs\solid\shekel-sign.svg" />
+    <Content Include="View\svgs\solid\shield-alt.svg" />
+    <Content Include="View\svgs\solid\ship.svg" />
+    <Content Include="View\svgs\solid\shipping-fast.svg" />
+    <Content Include="View\svgs\solid\shoe-prints.svg" />
+    <Content Include="View\svgs\solid\shopping-bag.svg" />
+    <Content Include="View\svgs\solid\shopping-basket.svg" />
+    <Content Include="View\svgs\solid\shopping-cart.svg" />
+    <Content Include="View\svgs\solid\shower.svg" />
+    <Content Include="View\svgs\solid\shuttle-van.svg" />
+    <Content Include="View\svgs\solid\sign-in-alt.svg" />
+    <Content Include="View\svgs\solid\sign-language.svg" />
+    <Content Include="View\svgs\solid\sign-out-alt.svg" />
+    <Content Include="View\svgs\solid\sign.svg" />
+    <Content Include="View\svgs\solid\signal.svg" />
+    <Content Include="View\svgs\solid\signature.svg" />
+    <Content Include="View\svgs\solid\sim-card.svg" />
+    <Content Include="View\svgs\solid\sitemap.svg" />
+    <Content Include="View\svgs\solid\skating.svg" />
+    <Content Include="View\svgs\solid\skiing-nordic.svg" />
+    <Content Include="View\svgs\solid\skiing.svg" />
+    <Content Include="View\svgs\solid\skull-crossbones.svg" />
+    <Content Include="View\svgs\solid\skull.svg" />
+    <Content Include="View\svgs\solid\slash.svg" />
+    <Content Include="View\svgs\solid\sleigh.svg" />
+    <Content Include="View\svgs\solid\sliders-h.svg" />
+    <Content Include="View\svgs\solid\smile-beam.svg" />
+    <Content Include="View\svgs\solid\smile-wink.svg" />
+    <Content Include="View\svgs\solid\smile.svg" />
+    <Content Include="View\svgs\solid\smog.svg" />
+    <Content Include="View\svgs\solid\smoking-ban.svg" />
+    <Content Include="View\svgs\solid\smoking.svg" />
+    <Content Include="View\svgs\solid\sms.svg" />
+    <Content Include="View\svgs\solid\snowboarding.svg" />
+    <Content Include="View\svgs\solid\snowflake.svg" />
+    <Content Include="View\svgs\solid\snowman.svg" />
+    <Content Include="View\svgs\solid\snowplow.svg" />
+    <Content Include="View\svgs\solid\socks.svg" />
+    <Content Include="View\svgs\solid\solar-panel.svg" />
+    <Content Include="View\svgs\solid\sort-alpha-down.svg" />
+    <Content Include="View\svgs\solid\sort-alpha-up.svg" />
+    <Content Include="View\svgs\solid\sort-amount-down.svg" />
+    <Content Include="View\svgs\solid\sort-amount-up.svg" />
+    <Content Include="View\svgs\solid\sort-down.svg" />
+    <Content Include="View\svgs\solid\sort-numeric-down.svg" />
+    <Content Include="View\svgs\solid\sort-numeric-up.svg" />
+    <Content Include="View\svgs\solid\sort-up.svg" />
+    <Content Include="View\svgs\solid\sort.svg" />
+    <Content Include="View\svgs\solid\spa.svg" />
+    <Content Include="View\svgs\solid\space-shuttle.svg" />
+    <Content Include="View\svgs\solid\spider.svg" />
+    <Content Include="View\svgs\solid\spinner.svg" />
+    <Content Include="View\svgs\solid\splotch.svg" />
+    <Content Include="View\svgs\solid\spray-can.svg" />
+    <Content Include="View\svgs\solid\square-full.svg" />
+    <Content Include="View\svgs\solid\square-root-alt.svg" />
+    <Content Include="View\svgs\solid\square.svg" />
+    <Content Include="View\svgs\solid\stamp.svg" />
+    <Content Include="View\svgs\solid\star-and-crescent.svg" />
+    <Content Include="View\svgs\solid\star-half-alt.svg" />
+    <Content Include="View\svgs\solid\star-half.svg" />
+    <Content Include="View\svgs\solid\star-of-david.svg" />
+    <Content Include="View\svgs\solid\star-of-life.svg" />
+    <Content Include="View\svgs\solid\star.svg" />
+    <Content Include="View\svgs\solid\step-backward.svg" />
+    <Content Include="View\svgs\solid\step-forward.svg" />
+    <Content Include="View\svgs\solid\stethoscope.svg" />
+    <Content Include="View\svgs\solid\sticky-note.svg" />
+    <Content Include="View\svgs\solid\stop-circle.svg" />
+    <Content Include="View\svgs\solid\stop.svg" />
+    <Content Include="View\svgs\solid\stopwatch.svg" />
+    <Content Include="View\svgs\solid\store-alt.svg" />
+    <Content Include="View\svgs\solid\store.svg" />
+    <Content Include="View\svgs\solid\stream.svg" />
+    <Content Include="View\svgs\solid\street-view.svg" />
+    <Content Include="View\svgs\solid\strikethrough.svg" />
+    <Content Include="View\svgs\solid\stroopwafel.svg" />
+    <Content Include="View\svgs\solid\subscript.svg" />
+    <Content Include="View\svgs\solid\subway.svg" />
+    <Content Include="View\svgs\solid\suitcase-rolling.svg" />
+    <Content Include="View\svgs\solid\suitcase.svg" />
+    <Content Include="View\svgs\solid\sun.svg" />
+    <Content Include="View\svgs\solid\superscript.svg" />
+    <Content Include="View\svgs\solid\surprise.svg" />
+    <Content Include="View\svgs\solid\swatchbook.svg" />
+    <Content Include="View\svgs\solid\swimmer.svg" />
+    <Content Include="View\svgs\solid\swimming-pool.svg" />
+    <Content Include="View\svgs\solid\synagogue.svg" />
+    <Content Include="View\svgs\solid\sync-alt.svg" />
+    <Content Include="View\svgs\solid\sync.svg" />
+    <Content Include="View\svgs\solid\syringe.svg" />
+    <Content Include="View\svgs\solid\table-tennis.svg" />
+    <Content Include="View\svgs\solid\table.svg" />
+    <Content Include="View\svgs\solid\tablet-alt.svg" />
+    <Content Include="View\svgs\solid\tablet.svg" />
+    <Content Include="View\svgs\solid\tablets.svg" />
+    <Content Include="View\svgs\solid\tachometer-alt.svg" />
+    <Content Include="View\svgs\solid\tag.svg" />
+    <Content Include="View\svgs\solid\tags.svg" />
+    <Content Include="View\svgs\solid\tape.svg" />
+    <Content Include="View\svgs\solid\tasks.svg" />
+    <Content Include="View\svgs\solid\taxi.svg" />
+    <Content Include="View\svgs\solid\teeth-open.svg" />
+    <Content Include="View\svgs\solid\teeth.svg" />
+    <Content Include="View\svgs\solid\temperature-high.svg" />
+    <Content Include="View\svgs\solid\temperature-low.svg" />
+    <Content Include="View\svgs\solid\tenge.svg" />
+    <Content Include="View\svgs\solid\terminal.svg" />
+    <Content Include="View\svgs\solid\text-height.svg" />
+    <Content Include="View\svgs\solid\text-width.svg" />
+    <Content Include="View\svgs\solid\th-large.svg" />
+    <Content Include="View\svgs\solid\th-list.svg" />
+    <Content Include="View\svgs\solid\th.svg" />
+    <Content Include="View\svgs\solid\theater-masks.svg" />
+    <Content Include="View\svgs\solid\thermometer-empty.svg" />
+    <Content Include="View\svgs\solid\thermometer-full.svg" />
+    <Content Include="View\svgs\solid\thermometer-half.svg" />
+    <Content Include="View\svgs\solid\thermometer-quarter.svg" />
+    <Content Include="View\svgs\solid\thermometer-three-quarters.svg" />
+    <Content Include="View\svgs\solid\thermometer.svg" />
+    <Content Include="View\svgs\solid\thumbs-down.svg" />
+    <Content Include="View\svgs\solid\thumbs-up.svg" />
+    <Content Include="View\svgs\solid\thumbtack.svg" />
+    <Content Include="View\svgs\solid\ticket-alt.svg" />
+    <Content Include="View\svgs\solid\times-circle.svg" />
+    <Content Include="View\svgs\solid\times.svg" />
+    <Content Include="View\svgs\solid\tint-slash.svg" />
+    <Content Include="View\svgs\solid\tint.svg" />
+    <Content Include="View\svgs\solid\tired.svg" />
+    <Content Include="View\svgs\solid\toggle-off.svg" />
+    <Content Include="View\svgs\solid\toggle-on.svg" />
+    <Content Include="View\svgs\solid\toilet-paper.svg" />
+    <Content Include="View\svgs\solid\toilet.svg" />
+    <Content Include="View\svgs\solid\toolbox.svg" />
+    <Content Include="View\svgs\solid\tools.svg" />
+    <Content Include="View\svgs\solid\tooth.svg" />
+    <Content Include="View\svgs\solid\torah.svg" />
+    <Content Include="View\svgs\solid\torii-gate.svg" />
+    <Content Include="View\svgs\solid\tractor.svg" />
+    <Content Include="View\svgs\solid\trademark.svg" />
+    <Content Include="View\svgs\solid\traffic-light.svg" />
+    <Content Include="View\svgs\solid\train.svg" />
+    <Content Include="View\svgs\solid\tram.svg" />
+    <Content Include="View\svgs\solid\transgender-alt.svg" />
+    <Content Include="View\svgs\solid\transgender.svg" />
+    <Content Include="View\svgs\solid\trash-alt.svg" />
+    <Content Include="View\svgs\solid\trash.svg" />
+    <Content Include="View\svgs\solid\tree.svg" />
+    <Content Include="View\svgs\solid\trophy.svg" />
+    <Content Include="View\svgs\solid\truck-loading.svg" />
+    <Content Include="View\svgs\solid\truck-monster.svg" />
+    <Content Include="View\svgs\solid\truck-moving.svg" />
+    <Content Include="View\svgs\solid\truck-pickup.svg" />
+    <Content Include="View\svgs\solid\truck.svg" />
+    <Content Include="View\svgs\solid\tshirt.svg" />
+    <Content Include="View\svgs\solid\tty.svg" />
+    <Content Include="View\svgs\solid\tv.svg" />
+    <Content Include="View\svgs\solid\umbrella-beach.svg" />
+    <Content Include="View\svgs\solid\umbrella.svg" />
+    <Content Include="View\svgs\solid\underline.svg" />
+    <Content Include="View\svgs\solid\undo-alt.svg" />
+    <Content Include="View\svgs\solid\undo.svg" />
+    <Content Include="View\svgs\solid\universal-access.svg" />
+    <Content Include="View\svgs\solid\university.svg" />
+    <Content Include="View\svgs\solid\unlink.svg" />
+    <Content Include="View\svgs\solid\unlock-alt.svg" />
+    <Content Include="View\svgs\solid\unlock.svg" />
+    <Content Include="View\svgs\solid\upload.svg" />
+    <Content Include="View\svgs\solid\user-alt-slash.svg" />
+    <Content Include="View\svgs\solid\user-alt.svg" />
+    <Content Include="View\svgs\solid\user-astronaut.svg" />
+    <Content Include="View\svgs\solid\user-check.svg" />
+    <Content Include="View\svgs\solid\user-circle.svg" />
+    <Content Include="View\svgs\solid\user-clock.svg" />
+    <Content Include="View\svgs\solid\user-cog.svg" />
+    <Content Include="View\svgs\solid\user-edit.svg" />
+    <Content Include="View\svgs\solid\user-friends.svg" />
+    <Content Include="View\svgs\solid\user-graduate.svg" />
+    <Content Include="View\svgs\solid\user-injured.svg" />
+    <Content Include="View\svgs\solid\user-lock.svg" />
+    <Content Include="View\svgs\solid\user-md.svg" />
+    <Content Include="View\svgs\solid\user-minus.svg" />
+    <Content Include="View\svgs\solid\user-ninja.svg" />
+    <Content Include="View\svgs\solid\user-plus.svg" />
+    <Content Include="View\svgs\solid\user-secret.svg" />
+    <Content Include="View\svgs\solid\user-shield.svg" />
+    <Content Include="View\svgs\solid\user-slash.svg" />
+    <Content Include="View\svgs\solid\user-tag.svg" />
+    <Content Include="View\svgs\solid\user-tie.svg" />
+    <Content Include="View\svgs\solid\user-times.svg" />
+    <Content Include="View\svgs\solid\user.svg" />
+    <Content Include="View\svgs\solid\users-cog.svg" />
+    <Content Include="View\svgs\solid\users.svg" />
+    <Content Include="View\svgs\solid\utensil-spoon.svg" />
+    <Content Include="View\svgs\solid\utensils.svg" />
+    <Content Include="View\svgs\solid\vector-square.svg" />
+    <Content Include="View\svgs\solid\venus-double.svg" />
+    <Content Include="View\svgs\solid\venus-mars.svg" />
+    <Content Include="View\svgs\solid\venus.svg" />
+    <Content Include="View\svgs\solid\vial.svg" />
+    <Content Include="View\svgs\solid\vials.svg" />
+    <Content Include="View\svgs\solid\video-slash.svg" />
+    <Content Include="View\svgs\solid\video.svg" />
+    <Content Include="View\svgs\solid\vihara.svg" />
+    <Content Include="View\svgs\solid\volleyball-ball.svg" />
+    <Content Include="View\svgs\solid\volume-down.svg" />
+    <Content Include="View\svgs\solid\volume-mute.svg" />
+    <Content Include="View\svgs\solid\volume-off.svg" />
+    <Content Include="View\svgs\solid\volume-up.svg" />
+    <Content Include="View\svgs\solid\vote-yea.svg" />
+    <Content Include="View\svgs\solid\vr-cardboard.svg" />
+    <Content Include="View\svgs\solid\walking.svg" />
+    <Content Include="View\svgs\solid\wallet.svg" />
+    <Content Include="View\svgs\solid\warehouse.svg" />
+    <Content Include="View\svgs\solid\water.svg" />
+    <Content Include="View\svgs\solid\weight-hanging.svg" />
+    <Content Include="View\svgs\solid\weight.svg" />
+    <Content Include="View\svgs\solid\wheelchair.svg" />
+    <Content Include="View\svgs\solid\wifi.svg" />
+    <Content Include="View\svgs\solid\wind.svg" />
+    <Content Include="View\svgs\solid\window-close.svg" />
+    <Content Include="View\svgs\solid\window-maximize.svg" />
+    <Content Include="View\svgs\solid\window-minimize.svg" />
+    <Content Include="View\svgs\solid\window-restore.svg" />
+    <Content Include="View\svgs\solid\wine-bottle.svg" />
+    <Content Include="View\svgs\solid\wine-glass-alt.svg" />
+    <Content Include="View\svgs\solid\wine-glass.svg" />
+    <Content Include="View\svgs\solid\won-sign.svg" />
+    <Content Include="View\svgs\solid\wrench.svg" />
+    <Content Include="View\svgs\solid\x-ray.svg" />
+    <Content Include="View\svgs\solid\yen-sign.svg" />
+    <Content Include="View\svgs\solid\yin-yang.svg" />
+    <Content Include="View\Css\all.min.css" />
+    <Content Include="View\Css\menurapido.css" />
+    <Content Include="View\Css\submodulourl.css" />
+    <Content Include="View\Css\filtro.css" />
+    <Content Include="View\Css\parametros.css" />
+    <Content Include="View\Css\usuario.css" />
+    <Content Include="View\fonts\fontawesome-webfont.svg" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="View\Css\font-awesome.min.css" />
+    <Content Include="View\Css\main.css" />
+    <Content Include="View\Css\modulo.css" />
+    <Content Include="View\Css\ultimosacessos.css" />
+    <Content Include="View\Img\logo_branco_300x100.png" />
+    <Content Include="View\Js\jquery-labelauty.js" />
+    <Content Include="View\Js\jquery.floatThead.min.js" />
+    <Content Include="View\Js\menurapido.js" />
+    <Content Include="View\Js\submodulo.js" />
+    <Content Include="View\Js\submodulourl.js" />
+    <Content Include="View\Js\filtro.js" />
+    <Content Include="View\Js\parametros.js" />
+    <Content Include="View\Js\perfildepartamento.js" />
+    <Content Include="View\Js\perfilfuncionalidadeAjaxCall.js" />
+    <Content Include="View\Js\perfilsubmoduloAjaxCall.js" />
+    <Content Include="View\Js\funcionalidade.js" />
+    <Content Include="View\Js\main.js" />
+    <Content Include="View\Js\modulo.js" />
+    <Content Include="View\Js\perfil.js" />
+    <Content Include="View\Js\perfilmoduloAjaxCall.js" />
+    <Content Include="View\Js\usuariocampus.js" />
+    <Content Include="View\Js\usuariodepartamento.js" />
+    <Content Include="View\Js\usuariomoduloAjaxCall.js" />
+    <Content Include="View\Js\ultimosacessos.js" />
+    <Content Include="View\Js\usuario.js" />
+    <Content Include="View\Js\usuarioperfil.js" />
+    <Content Include="View\Js\util.js" />
+    <Content Include="View\Page\MenuRapido.aspx" />
+    <Content Include="View\Page\Downloader.aspx" />
+    <Content Include="View\Page\Erro.aspx" />
+    <Content Include="View\Page\Filtro.aspx" />
+    <Content Include="View\Page\FiltroCampo.aspx" />
+    <Content Include="View\Page\Funcionalidade.aspx" />
+    <Content Include="View\Page\Modulo.aspx" />
+    <Content Include="View\Page\Parametros.aspx" />
+    <Content Include="View\Page\Perfil.aspx" />
+    <Content Include="View\Page\PerfilDepartamento.aspx" />
+    <Content Include="View\Page\SubModulo.aspx" />
+    <Content Include="View\Page\SubModuloUrl.aspx" />
+    <Content Include="View\Page\UltimosAcessos.aspx" />
+    <Content Include="View\Page\Usuario.aspx" />
+    <Content Include="View\Page\UsuarioCampus.aspx" />
+    <Content Include="View\Page\UsuarioDepartamento.aspx" />
+    <Content Include="View\Page\UsuarioPerfil.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="View\webfonts\fa-brands-400.svg" />
+    <Content Include="View\webfonts\fa-regular-400.svg" />
+    <Content Include="View\webfonts\fa-solid-900.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\AjaxFileUploader.ashx.cs">
+      <DependentUpon>AjaxFileUploader.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="View\MasterPage\Submodulo.master.cs">
+      <DependentUpon>Submodulo.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\MasterPage\Submodulo.master.designer.cs">
+      <DependentUpon>Submodulo.master</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\MenuRapido.aspx.cs">
+      <DependentUpon>MenuRapido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\MenuRapido.aspx.designer.cs">
+      <DependentUpon>MenuRapido.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Downloader.aspx.cs">
+      <DependentUpon>Downloader.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Downloader.aspx.designer.cs">
+      <DependentUpon>Downloader.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Erro.aspx.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Erro.aspx.designer.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Filtro.aspx.cs">
+      <DependentUpon>Filtro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Filtro.aspx.designer.cs">
+      <DependentUpon>Filtro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\FiltroCampo.aspx.cs">
+      <DependentUpon>FiltroCampo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\FiltroCampo.aspx.designer.cs">
+      <DependentUpon>FiltroCampo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Funcionalidade.aspx.cs">
+      <DependentUpon>Funcionalidade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Funcionalidade.aspx.designer.cs">
+      <DependentUpon>Funcionalidade.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Modulo.aspx.cs">
+      <DependentUpon>Modulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Modulo.aspx.designer.cs">
+      <DependentUpon>Modulo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Parametros.aspx.cs">
+      <DependentUpon>Parametros.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Parametros.aspx.designer.cs">
+      <DependentUpon>Parametros.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Perfil.aspx.cs">
+      <DependentUpon>Perfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Perfil.aspx.designer.cs">
+      <DependentUpon>Perfil.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\PerfilDepartamento.aspx.cs">
+      <DependentUpon>PerfilDepartamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\PerfilDepartamento.aspx.designer.cs">
+      <DependentUpon>PerfilDepartamento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\SubModulo.aspx.cs">
+      <DependentUpon>SubModulo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\SubModulo.aspx.designer.cs">
+      <DependentUpon>SubModulo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\SubModuloUrl.aspx.cs">
+      <DependentUpon>SubModuloUrl.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\SubModuloUrl.aspx.designer.cs">
+      <DependentUpon>SubModuloUrl.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\UltimosAcessos.aspx.cs">
+      <DependentUpon>UltimosAcessos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\UltimosAcessos.aspx.designer.cs">
+      <DependentUpon>UltimosAcessos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Usuario.aspx.cs">
+      <DependentUpon>Usuario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Usuario.aspx.designer.cs">
+      <DependentUpon>Usuario.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\UsuarioCampus.aspx.cs">
+      <DependentUpon>UsuarioCampus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\UsuarioCampus.aspx.designer.cs">
+      <DependentUpon>UsuarioCampus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\UsuarioDepartamento.aspx.cs">
+      <DependentUpon>UsuarioDepartamento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\UsuarioDepartamento.aspx.designer.cs">
+      <DependentUpon>UsuarioDepartamento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\UsuarioPerfil.aspx.cs">
+      <DependentUpon>UsuarioPerfil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\UsuarioPerfil.aspx.designer.cs">
+      <DependentUpon>UsuarioPerfil.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="View\MasterPage\Submodulo.master" />
+    <Content Include="Util\AjaxFileUploader.ashx" />
+    <Content Include="View\fonts\fontawesome-webfont.eot" />
+    <Content Include="View\fonts\fontawesome-webfont.ttf" />
+    <Content Include="View\fonts\fontawesome-webfont.woff" />
+    <Content Include="View\fonts\FontAwesome.otf" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <Content Include="View\webfonts\fa-brands-400.eot" />
+    <Content Include="View\webfonts\fa-brands-400.ttf" />
+    <Content Include="View\webfonts\fa-brands-400.woff" />
+    <Content Include="View\webfonts\fa-brands-400.woff2" />
+    <Content Include="View\webfonts\fa-regular-400.eot" />
+    <Content Include="View\webfonts\fa-regular-400.ttf" />
+    <Content Include="View\webfonts\fa-regular-400.woff" />
+    <Content Include="View\webfonts\fa-regular-400.woff2" />
+    <Content Include="View\webfonts\fa-solid-900.eot" />
+    <Content Include="View\webfonts\fa-solid-900.ttf" />
+    <Content Include="View\webfonts\fa-solid-900.woff" />
+    <Content Include="View\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Arquivos\" />
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Uploads\Temp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sistema.Api.dll\Sistema.Api.dll.csproj">
+      <Project>{ef326c03-0215-46d7-8c4e-5ce9e2f89430}</Project>
+      <Name>Sistema.Api.dll</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>8783</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:29979/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,378 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="ProfessorMaster.master.cs" Inherits="Sistema.Web.UI.PortalProfessor.View.MasterPage.ProfessorMaster" %>
+
+<%@ Import Namespace="Sistema.Api.dll.Repositorio.Util" %>
+<%@ Import Namespace="Sistema.Web.UI.PortalProfessor" %>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title>Portal do Professor </title>
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <!--Elimina Cache da Página-->
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <!--Elimina Cache da Página-->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+
+    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap.min.css", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/font-awesome.min.css", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/demo.min.css", true) %>
+
+    <!-- FAVICONS -->
+    <link rel="shortcut icon" href="../Img/favicon/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="../Img/favicon/favicon.png" type="image/x-icon" />
+
+    <%= Funcoes.InvocarTagArquivo("View/Css/sweet-alert.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/select2/select2.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/select2/select2-bootstrap.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/smartadmin-production.min.css", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/smartadmin-skins.min.css", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/smartadmin-rtl.min.css", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/select2/select2-bootstrap.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/professormaster.css" , true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/animate.css" )%>
+    <%= Funcoes.InvocarTagArquivo("View/Css/pnotify.custom.min.css" )%>
+    <%= Funcoes.InvocarTagArquivo("View/Css/jquery.resizableColumns.css") %>
+
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/ajaxhandler.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/criptografia.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/webstorage.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/pnotify.custom.min.js") %>
+
+
+    <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+    <%-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script>
+        if (!window.jQuery) {
+            document.write('<script src="../Js/libs/jquery-2.0.2.min.js"><\/script>');
+        }
+    </script>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script>
+        if (!window.jQuery.ui) {
+            document.write('<script src="../Js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+        }
+    </script>--%>
+
+    <script></script>
+    <script>
+        if (!window.jQuery) {
+            document.write('<script src="../Js/libs/jquery-2.0.2.min.js"><\/script>');
+        }
+    </script>
+
+    <script></script>
+    <script>
+        if (!window.jQuery.ui) {
+            document.write('<script src="../Js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+        }
+    </script>
+
+        <!--INICIO APPLICATION INSIGHTS-->
+        <script type="text/javascript">
+            var sdkInstance = "appInsightsSDK"; window[sdkInstance] = "appInsights"; var aiName = window[sdkInstance], aisdk = window[aiName] || function (e) { function n(e) { t[e] = function () { var n = arguments; t.queue.push(function () { t[e].apply(t, n) }) } } var t = { config: e }; t.initialize = !0; var i = document, a = window; setTimeout(function () { var n = i.createElement("script"); n.src = e.url || "https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js", i.getElementsByTagName("script")[0].parentNode.appendChild(n) }); try { t.cookie = i.cookie } catch (e) { } t.queue = [], t.version = 2; for (var r = ["Event", "PageView", "Exception", "Trace", "DependencyData", "Metric", "PageViewPerformance"]; r.length;)n("track" + r.pop()); n("startTrackPage"), n("stopTrackPage"); var s = "Track" + r[0]; if (n("start" + s), n("stop" + s), n("setAuthenticatedUserContext"), n("clearAuthenticatedUserContext"), n("flush"), !(!0 === e.disableExceptionTracking || e.extensionConfig && e.extensionConfig.ApplicationInsightsAnalytics && !0 === e.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)) { n("_" + (r = "onerror")); var o = a[r]; a[r] = function (e, n, i, a, s) { var c = o && o(e, n, i, a, s); return !0 !== c && t["_" + r]({ message: e, url: n, lineNumber: i, columnNumber: a, error: s }), c }, e.autoExceptionInstrumented = !0 } return t }(
+                {
+                    instrumentationKey: "5ba6ac2c-2db7-41e3-88b2-926992c2126c"
+                }
+            ); window[aiName] = aisdk, aisdk.queue && 0 === aisdk.queue.length && aisdk.trackPageView({});
+        </script>
+        <!--FIM APPLICATION INSIGHTS-->
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <input type="hidden" id="SessionTimeout" value="<%= Global.SessionCookieTimeout * 60 %>" />
+    <form id="form" runat="server">
+        <div>
+            <!-- HEADER -->
+            <header id="header">
+                <img src="../Img/capa_1928x150.png" id="capaTopo" alt="Sistemas Univag">
+                <!-- end pulled right: nav area -->
+            </header>
+            <!-- END HEADER -->
+
+            <!-- NAVIGATION -->
+            <aside id="left-panel">
+
+                <!-- User info -->
+                <div class="login-info">
+                    <span>
+                        <!-- User image size is adjusted inside CSS, it should stay as it -->
+
+                        <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
+                            <img src="../Img/avatars/male.png" id="foto-professor" alt="me" class="online" />
+                            <span><%= UsuarioCampusVo != null ? UsuarioCampusVo.Usuario.Nome : "" %> 
+                            </span>
+                            <i class="fa fa-angle-down"></i>
+                        </a>
+
+                    </span>
+                </div>
+                <!-- end user info -->
+
+                <nav>
+                    <ul id="links-admin">
+                        <% if (GetSession().IdModuloLogado == 18 && GetSession().IdModuloMedicina > 0)
+                            { %>
+                        <li style="background-color: #a90329; color: #FFF;">
+                            <a href="javascript:void(0);" class="btn-navegar-portal" style="color: #FFF!important;">
+                                <i class="fa fa-lg fa-fw fa-arrow-circle-right"></i><span class="menu-item-parent">Ir para Portal Medicina</span>
+                            </a>
+                        </li>
+                        <%}
+                            else if (GetSession().IdModuloLogado == 27 && GetSession().IdModuloNormal > 0)
+                            {%>
+                        <li style="background-color: #a90329; color: #FFF;">
+                            <a href="javascript:void(0);" class="btn-navegar-portal" style="color: #FFF!important;">
+                                <i class="fa fa-lg fa-fw fa-arrow-circle-left"></i><span class="menu-item-parent">Voltar para Outros Cursos</span>
+                            </a>
+                        </li>
+                        <% } %>
+                        <% foreach (var moduloVO in lstUsuarioModuloVo)
+                            {
+                                string linkModulo = "//url-modulo-nao-definido";
+
+                                if (Sistema.Api.dll.Src.Dominio.AppState == Sistema.Api.dll.Src.Dominio.ApplicationState.Producao && moduloVO.Modulo.Link != null)
+                                {
+                                    linkModulo = moduloVO.Modulo.Link;
+                                }
+                                else if (Sistema.Api.dll.Src.Dominio.AppState == Sistema.Api.dll.Src.Dominio.ApplicationState.Debug && moduloVO.Modulo.LinkDebug != null)
+                                {
+                                    linkModulo = moduloVO.Modulo.LinkDebug;
+                                }
+                                else if (Sistema.Api.dll.Src.Dominio.AppState == Sistema.Api.dll.Src.Dominio.ApplicationState.Teste && moduloVO.Modulo.LinkTeste != null)
+                                {
+                                    linkModulo = moduloVO.Modulo.LinkTeste;
+                                }
+                                else if (Sistema.Api.dll.Src.Dominio.AppState == Sistema.Api.dll.Src.Dominio.ApplicationState.Homologacao && moduloVO.Modulo.LinkHomologacao != null)
+                                {
+                                    linkModulo = moduloVO.Modulo.LinkHomologacao;
+                                }
+                        %>
+
+                        <% foreach (var sub in moduloVO.ListUsuarioSubModuloVO)
+                            {
+                                var linkSubModulo = linkModulo.Trim() + "/" + sub.SubModulo.Link.Trim();
+                                if (sub.SubModulo.Link != "View/Page/Principal.aspx")
+                                {
+                        %>
+
+                        <li>
+                            <a href="javascript:void(0);" data-acao="<%= sub.SubModulo.Nome.Trim().Replace(" ", "") %>" data-icon="<%= sub.SubModulo.Icone %>" data-href="<%= linkSubModulo %>" class="open-new-tab <%= sub.SubModulo.Nome.Trim().Replace(" ", "") %>" data-idsubmodulo="<% = sub.SubModulo.Id %>" title="<%= sub.SubModulo.Nome %>">
+                                <i class='fa fa-lg fa-fw fa-<%= sub.SubModulo.Icone %>'></i><span class="menu-item-parent"><%= sub.SubModulo.Nome %></span>
+                            </a>
+                        </li>
+
+                        <%}
+                        } %>
+
+
+                        <% } %>
+
+                        <% foreach (var item in lstUsuarioFuncionalidade)
+                            {
+                                if (item.Funcionalidade.RequisitoFuncional == "RF001")
+                                {
+                        %>
+
+                        <li>
+                            <a target="_blank" href="/View/Page/Redirecionando.aspx" data-idsubmodulo="" title="">
+                                <i class='fa fa-lg fa-fw fa-book'></i><span class="menu-item-parent">Acessar Portal Biblioteca</span>
+                            </a>
+                        </li>
+
+                        <%
+                                }
+                            } %>
+                    </ul>
+                </nav>
+                <span id="btn-left" class="minifyme" data-action="minifyMenu" title="Encolher menu">
+                    <%--<i class="fa fa-arrow-circle-left hit"></i>--%>
+                    <i></i>
+                </span>
+                <span class="minifyme" id="smart-topmenu" style="margin-top: 50px" title="Menu superior">
+                    <i class="fa fa-arrow-circle-up hit"></i>
+                </span>
+
+                <div class="pull-left">
+                </div>
+            </aside>
+            <!-- END NAVIGATION -->
+
+            <!-- PAGE FOOTER -->
+            <div class="page-footer hide">
+                <div class="row">
+                </div>
+            </div>
+            <!-- END PAGE FOOTER -->
+            <!-- MAIN PANEL -->
+            <div id="main" role="main">
+                <div id="ribbon" style="padding-left: 0px !important">
+
+                    <div id="hide-menu" class="btn-header pull-right" style="margin-left: 0;">
+                        <span><a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu" style="margin: 0!important; height: 40px">
+                            <i class="fa fa-reorder"></i></a></span>
+                    </div>
+                    <!-- logout button -->
+                    <div id="logout" class="btn-header transparent pull-right" style="margin-left: 0">
+                        <span><a style="border: 1px solid #FFF; margin: 0!important; height: 40px" href="<%= ResolveClientUrl("~/View/Page/Login.aspx?status=logoff") %>" title="Sair / Logout" data-action="userLogout" data-logout-msg="Você deseja realmente sair do Portal do Professor?"><i class="fa fa-sign-out"></i></a></span>
+                    </div>
+                    <!-- end logout button -->
+
+                    <!-- fullscreen button -->
+                    <div id="fullscreen" class="btn-header transparent pull-right" style="margin-left: 0">
+                        <span><a style="border: 1px solid #FFF; margin: 0!important; height: 40px" href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a></span>
+                    </div>
+                    <!-- end fullscreen button -->
+                </div>
+
+                <!-- PACE LOADER - turn this on if you want ajax loading to show (caution: uses lots of memory on iDevices)-->
+                <script data-pace-options='{ "restartOnRequestAfter": true }' src="../Js/plugin/pace/pace.min.js"></script>
+
+                <!-- Link to Google CDN's jQuery + jQueryUI; fall back to local -->
+                <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>-->
+                <script>
+                    if (!window.jQuery) {
+                        document.write('<script src="View/Js/libs/jquery-2.0.2.min.js"><\/script>');
+                    }
+                </script>
+
+                <!--<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>-->
+                <script>
+                    if (!window.jQuery.ui) {
+                        document.write('<script src="View/Js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+                    }
+                </script>
+
+
+
+                <!-- IMPORTANT: APP CONFIG -->
+                <%--<script src="../Js/app.config.js"></script>--%>
+                <!-- BOOTSTRAP JS -->
+                <%= Funcoes.InvocarTagArquivo("View/Js/bootstrap/bootstrap.min.js", true) %>
+                <%--<script src="../Js/bootstrap/bootstrap.min.js"></script>--%>
+                <!-- CUSTOM NOTIFICATION -->
+                <%= Funcoes.InvocarTagArquivo("View/Js/notification/SmartNotification.min.js", true) %>
+                <%--<script src="../Js/notification/SmartNotification.min.js"></script>--%>
+                <!-- JARVIS WIDGETS -->
+                <%= Funcoes.InvocarTagArquivo("View/Js/smartwidgets/jarvis.widget.min.js", true) %>
+                <%--<script src="../Js/smartwidgets/jarvis.widget.min.js"></script>--%>
+                <!-- EASY PIE CHARTS -->
+                <%= Funcoes.InvocarTagArquivo("View/Js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js", true) %>
+                <%--<script src="../Js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js"></script>--%>
+                <!-- SPARKLINES -->
+                <%= Funcoes.InvocarTagArquivo("View/Js/plugin/sparkline/jquery.sparkline.min.js", true) %>
+                <%--<script src="../Js/plugin/sparkline/jquery.sparkline.min.js"></script>--%>
+                <!-- JQUERY VALIDATE -->
+
+                <%= Funcoes.InvocarTagArquivo("View/Js/validate.js") %>
+                <%--<script src="../Js/plugin/jquery-validate/jquery.validate.min.js"></script>--%>
+
+                <%-- <script src="../Js/plugin/jquery-validate/jquery.validate.min.js"></script>--%>
+                <!-- JQUERY MASKED INPUT -->
+                <%= Funcoes.InvocarTagArquivo("View/Js/plugin/masked-input/jquery.maskedinput.min.js", true) %>
+                <%--<script src="../Js/plugin/masked-input/jquery.maskedinput.min.js"></script>--%>
+
+                <!-- JQUERY UI + Bootstrap Slider -->
+                <%= Funcoes.InvocarTagArquivo("View/Js/plugin/bootstrap-slider/bootstrap-slider.min.js", true) %>
+                <%--<script src="../Js/plugin/bootstrap-slider/bootstrap-slider.min.js"></script>--%>
+                <%= Funcoes.InvocarTagArquivo("View/Js/demo.min.js", true) %>
+                <%--<script src="../Js/demo.min.js"></script>--%>
+                <%--<script src="../Js/app.min.js"></script>--%>
+                <%= Funcoes.InvocarTagArquivo("View/Js/plugin/flot/jquery.flot.cust.min.js", true) %>
+                <%--<script src="../Js/plugin/flot/jquery.flot.cust.min.js"></script>--%>
+                <%= Funcoes.InvocarTagArquivo("View/Js/plugin/flot/jquery.flot.tooltip.min.js", true) %>
+                <%--<script src="../Js/plugin/flot/jquery.flot.tooltip.min.js"></script>--%>
+                <!-- Full Calendar -->
+                <%= Funcoes.InvocarTagArquivo("View/Js/plugin/fullcalendar/jquery.fullcalendar.min.js", true) %>
+                <%--<script src="../Js/plugin/fullcalendar/jquery.fullcalendar.min.js"></script>--%>
+
+                <%= Funcoes.InvocarTagArquivo("View/SmartAdmin/Js/smart-util.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/SmartAdmin/Js/plugin/datatables/jquery.dataTables.min.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/SmartAdmin/Js/plugin/datatables/dataTables.colVis.min.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/SmartAdmin/Js/plugin/datatables/dataTables.tableTools.min.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/SmartAdmin/Js/plugin/datatables/dataTables.bootstrap.min.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/SmartAdmin/Js/plugin/datatable-responsive/datatables.responsive.min.js") %>
+
+                <%= Funcoes.InvocarTagArquivo("View/Js/masterPage.js", true) %>
+                <!-- <script src="../Js/masterPage.js"></script>-->
+
+                <%= Funcoes.InvocarTagArquivo("View/Js/jquery.cookie.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/extention.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/jquery.price_format.2.0.min.js", true) %>
+                <%= Funcoes.InvocarTagArquivo("View/select2/select2.min.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/sweet-alert.min.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/moment.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/lib.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/jquery.mask.min.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/serializeObject.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/jquery.resizableColumns.min.js") %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/app.config.js", true) %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/app.min.js", true) %>
+                <%= Funcoes.InvocarTagArquivo("View/Js/plugin/easy-pie-chart/jquery.easy-pie-chart.min.js", true) %>
+                <!--INÍCIO SCRIPT MANAGER-->
+                <asp:ScriptManager ID="scm" runat="server" EnablePageMethods="true" />
+                <!--FIM SCRIPT MANAGER-->
+                <div id="tabs-control" class="jarviswidget jarviswidget-sortable" style="display: none">
+                    <ul id="nav-tabs-main" class="nav nav-tabs bordered">
+                        <i class="fa fa-expand pointer expand-tab pull-right" data-expand="0"></i>
+                    </ul>
+                    <!-- widget div-->
+                    <div role="content" class="no-padding">
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                        </div>
+                        <!-- end widget edit box -->
+
+                        <%-- <div class="progress progress-micro" id="progressLoadMaster">
+                            <div id="bar" class="progress-bar progress-load" style="width: 0%;" data-percentage="100"></div>
+                        </div>--%>
+
+                        <!-- widget content -->
+                        <div class="widget-body">
+                            <div id="tabs-content" class="tab-content no-padding">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <a id="btnHiddenMenu" href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu" style="z-index: -1000000"></a>
+
+                <div class="content-page">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+            <!-- END MAIN PANEL -->
+        </div>
+
+        <%-- CheckBox Animados
+
+        // Style 1
+        <div class="smart-form">
+            <label class="toggle">
+                <input type="checkbox" id="demo-switch-to-pills" name="checkbox-toggle">
+                <i data-swchon-text="SIM" data-swchoff-text="NAO"></i>Switch Navs / Pills</label>
+        </div>
+            
+        // Style 2
+        <span class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+            <label class="onoffswitch-label" for="myonoffswitch">
+                <span class="onoffswitch-inner" data-swchon-text="ON" data-swchoff-text="OFF"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </span>            
+        --%>
+    </form>
+</body>
+</html>

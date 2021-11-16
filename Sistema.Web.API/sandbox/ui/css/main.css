@@ -1,0 +1,375 @@
+
+
+/*******           DEFAULT STYLE                *****/
+
+.swagger-section  {
+    overflow-y: scroll !important;
+}
+
+/* TAGS - INPUT SELECT  */
+.swagger-section select,
+.swagger-section input[type="text"] {
+    font-size: 14px !important;
+    font-weight: 300 !important;
+}
+
+.swagger-section select {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+
+    padding: 4px 30px 4px 5px !important;
+    border: 2px solid #41444e !important;
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 4px !important;
+    background: #fff url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMCAyMCI+ICAgIDxwYXRoIGQ9Ik0xMy40MTggNy44NTljLjI3MS0uMjY4LjcwOS0uMjY4Ljk3OCAwIC4yNy4yNjguMjcyLjcwMSAwIC45NjlsLTMuOTA4IDMuODNjLS4yNy4yNjgtLjcwNy4yNjgtLjk3OSAwbC0zLjkwOC0zLjgzYy0uMjctLjI2Ny0uMjctLjcwMSAwLS45NjkuMjcxLS4yNjguNzA5LS4yNjguOTc4IDBMMTAgMTFsMy40MTgtMy4xNDF6Ii8+PC9zdmc+) right 10px center no-repeat !important;
+    background-size: auto auto !important;
+    background-size: 20px !important;
+    color: #3b4151 !important;
+}
+.swagger-section input[type="text"] {
+    padding: 4px 8px !important;
+    border: 1px solid #d9d9d9 !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+    color: #3b4151 !important;
+}
+
+.swagger-section,
+.swagger-section select,
+.swagger-section input[type="text"],
+.swagger-section .sandbox_header .submit,
+.swagger-section .sandbox_header .response_hider {
+    font-family: Titillium Web,sans-serif !important;
+}
+
+
+
+/*******           HEADER                *****/
+
+.swagger-section #header {
+    background-color: #000;
+    border-bottom: 1px solid #000;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+}
+.swagger-section #header a {
+    color: #fff;
+    text-decoration: none;
+}
+.swagger-section #header h1 {
+    display: inline-block;
+    color: #fff;
+    cursor: default;
+}
+
+.swagger-section #api_selector {
+    margin-top: 10px;
+}
+.swagger-section #api_selector input {
+    font-size: 13px;
+    line-height: 20px;
+    padding: 5px 10px;
+    border: none;
+}
+
+.swagger-section #explore {
+    color: #fff !important;
+    background: #0f6ac1;
+    padding: 8px 12px;
+    border-radius: 1px;
+}
+.swagger-section #explore:hover,
+.swagger-section #explore:active {
+    background: #3195f5;
+}
+
+
+/* New Header With Logo  */
+.swagger-section #header {
+    position: relative;
+    top: -50px;
+    background: none;
+    border-bottom: none;
+    height: 0;
+}
+.swagger-section #header h1 {
+    display: block;
+    position: absolute;
+    left: 0px !important;
+    top: -95px !important;
+}
+.swagger-section #header h1 a {
+    display: block;
+    color: #000;
+    color: transparent;
+    height: 120px;
+    width: 270px;
+    text-align: center;
+}
+
+
+/* Alert Class */
+.swagger-section #message-bar {
+    padding-top: 0;
+    padding: 10px;
+    white-space: nowrap;
+}
+.swagger-section #message-bar .wrapword {
+    white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    white-space: pre-wrap;       /* css-3 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+    white-space: -webkit-pre-wrap; /* Newer versions of Chrome/Safari*/
+    word-break: break-all;
+    white-space: normal;
+}
+.swagger-section #message-bar pre {
+    color: #111 !important;
+    border-color: #dab90f;
+    border-width: 2px;
+    border-radius: 4px;
+}
+
+/* Authorize Class */
+.swagger-section .authorize-wrapper {
+    padding: 10px;
+}
+
+
+/*******           OPERATIONS                *****/
+
+.swagger-section #resources .operations {
+    box-shadow: 0 0 3px rgba(0,0,0,.19) !important;
+    border: 1px solid #000 !important;
+    border-radius: 4px !important;
+        border: none !important;
+
+    margin: 0 0 9px !important;
+    padding: 0px !important;
+}
+
+.swagger-section #resources .operation {
+    border-radius: 4px !important;
+    margin: 0 !important;
+    padding: 0px !important;
+}
+.swagger-section #resources .operation .heading {
+    margin: 0 !important;
+    padding: 4px !important;
+}
+.swagger-section #resources .operation .heading .http_method {
+    text-shadow: 0 1px 0 rgba(0,0,0,.1) !important;
+}
+.swagger-section #resources .operation .heading .http_method > a {
+    min-width: 60px;
+}
+.swagger-section #resources .operation .heading .path {
+    padding: 0 10px !important;
+    align-items: center !important;
+    word-break: break-all !important;
+}
+.swagger-section #resources .operation .heading .options {
+    float: left !important;
+    margin-left: 6px !important;
+}
+
+
+
+/*******           BLOCK - CODE              *****/
+
+.swagger-section #resources .block pre,
+.swagger-section #resources .block pre code,
+.swagger-section #resources .block pre code span,
+.swagger-section #resources .snippet pre,
+.swagger-section #resources .snippet pre code {
+    border: none !important;
+    border-radius: 4px !important;
+    background: #41444e !important;
+}
+
+
+.swagger-section pre,
+.swagger-section pre code,
+.swagger-section pre span,
+.swagger-section .hljs {
+    color: #fff !important;
+}
+.swagger-section .hljs-string {
+    color: #fc0 !important;
+}
+.swagger-section .hljs-number {
+    color: #0f0 !important;
+}
+.swagger-section .hljs-literal {
+    color: #0cf !important;
+}
+
+
+/*******           CONTENT              *****/
+
+.swagger-section #resources .content {
+    position: relative !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.swagger-section #resources .content .required {
+    font-weight: normal !important;
+}
+.swagger-section #resources .content .required::after {
+    font-size: 10px;
+    position: relative;
+    top: -6px;
+    padding: 5px;
+    content: "required";
+    color: rgba(255,0,0,.6);
+
+    font-size: 18px;
+    top: -1px;
+    padding: 1px;
+    content: "*";
+}
+
+.swagger-section #resources .content > .response-class > h4,
+.swagger-section #resources .content > .response-class > div.markdown,
+.swagger-section #resources .content > .response-class > p,
+.swagger-section #resources .content > .response-class > div.response-content-type {
+    padding: 0 10px !important;
+}
+
+/* Response Class */
+.swagger-section #resources .content > .response-class > h4,
+.swagger-section #resources .content > .response-class > div.markdown {
+    background: #fff !important;
+    background: hsla(0,0%,100%,.8) !important;
+}
+.swagger-section #resources .content > .response-class > h4 {
+    padding: 20px 10px 0px !important;
+}
+.swagger-section #resources .content > .response-class > div.markdown {
+    padding-bottom: 10px !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+.swagger-section #resources .content > .response-class > p {
+    padding-top: 10px !important;
+}
+.swagger-section #resources .content > .response-class > div.response-content-type > div {
+    display: inline-block !important;
+    float: right !important;
+}
+
+.swagger-section #resources .content > form.sandbox,
+.swagger-section #resources .content > .response {
+    clear: right;
+    padding: 10px !important;
+}
+
+.swagger-section #resources .content > .response {
+    padding-bottom: 20px !important;
+}
+
+.swagger-section #resources .content > .response .block.response_body { 
+    padding: 0 !important;
+}
+
+
+
+
+
+/*******           SANDBOX - TABLE              *****/
+
+.swagger-section .sandbox .fullwidth.parameters,
+.swagger-section .sandbox .fullwidth.response-messages {
+    margin-top: 5px !important;
+}
+
+.swagger-section .sandbox .fullwidth.parameters th {
+    width: inherit !important;
+    max-width: inherit !important;
+}
+
+.swagger-section .sandbox .fullwidth.parameters th:nth-child(1) {
+    width: 10% !important;
+}
+.swagger-section .sandbox .fullwidth.parameters th:nth-child(2) {
+    width: 30% !important;
+}
+.swagger-section .sandbox .fullwidth.parameters th:nth-child(3) {
+    width: 34% !important;
+}
+.swagger-section .sandbox .fullwidth.parameters th:nth-child(4) {
+    width: 14% !important;
+}
+.swagger-section .sandbox .fullwidth.parameters th:nth-child(5) {
+    width: 12% !important;
+}
+
+.swagger-section .sandbox .operation-params .body-textarea.error {
+    outline: 2px solid #cc0000;
+}
+.swagger-section .sandbox .operation-params .parameter-content-type {
+    float: right !important;
+}
+
+.swagger-section .swagger-ui-wrap input.parameter {
+    width: 94% !important;
+}
+.swagger-section .swagger-ui-wrap ul#resources li.resource div.heading ul.options {
+    margin: 10px 10px 0 0;
+}
+
+
+
+
+/*******           SANDBOX - HEADER              *****/
+
+.swagger-section .sandbox_header {
+    position: relative !important;
+    text-align: center !important;
+    padding: 20px !important;
+}
+.swagger-section .sandbox_header .submit {
+    float: inherit !important;
+    display: inline-block !important;
+}
+
+.swagger-section .sandbox_header .response_hider {
+    text-decoration: none !important;
+}
+
+.swagger-section .sandbox_header .submit,
+.swagger-section .sandbox_header .response_hider {
+    transition: all .3s !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    border: 2px solid gray !important;
+    border-radius: 4px !important;
+    color: #3b4151 !important;
+    background: transparent !important;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.25) !important;
+    line-height: 20px !important;
+    padding: 2px 15px !important;
+    padding: 5px 23px !important;
+    cursor: pointer !important;
+}
+
+.swagger-section .sandbox_header .submit:hover,
+.swagger-section .sandbox_header .response_hider:hover {
+    box-shadow: 0 0 5px rgba(0,0,0,.3) !important;
+    background: #fff !important;
+
+    color: #2078fc !important;
+    border-color: #74b1ff !important;
+    color: #2684fc !important;
+    border-color: #2684fc !important;
+}
+
+.swagger-section .sandbox_header .response_throbber {
+    position: absolute !important;
+    right: 20px !important;
+    top: 0px !important;
+}
+

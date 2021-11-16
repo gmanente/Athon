@@ -1,0 +1,1307 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <Sala Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>Sala</Alias>
+        <ConnectionStringEncrypted>5dDZLcYWc8VHFazYYRhkY8PE9QthURPwQ3vogOTsNRPjEv8JxRhp7WldoYBkCWVn43hTr0Z+S93iSfX0aiU0u97EgQlPXkvNaUHNmGMEMj/wfLlDYUqT/ctHuczhmKRe1VjVg2IYewViS4i9Y3jre8VA</ConnectionStringEncrypted>
+        <Key>3df9e9bdbf51454b951d6e648f1496dd</Key>
+        <Name>Sala</Name>
+      </Sala>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <Sala Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>Sala</Alias>
+        <Columns isList="true" count="17">
+          <value>TurmaSigla,System.String</value>
+          <value>NomeSala,System.String</value>
+          <value>SiglaSala,System.String</value>
+          <value>SiglaBloco,System.String</value>
+          <value>NomeCurso,System.String</value>
+          <value>AreaConhecimento,System.String</value>
+          <value>NomeCampus,System.String</value>
+          <value>PeriodoLetivoSemestre,System.String</value>
+          <value>NomeTurno,System.String</value>
+          <value>QtdAluno,System.Int32</value>
+          <value>VagaAula,System.Int32</value>
+          <value>QtdVagaSalaDisponivel,System.Int32</value>
+          <value>Semestre,System.String</value>
+          <value>IdSala,System.Int32</value>
+          <value>QtdTurmaComAlocacao,System.Int32</value>
+          <value>QtdTurmaSemAlocacao,System.Int32</value>
+          <value>QtdSala,System.Int32</value>
+        </Columns>
+        <CommandTimeout>60000</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Key>d7ee13a2adee4c388264e1d0c2f98ab4</Key>
+        <Name>Sala</Name>
+        <NameInSource>Sala</NameInSource>
+        <Parameters isList="true" count="3">
+          <value>pIdCampus,,8,0</value>
+          <value>pIdPeriodoLetivo,,8,0</value>
+          <value>pIdCurso,,8,0</value>
+        </Parameters>
+        <SqlCommand>--DECLARE @pIdCampus INT = 1;
+--DECLARE @pIdPeriodoLetivo INT = 22;
+--DECLARE @pIdCurso INT = 0;
+
+SELECT 
+	DBSecretariaAcademica.dbo.GradeLetivaTurma.Sigla										AS TurmaSigla
+	, DBComum.dbo.Sala.Descricao															AS NomeSala 
+	, DBComum.dbo.Sala.Sigla  																AS SiglaSala
+	, DBComum.dbo.Bloco.Sigla																AS SiglaBloco
+	, DBComum.dbo.Curso.Descricao															AS NomeCurso
+	, DBComum.dbo.Gpa.Descricao																AS AreaConhecimento
+	, DBComum.dbo.Campus.Nome																AS NomeCampus	
+	, DBSecretariaAcademica.dbo.UvwAlunoSemestre.PeriodoLetivoSemestre	
+	, DBComum.dbo.Turno.Descricao															AS NomeTurno
+	, COUNT(DBSecretariaAcademica.dbo.UvwAlunoSemestre.IdAlunoSemestre)						AS QtdAluno
+	, DBComum.dbo.Sala.VagaAula
+	, ((DBComum.dbo.Sala.VagaAula) - COUNT(DBSecretariaAcademica.dbo.UvwAlunoSemestre.IdAlunoSemestre))	AS QtdVagaSalaDisponivel
+	, DBSecretariaAcademica.dbo.UvwAlunoSemestre.Semestre 
+	, DBSecretariaAcademica.dbo.GradeLetivaTurma.IdSala
+	,(SELECT COUNT(GLT.IdGradeLetivaTurma) 
+	    FROM DBSecretariaAcademica.dbo.GradeLetivaTurma GLT 
+  INNER JOIN DBSecretariaAcademica.dbo.GradeLetiva GL
+	        ON GL.IdGradeLetiva = GLT.IdGradeLetiva
+	     WHERE GLT.IdSala &gt; 0
+		 AND GL.IdPeriodoLetivo = @pIdPeriodoLetivo) AS QtdTurmaComAlocacao	
+,(SELECT COUNT(GLT.IdGradeLetivaTurma) 
+	FROM DBSecretariaAcademica.dbo.GradeLetivaTurma GLT 
+  INNER JOIN DBSecretariaAcademica.dbo.GradeLetiva GL
+	      ON GL.IdGradeLetiva = GLT.IdGradeLetiva
+	   WHERE GLT.IdSala IS NULL
+		 AND GL.IdPeriodoLetivo = @pIdPeriodoLetivo) AS QtdTurmaSemAlocacao	
+,(SELECT COUNT(S.IdSala) 
+	FROM DBComum.dbo.Sala S 
+	    WHERE S.IdSalaTipo = 1 /* Tipo = Sala de Aula */) AS QtdSala														
+				
+	FROM DBSecretariaAcademica.dbo.UvwAlunoSemestre 
+		
+	      INNER JOIN DBComum.dbo.Campus
+			      ON DBComum.dbo.Campus.IdCampus = DBSecretariaAcademica.dbo.UvwAlunoSemestre.IdCampus
+
+		  INNER JOIN DBComum.dbo.Curso
+			      ON DBComum.dbo.Curso.IdCurso = DBSecretariaAcademica.dbo.UvwAlunoSemestre.IdCurso
+
+		  INNER JOIN DBComum.dbo.Gpa
+			      ON DBComum.dbo.Gpa.IdGpa = DBComum.dbo.Curso.IdGpa
+
+		  INNER JOIN DBSecretariaAcademica.dbo.GradeLetivaTurma
+			      ON DBSecretariaAcademica.dbo.GradeLetivaTurma.IdGradeLetivaTurma = DBSecretariaAcademica.dbo.UvwAlunoSemestre.IdGradeLetivaTurma
+
+		  INNER JOIN DBSecretariaAcademica.dbo.GradeLetiva
+			      ON DBSecretariaAcademica.dbo.GradeLetiva.IdGradeLetiva = DBSecretariaAcademica.dbo.GradeLetivaTurma.IdGradeLetiva
+
+		  INNER JOIN DBSecretariaAcademica.dbo.GradeLetivaTurno
+			      ON DBSecretariaAcademica.dbo.GradeLetivaTurno.IdGradeLetivaTurno = DBSecretariaAcademica.dbo.GradeLetivaTurma.IdGradeLetivaTurno
+
+		  INNER JOIN DBComum.dbo.Turno
+			      ON DBComum.dbo.Turno.IdTurno = DBSecretariaAcademica.dbo.GradeLetivaTurno.IdTurno
+
+		  INNER JOIN DBComum.dbo.Sala
+			      ON DBComum.dbo.Sala.IdSala = DBSecretariaAcademica.dbo.GradeLetivaTurma.IdSala
+
+		  INNER JOIN DBComum.dbo.Bloco
+			      ON DBComum.dbo.Bloco.IdBloco = DBComum.dbo.Sala.IdBloco
+
+				  WHERE 1 = 1
+				  AND DBComum.dbo.Campus.IdCampus = @pIdCampus
+				  AND DBSecretariaAcademica.dbo.GradeLetiva.IdPeriodoLetivo = @pIdPeriodoLetivo
+				  AND (CASE WHEN @pIdCurso = 0 THEN @pIdCurso ELSE DBSecretariaAcademica.dbo.UvwAlunoSemestre.IdCurso END = @pIdCurso)				  
+
+				  GROUP BY DBSecretariaAcademica.dbo.GradeLetivaTurma.Sigla					
+						 , DBComum.dbo.Sala.Sigla  	
+						 , DBComum.dbo.Sala.Descricao										
+						 , DBComum.dbo.Bloco.Sigla											
+						 , DBComum.dbo.Curso.Descricao										
+						 , DBComum.dbo.Gpa.Descricao											
+						 , DBComum.dbo.Campus.Nome		
+						 , DBComum.dbo.Turno.Descricao									
+						 , DBSecretariaAcademica.dbo.UvwAlunoSemestre.PeriodoLetivoSemestre
+						 , DBComum.dbo.Sala.VagaAula
+						 , DBSecretariaAcademica.dbo.UvwAlunoSemestre.Semestre  
+						 , DBSecretariaAcademica.dbo.GradeLetivaTurma.IdSala </SqlCommand>
+      </Sala>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="1">
+      <value>,vUsuarioImpressao,vUsuarioImpressao,,System.String,,False,False,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>214b25c67b3a44a6bee4b9d30ff2cf1c</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="12">
+        <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,19,2.2</ClientRectangle>
+          <Components isList="true" count="5">
+            <Text13 Ref="6" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>0,0.2,19,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,15,Bold</Font>
+              <Guid>5cd35e7c063c450199a4c23588f45cae</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Capacidade Instalada / Disponibilidade</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Image1 Ref="7" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,3.8,1.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Guid>fef74eda5c3741c3a03f9e30a4c4621f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <IconColor>68, 114, 196</IconColor>
+              <ImageBytes>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</ImageBytes>
+              <Margins>0,0,0,0</Margins>
+              <Name>Image1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+            </Image1>
+            <Text21 Ref="8" type="Text" isKey="true">
+              <Border>None;[191:191:191];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15.8,0.4,2.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>15d4bae7267944688a8f390e9c369f59</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Emissão do Relatório
+{Time}</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text21>
+            <Text4 Ref="9" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>0,1,19,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>473172906e3744c3a999e075d21d7f67</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Campus: {Sala.NomeCampus} - Período Letivo: {Sala.PeriodoLetivoSemestre}</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <StartPointPrimitive1 Ref="10" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+              <ClientRectangle>0,-0.4,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>StartPointPrimitive1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <ReferenceToGuid>bd274841551a465699b20b25688c8d14</ReferenceToGuid>
+            </StartPointPrimitive1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageHeaderBand1>
+        <PageFooterBand1 Ref="11" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,26.5,19,1.2</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text27 Ref="12" type="Text" isKey="true">
+              <Border>None;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,White,Gainsboro,270</Brush>
+              <ClientRectangle>0,0,19,1.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>8eba65ecdb28456392ecb4e03cf29966</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="4" />
+              <Parent isRef="11" />
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text27>
+            <Text357 Ref="13" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>16.2,0,2.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>3721b5a1515949319098c8fbb2bb77d3</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text357</Name>
+              <Page isRef="4" />
+              <Parent isRef="11" />
+              <Text>Página {PageNumber} de {TotalPageCount}</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+            </Text357>
+            <Text17 Ref="14" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>0,0,16,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>b37682cbb15048e5b3705a34a950f585</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="4" />
+              <Parent isRef="11" />
+              <Text> {vUsuarioImpressao}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text17>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageFooterBand1>
+        <GroupHeaderBand1 Ref="15" type="GroupHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,3.4,19,0.6</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text12 Ref="16" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>0,0,19,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>15a4631f1e4241518965bc1c6872e521</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="4" />
+              <Parent isRef="15" />
+              <Text>Área de Conhecimento: {Sala.AreaConhecimento}</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+          </Components>
+          <Condition>{Sala.AreaConhecimento}</Condition>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupHeaderBand1>
+        <GroupHeaderBand2 Ref="17" type="GroupHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,4.8,19,0.6</ClientRectangle>
+          <Components isList="true" count="1">
+            <Text122 Ref="18" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>0,0,19,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>44b163597ffd45f78dbd1f9eeb0c6051</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text122</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>Curso: {Sala.NomeCurso} - Turno: {Sala.NomeTurno}</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text122>
+          </Components>
+          <Condition>{Sala.NomeCurso}</Condition>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupHeaderBand2</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupHeaderBand2>
+        <GroupHeaderBand4 Ref="19" type="GroupHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,6.2,19,0.6</ClientRectangle>
+          <Components isList="true" count="8">
+            <Text3 Ref="20" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>0,0,3,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>b88ff9a3491f4d6f8a4f6b2ba0c09398</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>Turma</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text5 Ref="21" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>15,0,2.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>b7e9eff1f76e4cc6a17ed29f5e77f247</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>Qtd. Alunos</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Text8 Ref="22" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>8.6,0,2.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>9ab1dd59ad25464a823da6ce1bb543e6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>Sigla Sala</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text9 Ref="23" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>11,0,1.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>2a0ba4c7095b48de86edd687b847407f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>Bloco</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text11 Ref="24" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>12.6,0,2.4,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>30002f6e16064810b216b0900e4581de</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>Capacidade</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+            <Text18 Ref="25" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>5.6,0,3,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>bdf4a3ac20424abf92fc528940eed425</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>Nome sala</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text20 Ref="26" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>17.4,0,1.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>1793b5406f3c4c2eb5ca7842e4c15b29</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text20</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>Qtd. Total</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text20>
+            <Text32 Ref="27" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>3,0,2.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>f8d07fe664e34bc1ac525874b85590bb</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text32</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>Semestre</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text32>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupHeaderBand4</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupHeaderBand4>
+        <DataBand1 Ref="28" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,7.6,19,0.4</ClientRectangle>
+          <Components isList="true" count="8">
+            <Text1 Ref="29" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,3,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="28" />
+              <Text>{Sala.TurmaSigla}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text10 Ref="30" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>2ac498d4755b4bcc95be4f878c69ee05</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="4" />
+              <Parent isRef="28" />
+              <Text>{Sala.QtdAluno}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+            <Text14 Ref="31" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>8.6,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>ebb9b2702fdd49838354344756b80ce4</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="4" />
+              <Parent isRef="28" />
+              <Text>{Sala.SiglaSala}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+            <Text15 Ref="32" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>1f5fd412ccf14643a7ba098186c07811</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="4" />
+              <Parent isRef="28" />
+              <Text>{Sala.SiglaBloco}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text15>
+            <Text16 Ref="33" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>12.6,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>10a7c4a5a9564a9ab13ad1ca0b351fb8</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="4" />
+              <Parent isRef="28" />
+              <Text>{Sala.VagaAula}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text19 Ref="34" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.6,0,3,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>40bcefe8986f4982bc01aeb1ca24c849</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="4" />
+              <Parent isRef="28" />
+              <Text>{Sala.NomeSala}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text19>
+            <Text22 Ref="35" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>17.4,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>55facddb54e642aa95804fa4b25ce69d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="4" />
+              <Parent isRef="28" />
+              <Text>{Sala.QtdVagaSalaDisponivel}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text22>
+            <Text33 Ref="36" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3,0,2.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>d1c2c25ed03946a98caddfe850291049</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text33</Name>
+              <Page isRef="4" />
+              <Parent isRef="28" />
+              <Text>{Sala.Semestre}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text33>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>Sala</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="0" />
+        </DataBand1>
+        <GroupFooterBand1 Ref="37" type="GroupFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,8.8,19,0.4</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text6 Ref="38" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>6d35cf42fd334fdf9f48ef179ca38979</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="4" />
+              <Parent isRef="37" />
+              <Text>{Sum(GroupHeaderBand1,Sala.QtdAluno)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text7 Ref="39" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>0,0,12.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>33eaa386d9314cee913b6ea7fb722adf</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="4" />
+              <Parent isRef="37" />
+              <Text>Total por Curso:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text2 Ref="40" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>12.6,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>fc99cd94287e46a7ab48fae4fc74dd11</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="37" />
+              <Text>{Sum(GroupHeaderBand1,Sala.VagaAula)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text23 Ref="41" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>17.4,0,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>83e92ce005094cb88689977ef21b74b6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="4" />
+              <Parent isRef="37" />
+              <Text>{Sum(GroupHeaderBand1,Sala.QtdVagaSalaDisponivel)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text23>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupFooterBand1>
+        <ReportSummaryBand1 Ref="42" type="ReportSummaryBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,10,19,4</ClientRectangle>
+          <Components isList="true" count="20">
+            <Text24 Ref="43" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.8,1.6,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>fdc01f7e6ddc4d06be156b1214770613</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>{Sum(GroupHeaderBand1,Sala.QtdAluno)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text24>
+            <Text25 Ref="44" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>0,0.8,6.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>70429c506dc246cdb61327bc29c627e9</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Totalizadores</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text25>
+            <Text26 Ref="45" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.8,1.2,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>8d4f9be356b24b239c1ca1acba188078</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>{Sum(GroupHeaderBand1,Sala.VagaAula)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text26>
+            <Text28 Ref="46" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>3.8,2,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>c2a46939247345f3ac9792ccece14fa8</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>{Sum(GroupHeaderBand1,Sala.QtdVagaSalaDisponivel)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text28>
+            <Text29 Ref="47" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>0,1.2,3.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>176a4c4e09b148eaa80f57af2c9da948</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Capacidade:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text29>
+            <Text30 Ref="48" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>0,1.6,3.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>67e5ba70c9724efb9920757491661ee5</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text30</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Qtd. Alunos:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text30>
+            <Text31 Ref="49" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>0,2,3.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>388006baee1a424699ad5cc97d881d71</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text31</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Qtd. Total:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text31>
+            <Text34 Ref="50" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>7.2,0.8,6.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>9343d0eaa2f34102a0d9feb7085ab507</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text34</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Totalizadores</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text34>
+            <Text35 Ref="51" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>7.2,1.2,4.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>a585d3fd5675456f9f7bb33d7a7c133a</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text35</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Qtd. de Turmas Alocadas:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text35>
+            <Text36 Ref="52" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>7.2,1.6,4.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>9551a6de8b6246cca2c5d1ca6fa0203e</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text36</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Qtd. de Turmas não Alocadas:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text36>
+            <Text37 Ref="53" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>7.2,2.4,4.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>2d8dbf74b2a34032994522ff1c9d3826</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text37</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Qtd. de Salas Disponíveis:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text37>
+            <Text38 Ref="54" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.6,1.2,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>42b62adab1ff48dd88fdebed6c7a11d5</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text38</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>{Sala.QtdTurmaComAlocacao}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text38>
+            <Text39 Ref="55" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.6,1.6,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>df4e5ebfc6ce4136b64f037c39b068a3</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text39</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>{Sala.QtdTurmaSemAlocacao}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text39>
+            <Text40 Ref="56" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.6,2.4,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>287db8f0bd8c4cc4b508911fc733d9ee</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text40</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>({Sala.QtdSala} - {Sala.QtdTurmaComAlocacao})</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text40>
+            <Text41 Ref="57" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,Gainsboro,White,90</Brush>
+              <ClientRectangle>7.2,2,4.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>985e99ed569841dbac24d09151bf6b06</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text41</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>Qtd. de Salas:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text41>
+            <Text42 Ref="58" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.6,2,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>2c78fef7d97a4729a3299b814eae155a</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text42</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <Text>{Sala.QtdSala}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text42>
+            <StartPointPrimitive2 Ref="59" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+              <ClientRectangle>0,0.4,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>StartPointPrimitive2</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <ReferenceToGuid>ac31fd6ae01746e7abbe5701d0357c3b</ReferenceToGuid>
+            </StartPointPrimitive2>
+            <EndPointPrimitive2 Ref="60" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+              <ClientRectangle>6.2,2.8,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>EndPointPrimitive2</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <ReferenceToGuid>ac31fd6ae01746e7abbe5701d0357c3b</ReferenceToGuid>
+            </EndPointPrimitive2>
+            <StartPointPrimitive3 Ref="61" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+              <ClientRectangle>7.2,0.4,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>StartPointPrimitive3</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <ReferenceToGuid>3be5bf739ddc41d6b005a78c3b47cb9e</ReferenceToGuid>
+            </StartPointPrimitive3>
+            <EndPointPrimitive3 Ref="62" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+              <ClientRectangle>13.4,3.2,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>EndPointPrimitive3</Name>
+              <Page isRef="4" />
+              <Parent isRef="42" />
+              <ReferenceToGuid>3be5bf739ddc41d6b005a78c3b47cb9e</ReferenceToGuid>
+            </EndPointPrimitive3>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>ReportSummaryBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </ReportSummaryBand1>
+        <RoundedRectanglePrimitive1 Ref="63" type="Stimulsoft.Report.Components.StiRoundedRectanglePrimitive" isKey="true">
+          <ClientRectangle>0,0,19,27.7</ClientRectangle>
+          <Color>216, 216, 216</Color>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>bd274841551a465699b20b25688c8d14</Guid>
+          <Name>RoundedRectanglePrimitive1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Round>0.2</Round>
+          <Size>2</Size>
+        </RoundedRectanglePrimitive1>
+        <EndPointPrimitive1 Ref="64" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+          <ClientRectangle>19,27.7,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>EndPointPrimitive1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>bd274841551a465699b20b25688c8d14</ReferenceToGuid>
+        </EndPointPrimitive1>
+        <RoundedRectanglePrimitive2 Ref="65" type="Stimulsoft.Report.Components.StiRoundedRectanglePrimitive" isKey="true">
+          <ClientRectangle>0,10.4,6.2,2.4</ClientRectangle>
+          <Color>216, 216, 216</Color>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>ac31fd6ae01746e7abbe5701d0357c3b</Guid>
+          <LeftSide>False</LeftSide>
+          <Name>RoundedRectanglePrimitive2</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Round>0.2</Round>
+          <Size>2</Size>
+        </RoundedRectanglePrimitive2>
+        <RoundedRectanglePrimitive3 Ref="66" type="Stimulsoft.Report.Components.StiRoundedRectanglePrimitive" isKey="true">
+          <ClientRectangle>7.2,10.4,6.2,2.8</ClientRectangle>
+          <Color>216, 216, 216</Color>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>3be5bf739ddc41d6b005a78c3b47cb9e</Guid>
+          <Name>RoundedRectanglePrimitive3</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Round>0.2</Round>
+          <Size>2</Size>
+        </RoundedRectanglePrimitive3>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>f7b20ec68a344ea3955f129014c781f2</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/10/2021 4:37:20 PM</ReportChanged>
+  <ReportCreated>12/8/2015 8:49:59 AM</ReportCreated>
+  <ReportFile>D:\Net_v4.6_New\Projetos\Univag.Sisger\Sistema.Web.UI.Relatorio\View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaCapacidadeInstaladaDisponibilidadeRel.mrt</ReportFile>
+  <ReportGuid>03e7271e260241f2a4c80de24e9c9d52</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2020.5.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

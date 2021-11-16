@@ -1,0 +1,536 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <ConexaoSQL Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>ConexaoSQL</Alias>
+        <ConnectionStringEncrypted>+WD7iVVd4wV/Wuhs5XAy597yf+vFVzGIQ0313E49qHvwcMGhT05DxUZPtMxhGPY30XSbg80K6oHiE6Xc6RRpP8N60aJPaEuMb0vVnGdx9nvccNeJRV3zmel7jKxjBOxent71aEZK0wVvWoT8S3gif5BYzQ==</ConnectionStringEncrypted>
+        <Key>4ebf46c1abca41f2b6ed9fa8640824f8</Key>
+        <Name>ConexaoSQL</Name>
+      </ConexaoSQL>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <sql Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>sql</Alias>
+        <Columns isList="true" count="9">
+          <value>DataEmprestimo,System.DateTime</value>
+          <value>DataOperacao,System.DateTime</value>
+          <value>IdMulta,System.Int32</value>
+          <value>NomeCampus,System.String</value>
+          <value>NomeMulta,System.String</value>
+          <value>NomeOperador,System.String</value>
+          <value>NomePessoa,System.String</value>
+          <value>SituacaoMulta,System.String</value>
+          <value>ValorMulta,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>6000</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Key>70de0a36310945d1907da587b87e5535</Key>
+        <Name>sql</Name>
+        <NameInSource>ConexaoSQL</NameInSource>
+        <Parameters isList="true" count="2">
+          <value>DataInicial,,22,10</value>
+          <value>DataFinal,,22,10</value>
+        </Parameters>
+        <SqlCommand>
+/*
+DECLARE @DataInicial   VARCHAR(10) = '27/12/2018';
+DECLARE @DataFinal     VARCHAR(10) = '27/12/2018';
+*/
+
+     SELECT
+            Multa.IdMulta                         AS IdMulta
+
+	      , Campus.Nome                           AS NomeCampus
+          , Pessoa.Nome                           AS NomePessoa
+          --, AcervoTitulo.NomeCompleto             AS AcervoTitulo
+
+          , MultaHistorico.Descricao              AS NomeMulta
+          , Multa.ValorTotal                      AS ValorMulta
+          , MultaSituacao.Descricao               AS SituacaoMulta
+
+          , Emprestimo.DataEmprestimo             AS DataEmprestimo
+          , Multa.DataOperacao                    AS DataOperacao
+          , Usuario.Nome                          AS NomeOperador
+
+      FROM DBBiblioteca.dbo.Emprestimo                  WITH (NOLOCK)
+INNER JOIN DBBiblioteca.dbo.EmprestimoAcervoTombo EAT   WITH (NOLOCK) ON EAT.IdEmprestimo = Emprestimo.IdEmprestimo
+INNER JOIN DBBiblioteca.dbo.DevolucaoTombo              WITH (NOLOCK) ON DevolucaoTombo.IdDevolucaoTombo = ( SELECT MAX(X.IdDevolucaoTombo) FROM DBBiblioteca.dbo.DevolucaoTombo X WITH (NOLOCK) WHERE X.IdEmprestimoAcervoTombo = EAT.IdEmprestimoAcervoTombo )
+
+INNER JOIN DBBiblioteca.dbo.AcervoTombo                 WITH (NOLOCK) ON AcervoTombo.IdAcervoTombo = EAT.IdAcervoTombo
+INNER JOIN DBBiblioteca.dbo.Acervo                      WITH (NOLOCK) ON Acervo.IdAcervo = AcervoTombo.IdAcervo
+--INNER JOIN DBBiblioteca.dbo.AcervoTitulo                WITH (NOLOCK) ON AcervoTitulo.IdAcervoTitulo = Acervo.IdAcervoTitulo
+
+INNER JOIN DBBiblioteca.dbo.Pessoa                      WITH (NOLOCK) ON Pessoa.IdPessoa = Emprestimo.IdPessoa
+INNER JOIN DBComum.dbo.Campus                           WITH (NOLOCK) ON Campus.IdCampus = Emprestimo.IdCampus
+
+INNER JOIN DBBiblioteca.dbo.DevolucaoMulta              WITH (NOLOCK) ON DevolucaoMulta.IdDevolucaoTombo = DevolucaoTombo.IdDevolucaoTombo
+INNER JOIN DBBiblioteca.dbo.Multa                       WITH (NOLOCK) ON Multa.IdMulta = DevolucaoMulta.IdMulta
+INNER JOIN DBBiblioteca.dbo.MultaLog                    WITH (NOLOCK) ON MultaLog.IdMultaLog = ( SELECT TOP 1 X.IdMultaLog FROM DBBiblioteca.dbo.MultaLog X WHERE X.IdMulta = Multa.IdMulta ORDER BY X.DataOperacao DESC )
+INNER JOIN DBBiblioteca.dbo.MultaSituacao               WITH (NOLOCK) ON MultaSituacao.IdMultaSituacao = MultaLog.IdMultaSituacao
+INNER JOIN DBBiblioteca.dbo.MultaHistorico              WITH (NOLOCK) ON MultaHistorico.IdMultaHistorico = Multa.IdMultaHistorico
+
+INNER JOIN DBSeguranca.dbo.Usuario                      WITH (NOLOCK) ON Usuario.IdUsuario = Multa.IdUsuario
+
+
+WHERE 1 = 1
+
+    AND CONVERT(DATE, Multa.DataOperacao) BETWEEN CONVERT(DATE, @DataInicial, 105) AND CONVERT(DATE, @DataFinal, 105)
+
+	{Query}
+
+--ORDER BY NomePessoa, DataOperacao
+ORDER BY NomeCampus, NomeMulta
+,NomePessoa,DataEmprestimo,DataOperacao,NomeOperador
+
+
+</SqlCommand>
+      </sql>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="4">
+      <value>,Query,Query,,System.String,,False,False,False,False</value>
+      <value>,vFiltro,vFiltro,,System.String,,False,False,False,False</value>
+      <value>,vFiltroPeriodo,vFiltroPeriodo,,System.String,,False,False,False,False</value>
+      <value>,vUsuarioImpressao,vUsuarioImpressao,,System.String,,False,False,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>3d9541c5edf04e7eb2d02afb96f5dffa</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>All;[127:127:127];2;Solid;False;4;Black</Border>
+      <Brush>White</Brush>
+      <Components isList="true" count="2">
+        <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
+          <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+          <Brush>White</Brush>
+          <ClientRectangle>0,0.4,27.6,2.5</ClientRectangle>
+          <Components isList="true" count="9">
+            <Panel1 Ref="6" type="Panel" isKey="true">
+              <Brush>White</Brush>
+              <ClientRectangle>0,0.05,27.6,1.85</ClientRectangle>
+              <Components isList="true" count="2">
+                <Text1 Ref="7" type="Text" isKey="true">
+                  <Brush>White</Brush>
+                  <ClientRectangle>0,0.15,27.6,0.6</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Arial,14,Bold</Font>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text1</Name>
+                  <Page isRef="4" />
+                  <Parent isRef="6" />
+                  <Text>Relatório de Multas de Acervo por Período</Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text1>
+                <Text27 Ref="8" type="Text" isKey="true">
+                  <Brush>White</Brush>
+                  <ClientRectangle>0,0.75,27.6,0.9</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Arial,10,Bold</Font>
+                  <Guid>0b997f1ba2334f53b1badab1c4f8c0e3</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text27</Name>
+                  <Page isRef="4" />
+                  <Parent isRef="6" />
+                  <Text>{vFiltroPeriodo}
+{vFiltro}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+                  <Type>Expression</Type>
+                </Text27>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>Panel1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+            </Panel1>
+            <Text7 Ref="9" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>10.8,2.05,3.8,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>6e93929d302247969f2251cc2f762c22</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Situação</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text13 Ref="10" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>21.8,2.05,5.8,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>6b7a7f859b494b7abb0766fb45bc3f0f</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Nome do Operador</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Text99 Ref="11" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>17,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>3278777c36af4e469bc260d1602138e5</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text99</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Data de Empréstimo</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text99>
+            <Text12 Ref="12" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>0,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>1ca11a23b799449099f75fe73052e114</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Nome do Campus</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+            <Text15 Ref="13" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>2.4,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>2adf99a8e0f5418a95fdcefbce57f488</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Tipo de Multa</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text15>
+            <Text16 Ref="14" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>4.8,2.05,6,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>530e7525a1c5400db22dd7c20ee3271d</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Nome da Pessoa</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text11 Ref="15" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>19.4,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>ba2c64ee6c4a49dfb38b81e36bdb69d9</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Data da Operação</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+            <Text5 Ref="16" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>14.6,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>aff39676e11c4ab293e3a12251646b46</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Valor</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <PrintOn>OnlyFirstPage</PrintOn>
+        </PageHeaderBand1>
+        <DataBand1 Ref="17" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,3.7,27.6,0.4</ClientRectangle>
+          <Components isList="true" count="8">
+            <Text3 Ref="18" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>19.4,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>{sql.DataOperacao}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="19" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text4 Ref="20" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>21.8,0,5.8,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>8758229faeca463bbdaa1ea58a09e68e</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>{sql.NomeOperador}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <Text17 Ref="21" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>17,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>9102521efe404135ae5b75884d9fc357</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>{sql.DataEmprestimo}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="22" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+            <Text2 Ref="23" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>0,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>d56ab9ca65a14388b43c839baf67088a</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>{sql.NomeCampus}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="24" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text8 Ref="25" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>2.4,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>71c6dfaa86cc4238bdfe0d43100cc3c1</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>{sql.NomeMulta}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="26" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text10 Ref="27" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>4.8,0,6,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>9950e2ba2ac04d76bfe5df6c58425002</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>{sql.NomePessoa}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="28" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+            <Text18 Ref="29" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>10.8,0,3.8,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>2461722b8ff14e2e8ecc0cd31c3fcbec</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>{sql.SituacaoMulta}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="30" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text6 Ref="31" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>14.6,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>8a87387006b747478ff20e57a27ff73b</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="4" />
+              <Parent isRef="17" />
+              <Text>{sql.ValorMulta}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="32" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>sql</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="0" />
+        </DataBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>2886fe215b244fedaab1a981924f707a</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>29.6</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/10/2021 3:14:14 PM</ReportChanged>
+  <ReportCreated>2/9/2017 10:49:35 AM</ReportCreated>
+  <ReportFile>D:\Net_v4.6_New\Projetos\Univag.Sisger\Sistema.Web.UI.Relatorio\View\Report\Biblioteca\Stimull\RelatorioPeriodoMultasAcervo-Bruto.mrt</ReportFile>
+  <ReportGuid>497ce13300ab450b9afa37676cfbdedd</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2020.5.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

@@ -1,0 +1,36 @@
+
+----------------------
+1 - 
+Botão direito na pasta Univag.Sisger 
+e no menu de contexto "TortoiseSvn" clicar em "Properties" 
+e adicionar uma nova propriedade (Other) de nome "svn:global-ignores"
+
+
+----------------------
+2 - 
+Adicionar os valores abaixo e aplicar: 
+(obs: Não precisa ser recursiva)
+
+AcervoImagem
+BuildProcessTemplates
+Univag.Sisger.v11.suo
+Univag.Sisger.v11.suo.*
+Univag.Sisger.sln.startup.json
+Univag.Sisger.vsext
+$tf
+.vs
+.git
+*.vs
+*.bak
+*.user
+*.csproj.user
+*.lib
+*.obj
+*.user
+.vscode
+[bB]in
+[oO]bj
+[dD]ebug
+[rR]elease
+packages
+bower_components

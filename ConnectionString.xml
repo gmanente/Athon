@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Banco_Dados>
+
+
+<ConDicionarioDados>
+<Server>192.168.160.8</Server>
+ <Port></Port>
+ <User_Id>UsrSistema</User_Id>
+ <Password>univ@g</Password>
+ <Data_Base>DBDicionarioDado</Data_Base>
+</ConDicionarioDados>
+
+<ConDB_Univag>
+<Server>192.168.20.17</Server>
+ <Port></Port>
+ <User_Id>univag</User_Id>
+ <Password>r2e0n0o7vo</Password>
+ <Data_Base>DB_Univag</Data_Base>
+</ConDB_Univag>
+  
+<ConComum>
+<Server>B-NTIDDT004</Server>
+<Port></Port>
+<User_Id>UsrSistema</User_Id>
+<Password>univ@g</Password>
+<Data_Base>DBComum</Data_Base>
+</ConComum>
+</Banco_Dados>
+
+

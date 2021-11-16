@@ -1,0 +1,103 @@
+﻿/*
+    MAIN CSS
+    AUTOR: Leandro Moreira Curioso de Oliveira
+    ORGANIZAÇÃO: Univag - Centro Universitário (NPD - Núcleo de Processamento de Dados)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+
+/*Import css styles*/
+@import url('//repositorio.univag.edu.br/View/Css/normalize.css');
+@import url('//repositorio.univag.edu.br/View/Css/bootstrap.css');
+@import url('//repositorio.univag.edu.br/View/Css/bootstrap-theme.css');
+@import url('//repositorio.univag.edu.br/View/Css/pre-sets.css');
+
+/*Ínício body*/
+body {
+    width: 100%;
+}
+/*Fim body*/
+
+/*Início console*/
+#console {
+    width: 80%;
+    margin: 40px auto 0 auto;
+}
+/*Fim console*/
+
+/*Ínício linha topo*/
+#linha-topo {
+    width: 100%;
+    color: white;
+    text-align: center;
+    margin: 0 0 0 0;
+    -webkit-box-shadow: 0 3px 5px rgba(89,89,89,.6);
+    -moz-box-shadow: 0 3px 5px rgba(89,89,89,.6);
+    box-shadow: 0 3px 5px rgba(89,89,89,.6);
+}
+
+#linha-topo-icone {
+    padding: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+#linha-topo-descricao {
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 20px;
+    text-shadow: 1px 1px 0 #000000;
+}
+
+    #linha-topo-descricao a {
+        color: white;
+    }
+
+#linha-topo-menu .btn-group {
+    text-align: left;
+}
+
+#linha-topo-menu {
+    margin-top: 5px;
+    margin-left: 10px;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+/*Fim linha topo*/
+
+#titulo-modulo {
+    width: 100%;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+    -webkit-box-shadow: 0 3px 5px rgba(89,89,89,.6);
+    -moz-box-shadow: 0 3px 5px rgba(89,89,89,.6);
+    box-shadow: 0 3px 5px rgba(89,89,89,.6);
+    text-shadow: 1px 1px 0 #000000;
+}
+
+.dropdown-menu {
+    cursor: pointer;
+}
+
+.table {
+    margin-top: 10px;
+}
+
+/*Início datepicker*/
+.datepicker {
+    z-index: 1151 !important;
+}
+/*Fim datepicker*/
+
+/*Início tabela grid hover*/
+.#grid tbody tr:nth-child(odd) td {
+    background-color: #F1F1F1;
+}
+#grid tbody tr:hover td {
+    background-color:#a9dafe;
+}

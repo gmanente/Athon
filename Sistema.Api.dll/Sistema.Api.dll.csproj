@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{EF326C03-0215-46D7-8C4E-5CE9E2F89430}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sistema.Api.dll</RootNamespace>
+    <AssemblyName>Sistema.Api.dll</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0114,0219</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.10.0.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\DocumentFormat.OpenXml.2.10.0\lib\net40\DocumentFormat.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ExcelDataReader, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ExcelDataReader.3.6.0\lib\net45\ExcelDataReader.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelDataReader.DataSet, Version=3.6.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\ExcelDataReader.DataSet.3.6.0\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
+    </Reference>
+    <Reference Include="Facebook">
+      <HintPath>..\..\..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=4.1.2.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca">
+      <HintPath>..\..\..\packages\PDFLittleSigner.1.0.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="LibExcel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\LibExcel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.8.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.2.8.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfLittleSigner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PDFLittleSigner.1.0.1\lib\PdfLittleSigner.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Base, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Dashboard, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Dashboards.Web.2021.3.5\lib\net45\Stimulsoft.Dashboard.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Dashboard.Drawing, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Dashboards.Web.2021.3.5\lib\net45\Stimulsoft.Dashboard.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Dashboard.Export, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Dashboards.Web.2021.3.5\lib\net45\Stimulsoft.Dashboard.Export.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Data, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Map, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Map.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.MathFX, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.MathFX.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Check, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Report.Check.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Helper, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Report.Helper.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Mvc, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Web.2021.3.5\lib\net45\Stimulsoft.Report.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Web, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Web.2021.3.5\lib\net45\Stimulsoft.Report.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.WebDesign, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Web.2021.3.5\lib\net45\Stimulsoft.Report.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg, Version=2.4.3.29446, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Svg.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interface\IBE.cs" />
+    <Compile Include="Interface\IDAO.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositorio\Exceptions\AbstractException.cs" />
+    <Compile Include="Repositorio\Exceptions\ExceptionCpf.cs" />
+    <Compile Include="Repositorio\Exceptions\ExceptionEmail.cs" />
+    <Compile Include="Repositorio\Exceptions\ModelException.cs" />
+    <Compile Include="Repositorio\Exceptions\SysException.cs" />
+    <Compile Include="Repositorio\LimparMine.cs" />
+    <Compile Include="Repositorio\Util\AgendaTarefa.cs" />
+    <Compile Include="Repositorio\Util\Ajax.cs" />
+    <Compile Include="Repositorio\Util\AjaxCall.cs" />
+    <Compile Include="Repositorio\Util\Attributes\FieldsAttributes.cs" />
+    <Compile Include="Repositorio\Util\Attributes\TableAttribute.cs" />
+    <Compile Include="Repositorio\Util\Binary.cs" />
+    <Compile Include="Repositorio\Util\BinarySerializer.cs" />
+    <Compile Include="Repositorio\Util\ChaveValidacaoContrato.cs" />
+    <Compile Include="Repositorio\Util\CommonMasterPage.cs" />
+    <Compile Include="Repositorio\Util\CommonPage.cs" />
+    <Compile Include="Repositorio\Util\Componentes\A.cs" />
+    <Compile Include="Repositorio\Util\Componentes\AbstractCheckRadio.cs" />
+    <Compile Include="Repositorio\Util\Componentes\AbstractComponent.cs" />
+    <Compile Include="Repositorio\Util\Componentes\AbstractComponentText.cs" />
+    <Compile Include="Repositorio\Util\Componentes\AbstractComponetInput.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Btn.cs" />
+    <Compile Include="Repositorio\Util\Componentes\BtnDropDown.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Center.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Check.cs" />
+    <Compile Include="Repositorio\Util\Componentes\ColorPicker.cs" />
+    <Compile Include="Repositorio\Util\Componentes\DatePicker.cs" />
+    <Compile Include="Repositorio\Util\Componentes\DatetimePicker.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Div.cs" />
+    <Compile Include="Repositorio\Util\Componentes\FileField.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Grid.cs" />
+    <Compile Include="Repositorio\Util\Componentes\GroupComponent.cs" />
+    <Compile Include="Repositorio\Util\Componentes\GroupComponet.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Heading.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Hidden.cs" />
+    <Compile Include="Repositorio\Util\Componentes\I.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Img.cs" />
+    <Compile Include="Repositorio\Util\Componentes\InputNumber.cs" />
+    <Compile Include="Repositorio\Util\Componentes\InputText.cs" />
+    <Compile Include="Repositorio\Util\Componentes\ItemMenu.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Li.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Modal.cs" />
+    <Compile Include="Repositorio\Util\Componentes\OlUl.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Option.cs" />
+    <Compile Include="Repositorio\Util\Componentes\P.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Radio.cs" />
+    <Compile Include="Repositorio\Util\Componentes\SelectField.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Span.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Strong.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\BreadcrumbTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\ConsultarModalTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\EditarInformacoesFormularioTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\FormularioModalTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\LoginTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\ModuloWireFrameTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\SubmoduloMasterTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\SubmoduloWireFrameTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\Templates\UltimosAcessosTemplate.cs" />
+    <Compile Include="Repositorio\Util\Componentes\TextArea.cs" />
+    <Compile Include="Repositorio\Util\Criptografia.cs" />
+    <Compile Include="Repositorio\Util\CustomDictionary.cs" />
+    <Compile Include="Repositorio\Util\DynamicJsonConverter.cs" />
+    <Compile Include="Repositorio\Util\Email.cs" />
+    <Compile Include="Repositorio\Util\FileProcess.cs" />
+    <Compile Include="Repositorio\Util\Funcoes.cs" />
+    <Compile Include="Repositorio\Util\Helpers\Join.cs" />
+    <Compile Include="Repositorio\Util\Helpers\TipoConsulta.cs" />
+    <Compile Include="Repositorio\Util\Ip.cs" />
+    <Compile Include="Repositorio\Util\JsInjector.cs" />
+    <Compile Include="Repositorio\Util\Json.cs" />
+    <Compile Include="Repositorio\Util\ListSorter.cs" />
+    <Compile Include="Repositorio\Util\ManipulaArquivo.cs" />
+    <Compile Include="Repositorio\Util\ManipularCsv.cs" />
+    <Compile Include="Repositorio\Util\Mensagem.cs" />
+    <Compile Include="Repositorio\Util\MontarSelectField.cs" />
+    <Compile Include="Repositorio\Util\Paginacao.cs" />
+    <Compile Include="Repositorio\Util\PdfGenerator.cs" />
+    <Compile Include="Repositorio\Util\RandomImage.cs" />
+    <Compile Include="Repositorio\Util\ReflectionDAO.cs" />
+    <Compile Include="Repositorio\Util\ReflectionHandler.cs" />
+    <Compile Include="Repositorio\Util\SessaoModulo.cs" />
+    <Compile Include="Repositorio\Util\SessaoSistema.cs" />
+    <Compile Include="Repositorio\Util\SessionHandler.cs" />
+    <Compile Include="Repositorio\Util\UtilMensageria.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidacaoCaracteresEspeciais.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidacaoCpfOrCnpj.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidacaoEmail.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidacaoGeral.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidacaoGoogleLogin.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidacaoNomeSemNumero.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidacaoReCaptcha.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidaIE.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidaIERegex.cs" />
+    <Compile Include="Repositorio\Validacoes\ValidaInscricaoEstadual.cs" />
+    <Compile Include="Src\AbstractBE.cs" />
+    <Compile Include="Src\AbstractDAO.cs" />
+    <Compile Include="Src\AbstractVO.cs" />
+    <Compile Include="Src\AuditOperation.cs" />
+    <Compile Include="Src\CarteirinhaAluno\BE\FuncionarioFotoBE.cs" />
+    <Compile Include="Src\CarteirinhaAluno\BE\FuncionarioFotoLogBE.cs" />
+    <Compile Include="Src\CarteirinhaAluno\DAO\FuncionarioFotoDAO.cs" />
+    <Compile Include="Src\CarteirinhaAluno\DAO\FuncionarioFotoLogDAO.cs" />
+    <Compile Include="Src\CarteirinhaAluno\DAO\FuncionarioFotoTipoDAO.cs" />
+    <Compile Include="Src\CarteirinhaAluno\VO\FuncionarioFotoLogVO.cs" />
+    <Compile Include="Src\CarteirinhaAluno\VO\FuncionarioFotoTipoVO.cs" />
+    <Compile Include="Src\CarteirinhaAluno\VO\FuncionarioFotoVO.cs" />
+    <Compile Include="Src\Comum\BE\AuditoriaBE.cs" />
+    <Compile Include="Src\Comum\BE\BlocoBE.cs" />
+    <Compile Include="Src\Comum\BE\CampusBE.cs" />
+    <Compile Include="Src\Comum\BE\CidadeBE.cs" />
+    <Compile Include="Src\Comum\BE\CleroBE.cs" />
+    <Compile Include="Src\Comum\BE\EscolaridadeBE.cs" />
+    <Compile Include="Src\Comum\BE\GrauParentescoBE.cs" />
+    <Compile Include="Src\Comum\BE\CorBE.cs" />
+    <Compile Include="Src\Comum\BE\DepartamentoBE.cs" />
+    <Compile Include="Src\Comum\BE\DiaSemanaBE.cs" />
+    <Compile Include="Src\Comum\BE\EstadoBE.cs" />
+    <Compile Include="Src\Comum\BE\EstadoCivilBE.cs" />
+    <Compile Include="Src\Comum\BE\FeriadoBE.cs" />
+    <Compile Include="Src\Comum\BE\FeriadoTipoBE.cs" />
+    <Compile Include="Src\Comum\BE\FiltroBE.cs" />
+    <Compile Include="Src\Comum\BE\FuncionarioBE.cs" />
+    <Compile Include="Src\Comum\BE\GrauFormacaoBE.cs" />
+    <Compile Include="Src\Comum\BE\HabilitacaoBE.cs" />
+    <Compile Include="Src\Comum\BE\InformacaoBE.cs" />
+    <Compile Include="Src\Comum\BE\LogExceptionBE\LogErroSistemaBE.cs" />
+    <Compile Include="Src\Comum\BE\MasterBE.cs" />
+    <Compile Include="Src\Comum\BE\MetodologiaBE.cs" />
+    <Compile Include="Src\Comum\BE\NacionalidadeBE.cs" />
+    <Compile Include="Src\Comum\BE\PaisBE.cs" />
+    <Compile Include="Src\Comum\BE\ParametroBE.cs" />
+    <Compile Include="Src\Comum\BE\PeriodoDiaBE.cs" />
+    <Compile Include="Src\Comum\BE\PneBE.cs" />
+    <Compile Include="Src\Comum\BE\RegimeBE.cs" />
+    <Compile Include="Src\Comum\BE\SexoBE.cs" />
+    <Compile Include="Src\Comum\BE\TipoDocumentoFotoBE.cs" />
+    <Compile Include="Src\Comum\DAO\AgendaEmailDAO.cs" />
+    <Compile Include="Src\Comum\DAO\AuditoriaDAO.cs" />
+    <Compile Include="Src\Comum\DAO\BlocoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\CampusDAO.cs" />
+    <Compile Include="Src\Comum\DAO\CidadeDAO.cs" />
+    <Compile Include="Src\Comum\DAO\CleroDAO.cs" />
+    <Compile Include="Src\Comum\DAO\GrauParentescoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\EscolaridadeDAO.cs" />
+    <Compile Include="Src\Comum\DAO\CorDAO.cs" />
+    <Compile Include="Src\Comum\DAO\DepartamentoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\DiaSemanaDAO.cs" />
+    <Compile Include="Src\Comum\DAO\EmpresaDAO.cs" />
+    <Compile Include="Src\Comum\DAO\EstadoCivilDAO.cs" />
+    <Compile Include="Src\Comum\DAO\EstadoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\ExtensionMethods.cs" />
+    <Compile Include="Src\Comum\DAO\FeriadoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\FeriadoTipoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\FiltroDAO.cs" />
+    <Compile Include="Src\Comum\DAO\FuncionarioDAO.cs" />
+    <Compile Include="Src\Comum\DAO\GrauFormacaoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\HabilitacaoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\InformacaoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\LogExceptionDAO\LogErroSistemaDAO.cs" />
+    <Compile Include="Src\Comum\DAO\MasterDAO.cs" />
+    <Compile Include="Src\Comum\DAO\MetodologiaDAO.cs" />
+    <Compile Include="Src\Comum\DAO\NacionalidadeDAO.cs" />
+    <Compile Include="Src\Comum\DAO\PaisDAO.cs" />
+    <Compile Include="Src\Comum\DAO\ParametroDAO.cs" />
+    <Compile Include="Src\Comum\DAO\PeriodoDiaDAO.cs" />
+    <Compile Include="Src\Comum\DAO\PneDAO.cs" />
+    <Compile Include="Src\Comum\DAO\RegimeDAO.cs" />
+    <Compile Include="Src\Comum\DAO\SexoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\TipoDocumentoFotoDAO.cs" />
+    <Compile Include="Src\Comum\DAO\Tmp\MetodoSistemaAntigoDAO.cs" />
+    <Compile Include="Src\Comum\Util\Tools.cs" />
+    <Compile Include="Src\Comum\VO\AgendaEmailVO.cs" />
+    <Compile Include="Src\Comum\VO\ArquivoExtensaoVO.cs" />
+    <Compile Include="Src\Comum\VO\ArquivoTipoVO.cs" />
+    <Compile Include="Src\Comum\VO\AuditoriaAcessoVO.cs" />
+    <Compile Include="Src\Comum\VO\AuditoriaVO.cs" />
+    <Compile Include="Src\Comum\VO\BlocoVO.cs" />
+    <Compile Include="Src\Comum\VO\CampusVO.cs" />
+    <Compile Include="Src\Comum\VO\CidadeVO.cs" />
+    <Compile Include="Src\Comum\VO\CleroVO.cs" />
+    <Compile Include="Src\Comum\VO\ConsultaCampoVO.cs" />
+    <Compile Include="Src\Comum\VO\ConsultaVO.cs" />
+    <Compile Include="Src\Comum\VO\EntidadeVO.cs" />
+    <Compile Include="Src\Comum\VO\GrauParentescoVO .cs" />
+    <Compile Include="Src\Comum\VO\EscolaridadeVO.cs" />
+    <Compile Include="Src\Comum\VO\CorVO.cs" />
+    <Compile Include="Src\Comum\VO\DepartamentoVO.cs" />
+    <Compile Include="Src\Comum\VO\DiaSemanaVO.cs" />
+    <Compile Include="Src\Comum\VO\EmpresaVO.cs" />
+    <Compile Include="Src\Comum\VO\EstadoCivilVO.cs" />
+    <Compile Include="Src\Comum\VO\EstadoVO.cs" />
+    <Compile Include="Src\Comum\VO\FeriadoTipoVO.cs" />
+    <Compile Include="Src\Comum\VO\FeriadoVO.cs" />
+    <Compile Include="Src\Comum\VO\FiltroCampoVO.cs" />
+    <Compile Include="Src\Comum\VO\FiltroVO.cs" />
+    <Compile Include="Src\Comum\VO\FuncionarioVO.cs" />
+    <Compile Include="Src\Comum\VO\GrauFormacaoVO.cs" />
+    <Compile Include="Src\Comum\VO\HabilitacaoVO.cs" />
+    <Compile Include="Src\Comum\VO\InformacaoVO.cs" />
+    <Compile Include="Src\Comum\VO\LogErroSistemaVO\LogErroSistemaVO.cs" />
+    <Compile Include="Src\Comum\VO\MetodologiaVO.cs" />
+    <Compile Include="Src\Comum\VO\NacionalidadeVO.cs" />
+    <Compile Include="Src\Comum\VO\PaisVO.cs" />
+    <Compile Include="Src\Comum\VO\ParametroCampusVO.cs" />
+    <Compile Include="Src\Comum\VO\ParametroLogVO.cs" />
+    <Compile Include="Src\Comum\VO\ParametroModeloVO.cs" />
+    <Compile Include="Src\Comum\VO\ParametroVO.cs" />
+    <Compile Include="Src\Comum\VO\PeriodoDiaVO.cs" />
+    <Compile Include="Src\Comum\VO\PneVO.cs" />
+    <Compile Include="Src\Comum\VO\RegimeVO.cs" />
+    <Compile Include="Src\Comum\VO\SexoVO.cs" />
+    <Compile Include="Src\Comum\VO\TipoDocumentoFotoVO.cs" />
+    <Compile Include="Src\Comum\VO\Tmp\AlteracaoNotaLogVO.cs" />
+    <Compile Include="Src\Comum\VO\Tmp\OperacaoIdVO.cs" />
+    <Compile Include="Src\Comum\VO\Tmp\TituloVO.cs" />
+    <Compile Include="Src\Datanorte\BE\BairroBE.cs" />
+    <Compile Include="Src\Datanorte\BE\CidadeBE.cs" />
+    <Compile Include="Src\Datanorte\BE\ContatoBE.cs" />
+    <Compile Include="Src\Datanorte\BE\ContatoHistoricoBE.cs" />
+    <Compile Include="Src\Datanorte\BE\Contato_LancamentoBE.cs" />
+    <Compile Include="Src\Datanorte\BE\PessoaCidadeBE.cs" />
+    <Compile Include="Src\Datanorte\DAO\BairroDAO.cs" />
+    <Compile Include="Src\Datanorte\DAO\CidadeDAO.cs" />
+    <Compile Include="Src\Datanorte\DAO\ContatoDAO.cs" />
+    <Compile Include="Src\Datanorte\DAO\ContatoHistoricoDAO.cs" />
+    <Compile Include="Src\Datanorte\DAO\Contato_LancamentoDAO.cs" />
+    <Compile Include="Src\Datanorte\DAO\PessoaCidadeDAO.cs" />
+    <Compile Include="Src\Datanorte\VO\BairroVO.cs" />
+    <Compile Include="Src\Datanorte\VO\CidadeVO.cs" />
+    <Compile Include="Src\Datanorte\VO\ContatoHistoricoVO.cs" />
+    <Compile Include="Src\Datanorte\VO\ContatoVO.cs" />
+    <Compile Include="Src\Datanorte\VO\Contato_LancamentoVO.cs" />
+    <Compile Include="Src\Datanorte\VO\PessoaCidadeVO.cs" />
+    <Compile Include="Src\Dominio.Config.cs" />
+    <Compile Include="Src\MySQLConnection.cs" />
+    <Compile Include="Src\Productive\BE\RevendaBE.cs" />
+    <Compile Include="Src\Productive\DAO\RevendaDAO.cs" />
+    <Compile Include="Src\Productive\VO\RevendaVO.cs" />
+    <Compile Include="Src\Relatorio\BE\RelatorioBE.cs" />
+    <Compile Include="Src\Relatorio\DAO\RelatorioDAO.cs" />
+    <Compile Include="Src\Relatorio\VO\RelatorioVO.cs" />
+    <Compile Include="Src\Repositorio\BE\AuditoriaModuloBE.cs" />
+    <Compile Include="Src\Repositorio\BE\ConsultaBE.cs" />
+    <Compile Include="Src\Repositorio\BE\EmailExceptionBE.cs" />
+    <Compile Include="Src\Repositorio\DAO\AuditoriaModuloDAO.cs" />
+    <Compile Include="Src\Repositorio\DAO\ConsultaDAO.cs" />
+    <Compile Include="Src\Repositorio\DAO\EmailExceptionDAO.cs" />
+    <Compile Include="Src\Seguranca\BE\AuditoriaOperacaoBE.cs" />
+    <Compile Include="Src\Seguranca\BE\FuncionalidadeBE.cs" />
+    <Compile Include="Src\Seguranca\BE\LoginBE.cs" />
+    <Compile Include="Src\Seguranca\BE\MenuRapidoItemBE.cs" />
+    <Compile Include="Src\Seguranca\BE\MenuRapidoBE.cs" />
+    <Compile Include="Src\Seguranca\BE\ModuloBE.cs" />
+    <Compile Include="Src\Seguranca\BE\PerfilBE.cs" />
+    <Compile Include="Src\Seguranca\BE\PerfilDepartamentoBE.cs" />
+    <Compile Include="Src\Seguranca\BE\PerfilFuncionalidadeBE.cs" />
+    <Compile Include="Src\Seguranca\BE\PerfilModuloBE.cs" />
+    <Compile Include="Src\Seguranca\BE\PerfilSubModuloBE.cs" />
+    <Compile Include="Src\Seguranca\BE\RelatorioLogBE.cs" />
+    <Compile Include="Src\Seguranca\BE\SistemaBE.cs" />
+    <Compile Include="Src\Seguranca\BE\SubModuloBE.cs" />
+    <Compile Include="Src\Seguranca\BE\SubmoduloUrlBE.cs" />
+    <Compile Include="Src\Seguranca\BE\UsuarioBE.cs" />
+    <Compile Include="Src\Seguranca\BE\UsuarioCampusBE.cs" />
+    <Compile Include="Src\Seguranca\BE\UsuarioDepartamentoBE.cs" />
+    <Compile Include="Src\Seguranca\BE\UsuarioFuncionalidadeBE.cs" />
+    <Compile Include="Src\Seguranca\BE\UsuarioModuloBE.cs" />
+    <Compile Include="Src\Seguranca\BE\UsuarioPerfilBE.cs" />
+    <Compile Include="Src\Seguranca\BE\UsuarioSenhaBE.cs" />
+    <Compile Include="Src\Seguranca\BE\UsuarioSubModuloBE.cs" />
+    <Compile Include="Src\Seguranca\Controle.cs" />
+    <Compile Include="Src\Seguranca\DAO\AuditoriaOperacaoDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\FuncionalidadeDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\MenuRapidoItemDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\MenuRapidoDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\ModuloDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\PerfilDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\PerfilDepartamentoDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\PerfilFuncionalidadeDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\PerfilModuloDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\PerfilSubModuloDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\RelatorioLogDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\SistemaDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\SubModuloDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\SubModuloTutorialDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\SubmoduloUrlDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\UsuarioCampusDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\UsuarioDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\UsuarioDepartamentoDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\UsuarioFuncionalidadeDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\UsuarioModuloDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\UsuarioPerfilDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\UsuarioSenhaDAO.cs" />
+    <Compile Include="Src\Seguranca\DAO\UsuarioSubModuloDAO.cs" />
+    <Compile Include="Src\Seguranca\VO\AuditoriaOperacaoVO.cs" />
+    <Compile Include="Src\Seguranca\VO\FuncionalidadeVO.cs" />
+    <Compile Include="Src\Seguranca\VO\MenuRapidoItemVO.cs" />
+    <Compile Include="Src\Seguranca\VO\MenuRapidoVO.cs" />
+    <Compile Include="Src\Seguranca\VO\ModuloVO.cs" />
+    <Compile Include="Src\Seguranca\VO\PerfilDepartamentoVO.cs" />
+    <Compile Include="Src\Seguranca\VO\PerfilFuncionalidadeVO.cs" />
+    <Compile Include="Src\Seguranca\VO\PerfilModuloVO.cs" />
+    <Compile Include="Src\Seguranca\VO\PerfilSubModuloVO.cs" />
+    <Compile Include="Src\Seguranca\VO\PerfilVO.cs" />
+    <Compile Include="Src\Seguranca\VO\RelatorioLogVO.cs" />
+    <Compile Include="Src\Seguranca\VO\SistemaVO.cs" />
+    <Compile Include="Src\Seguranca\VO\SubmoduloTutorialVO.cs" />
+    <Compile Include="Src\Seguranca\VO\SubmoduloUrlVO.cs" />
+    <Compile Include="Src\Seguranca\VO\SubModuloVO.cs" />
+    <Compile Include="Src\Seguranca\VO\UsuarioCampusVO.cs" />
+    <Compile Include="Src\Seguranca\VO\UsuarioDepartamentoVO.cs" />
+    <Compile Include="Src\Seguranca\VO\UsuarioFuncionalidadeVO.cs" />
+    <Compile Include="Src\Seguranca\VO\UsuarioModuloVO.cs" />
+    <Compile Include="Src\Seguranca\VO\UsuarioPerfilVO.cs" />
+    <Compile Include="Src\Seguranca\VO\UsuarioSenhaVO.cs" />
+    <Compile Include="Src\Seguranca\VO\UsuarioSubModuloVO.cs" />
+    <Compile Include="Src\Seguranca\VO\UsuarioVO.cs" />
+    <Compile Include="Src\SqlDataReaderExtensionMethods.cs" />
+    <Compile Include="Src\SqlExtensionMethods.cs" />
+    <Compile Include="Src\SqlServerConnection.cs" />
+    <Compile Include="Src\StringBuilderExtensionMethods.cs" />
+    <Compile Include="Template\CarteirinhaAluno\Grid\FotoFuncionarioGridTemplate.cs" />
+    <Compile Include="Template\CarteirinhaAluno\Grid\FotoGridTemplate.cs" />
+    <Compile Include="Template\CarteirinhaAluno\Grid\RelatorioGridTemplate.cs" />
+    <Compile Include="Template\CarteirinhaAluno\Master\CarteirinhaAlunoSubmoduloMasterTemplate.cs" />
+    <Compile Include="Template\Productive\Master\ProductiveMasterTemplate.cs" />
+    <Compile Include="Template\Sistema\Master\SistemaMasterTemplate.cs" />
+    <Compile Include="Template\Datanorte\Master\DatanorteMasterTemplate.cs" />
+    <Compile Include="Template\Relatorio\Master\RelatorioSubmoduloMasterTemplate.cs" />
+    <Compile Include="Template\Repositorio\Mensageria\SisUnivagMensageria.cs" />
+    <Compile Include="Template\Seguranca\Form\FuncionalidadeFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\ModuloFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\PerfilFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\PerfilFuncionalidadeFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\PerfilModuloFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\PerfilSubModuloFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\SubModuloFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\UsuarioCampusFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\UsuarioFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Form\UsuarioPerfilFormularioTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\FiltroCampoGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\FiltroGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\FuncionalidadeGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\ModuloGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\ParametroGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\PerfilDepartamentoGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\PerfilGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\SubModuloGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\SubmoduloUrlGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\UsuarioCampusGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\UsuarioDepartamentoGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\UsuarioGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Grid\UsuarioPerfilGridTemplate.cs" />
+    <Compile Include="Template\Seguranca\Master\SegurancaSubmoduloMasterTemplate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Localization\ar.xml" />
+    <Content Include="Localization\be.xml" />
+    <Content Include="Localization\bg.xml" />
+    <Content Include="Localization\bh.xml" />
+    <Content Include="Localization\ca-ES.xml" />
+    <Content Include="Localization\cs.xml" />
+    <Content Include="Localization\de.xml" />
+    <Content Include="Localization\el-GR.xml" />
+    <Content Include="Localization\en-GB.xml" />
+    <Content Include="Localization\en.xml" />
+    <Content Include="Localization\es.xml" />
+    <Content Include="Localization\eu-ES.xml" />
+    <Content Include="Localization\fa.xml" />
+    <Content Include="Localization\fr.xml" />
+    <Content Include="Localization\gl-ES.xml" />
+    <Content Include="Localization\hr.xml" />
+    <Content Include="Localization\hu.xml" />
+    <Content Include="Localization\id.xml" />
+    <Content Include="Localization\it.xml" />
+    <Content Include="Localization\ja.xml" />
+    <Content Include="Localization\ka.xml" />
+    <Content Include="Localization\ko.xml" />
+    <Content Include="Localization\lt.xml" />
+    <Content Include="Localization\nb-NO.xml" />
+    <Content Include="Localization\nl.xml" />
+    <Content Include="Localization\pl.xml" />
+    <Content Include="Localization\pt-BR.xml" />
+    <Content Include="Localization\pt.xml" />
+    <Content Include="Localization\ro.xml" />
+    <Content Include="Localization\ru.xml" />
+    <Content Include="Localization\sk.xml" />
+    <Content Include="Localization\sr.xml" />
+    <Content Include="Localization\sv.xml" />
+    <Content Include="Localization\tr.xml" />
+    <Content Include="Localization\uk.xml" />
+    <Content Include="Localization\vi.xml" />
+    <Content Include="Localization\zh-CHS.xml" />
+    <Content Include="Localization\zh-CHT.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Template\Relatorio\Form\" />
+    <Folder Include="Template\Relatorio\Grid\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="CobreBemX">
+      <Guid>{97B92612-EA6B-4E12-B759-91B91554DE0D}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

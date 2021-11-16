@@ -1,0 +1,32 @@
+﻿.menu-context {
+    position: absolute;
+    display: none;
+}
+
+.menu-context {
+    -webkit-animation-name: flipInX;
+    -moz-animation-name: flipInX;
+    -o-animation-name: flipInX;
+    animation-name: flipInX;
+    -webkit-animation-duration: .4s;
+    -moz-animation-duration: .4s;
+    -o-animation-duration: .4s;
+    animation-duration: .4s;
+    -webkit-animation-fill-mode: both;
+    -moz-animation-fill-mode: both;
+    -o-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+.context-show > a > i {
+    width: 15px;
+    color: #15659A;
+}
+
+.contextmenu-container {
+    display: none;
+}
+
+.context-show {
+    display: block;
+}

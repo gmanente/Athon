@@ -1,0 +1,56 @@
+﻿/*
+    DISPONIBILIDADE DISCIPLINA CSS
+    AUTOR: Evander Emanuel da Silva Costa
+    ORGANIZAÇÃO: Univag - Centro Universitário (NTI - Núcleo de Tecnologia da Informação)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+
+.modal-header 
+{
+    padding: 10px;
+}
+
+.modal-body 
+{
+    padding: 10px;
+}
+
+.modal-footer
+{
+    padding: 10px;
+}
+
+#ModalGridConsultaOfertadas .modal-dialog
+{
+    width: 75% !important;
+    z-index: 9999;
+}
+
+.fa-mais:after {
+    font-family: FontAwesome;
+    content: "+";
+    color: #AAAAAA;
+}
+
+
+.btn-circle-sm {
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  padding: 2px 0;
+  font-size: 20px;
+  line-height: 1.65;
+  border-radius: 30px;
+}
+
+.btn-circle-micro {
+  width: 19px;
+  height: 19px;
+  text-align: center;
+  padding: 1px 0;
+  font-size: 13px;
+  line-height: 0.1;
+  border-radius: 30px;
+}

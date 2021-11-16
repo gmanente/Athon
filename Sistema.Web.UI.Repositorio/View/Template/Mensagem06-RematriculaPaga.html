@@ -1,0 +1,226 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Confirmação de rematrícula - Sistemas Univag</title>
+    <style>
+        body {
+            width: 100% !important;
+            min-width: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        a, a:visited {
+            color: #0A32A1;
+        }
+
+            a:hover {
+                color: #0026ff;
+            }
+
+        table.tabela_conteudo td {
+            padding-left: 10px;
+        }
+    </style>
+
+    <style type="text/css">
+        body {
+            width: 100% !important;
+            min-width: 100%;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        a:visited {
+            color: #0A32A1;
+        }
+
+        a:hover {
+            color: #0026ff;
+        }
+
+        .tabela tr:hover td {
+            -moz-transition: all 0.5s ease !important;
+            -o-transition: all 0.5s ease !important;
+            -webkit-transition: all 0.5s ease !important;
+            transition: all 0.5s ease !important;
+            background-color: #d2f0ff !important;
+        }
+
+        @media (max-width: 490px) {
+            .tabela-responsive {
+                display: block !important;
+                position: relative !important;
+                width: 100% !important;
+            }
+
+                .tabela-responsive thead {
+                    display: block;
+                }
+
+                .tabela-responsive tbody {
+                    display: block;
+                }
+
+                .tabela-responsive th {
+                    display: block;
+                }
+
+                .tabela-responsive td {
+                    display: block;
+                }
+
+                .tabela-responsive tr {
+                    display: block;
+                }
+
+                .tabela-responsive td {
+                    height: 35px !important;
+                    text-align: left !important;
+                }
+
+                .tabela-responsive th {
+                    height: 35px !important;
+                    text-align: left !important;
+                }
+
+                .tabela-responsive thead {
+                    float: left !important;
+                }
+
+                .tabela-responsive tbody {
+                    width: auto !important;
+                    position: relative !important;
+                    overflow-x: auto !important;
+                    -webkit-overflow-scrolling: touch !important;
+                    white-space: nowrap !important;
+                }
+
+                    .tabela-responsive tbody tr {
+                        display: inline-block !important;
+                    }
+
+            .tabela td:last-child {
+                border-right: #999999 solid 1px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="background:#142752 url(http://sistema.univag.edu.br/View/img/email/email_capa_fundo.png); height: 134px;">
+                <div style="background:url(http://sistema.univag.edu.br/View/img/email/email_capa_fundo_quadrados.png); height:130px;">
+                    <!--CABEÇALHO-->
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td>
+                                <div style="text-align:center;">
+                                    <a href="http://www.univag.com.br" title="Sistemas Univag" target="_blank" style="text-decoration:none;">
+                                        <img src="http://sistema.univag.edu.br/img/email/email_capa_logo.png" alt="Sistemas Univag" border="0" style="border:0;display:inline-block;">
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!--TEXTO CONFIRMAÇAO-->
+                <div style="background:#F0F0F0; padding:5%;">
+
+                    <h1 style="color:#444; font-family:Arial, Helvetica, sans-serif; font-size:24px; margin:0 0 30px 0; padding:0; display:block; text-align:center">
+                        Rematrícula Realizada Com Sucesso
+                    </h1>
+
+                    <p style="color:#444; font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:18px">
+                        <strong>Caro(a) aluno(a) #{NOME},</strong><br /><br />
+                        Sua rematrícula para o período letivo de #{PERIODOLETIVO} foi realizada com sucesso. Favor conferir os dados abaixo sobre a progressão de grade de seu curso:
+                        <br /><br />
+                    </p>
+
+                    <table class="tabela_conteudo" style="width:100%; font-family:Arial, Helvetica, sans-serif; font-size:14px; margin-top:20px; line-height:20px">
+                        <tr>
+                            <td><strong>Matrícula:</strong> #{MATRICULA}</td>
+                            <td><strong>CPF:</strong> #{CPF}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Curso:</strong> #{CURSO}</td>
+                            <td><strong>Campus:</strong> #{CAMPUS}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Semestre:</strong> #{SEMESTRE}</td>
+                            <td><strong>Turno:</strong> #{TURNO}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="vertical-align:top">
+                                <div style="background:#F0F0F0; text-align:center; font-size:16px; padding:3%;">
+                                    <!-- GRID RESTRICOES DE REMATRICULA -->
+                                    <table class="tabela tabela-responsive" style="background: transparent; border-collapse: collapse; border-spacing: 0; border: 1px solid #005dab; font-family: arial; margin-bottom: 20px !important; max-width: 100%; width: 100% !important" bgcolor="transparent">
+                                        <caption><strong>Disciplinas a Cursar no Período Letivo #{PERIODOLETIVO}</strong></caption>
+                                        <thead>
+                                            <tr>
+                                                <th style="background: #005dab; border-right-color: #999999 !important; border-right-style: solid !important; border-right-width: 1px !important; color: #fff; font-size: 12px !important; font-weight: normal; line-height: 20px !important; padding: 8px; vertical-align: middle !important" bgcolor="#005dab">Disciplina</th>
+                                                <th style="background: #005dab; border-right-color: #999999 !important; border-right-style: solid !important; border-right-width: 1px !important; color: #fff; font-size: 12px !important; font-weight: normal; line-height: 20px !important; padding: 8px; vertical-align: middle !important" bgcolor="#005dab">Carga Horaria</th>
+                                                <th style="background: #005dab; border-right-color: #999999 !important; border-right-style: solid !important; border-right-width: 1px !important; color: #fff; font-size: 12px !important; font-weight: normal; line-height: 20px !important; padding: 8px; vertical-align: middle !important" bgcolor="#005dab">Turma</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody id="grid-data-result">
+                                            #{DISCIPLINAS}
+                                        </tbody>
+                                    </table>
+                                    <!-- FIM GRID RESTRICOES DE REMATRICULA -->
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="auto-style2"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <p style="color:#444; font-family:Arial, Helvetica, sans-serif; font-size:14px; line-height:18px">
+                                    Segue anexos os documentos da sua rematrícula: Termo Aditivo de Contrato de Prestação de Serviços Educacionais, Requerimento de Rematricula e demais documentos conforme vínculo de convênio do aluno.<br />
+                                    <h1 style="color:#444; font-family:Arial, Helvetica, sans-serif; font-size:24px; margin:0 0 30px 0; padding:0; display:block; text-align:center">BOAS AULAS!</h1>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                Em caso de dúvidas, entre em contato com a sua Coordenação ou com a Central de Atendimento ao Estudante (CAE) através dos telefones: (65) 3688-6006.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align:center; font-family:Arial, Helvetica, sans-serif; font-size:18px; height:40px;">
+                                &nbsp;
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!--RODAPE-->
+                <div style="background:#142752;padding:5%;text-align:center;font-family:Arial,Helvetica,sans-serif;">
+                    <img src="http://sistema.univag.edu.br/img/email/email_rodape_logo.png" width="130" height="54" alt="Sistemas Univag" style="margin-bottom:10px;" /><br />
+                    <a href="http://www.univag.com.br" title="Sistemas Univag" target="_blank" style="color:#00C0FF;text-decoration:none;font-size:1em;">
+                        www.univag.com.br
+                    </a><p style="color:#fff; font-size: 0.75em">© #{ANO} SISUNIVAG - Sistemas Univag. Todos os direitos reservados.</p>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

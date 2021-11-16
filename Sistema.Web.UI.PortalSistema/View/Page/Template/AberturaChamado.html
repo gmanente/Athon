@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Mensageria - Sistemas Univag</title>
+    <style>
+    body {width:100%!important;min-width:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;margin:0;padding:0;}
+    a, a:visited {color:#0A32A1; }
+    a:hover { color:#0026ff; }
+</style>
+</head>
+
+<body>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td style="background:#142752 url(http://sistema.univag.edu.br/View/img/email/email_capa_fundo.png); height: 185px;">
+                <div style="background:url(http://sistema.univag.edu.br/View/img/email/email_capa_fundo_quadrados.png); height:130px;">
+        	        <!--CABEÇALHO-->
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                            <td>
+                                <div style="text-align:center;">
+                                    <a href="http://sistema.univag.edu.br" title="Sistemas Univag" target="_blank" style="text-decoration:none;">
+                                        <img src="http://sistema.univag.edu.br/img/email/email_capa_logo.png" alt="Sistemas Univag" border="0" style="border:0;display:inline-block;">
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
+        <tr><td>
+      	<!--TEXTO CONFIRMAÇAO-->
+        <div style="background:#F0F0F0;padding:5%;">
+        	<h1 style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:24px;margin:0;padding:0;">Mensageria (Help Desk)</h1><br/>
+            
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Olá #{NOME}, foi aberto um chamado para o Núcleo de Tecnologia da Informação em sua conta.</strong>
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;">Confira abaixo as informações sobre a abertura do chamado.</p>
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Código do chamado: </strong>#{CODIGOCHAMADO}</p>
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Data de abertura: </strong>#{DATAABERTURA}</p>
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Campus: </strong>#{CAMPUS}</p>
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Login usuário solicitante:</strong> #{LOGINUSUARIO}</p>
+			<p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Módulo: </strong>#{MODULO}</p>
+		    <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Assunto: </strong>#{ASSUNTO}</p>
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Status do chamado:</strong> #{STATUSCHAMADO}</p>
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Tipo do chamado:</strong> #{TIPOCHAMADO}</p>
+            <p style="color:#444;font-family:Arial, Helvetica, sans-serif;font-size:16px;"><strong>Texto solicitante: </strong><br/><br/>#{TEXTOSOLICITANTE}</p>
+            <br/>
+			
+            <p style="color:#444444;font-family:Arial, Helvetica, sans-serif;font-size:16px;">
+				Fique atento! Em breve um dos nossos analistas irá atender seu chamado, você receberá automaticamente atualizações por e-mail da situação do chamado.
+			</p>
+           
+        </div>
+      </td></tr>
+        <tr>
+            <td>
+      	        <!--RODAPE-->
+                <div style="background:#142752;padding:5%;text-align:center;font-family:Arial,Helvetica,sans-serif;">
+                    <img src="http://sistema.univag.edu.br/img/email/email_rodape_logo.png" width="130" height="54" alt="Sistemas Univag" style="margin-bottom:10px;" /><br />          
+                    <a href="http://sistema.univag.edu.br" title="Sistemas Univag" target="_blank" style="color:#00C0FF;text-decoration:none;font-size:1em;">
+                        www.sistema.univag.edu.br
+                    </a>
+                    <p style="color:#fff; font-size: 0.75em">© 2014 SISUNIVAG - Sistemas Univag. Todos os direitos reservados.</p>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

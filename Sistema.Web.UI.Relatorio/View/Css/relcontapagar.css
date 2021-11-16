@@ -1,0 +1,45 @@
+﻿
+
+.cinza-padrao {
+    background-color: #444;
+    color: #666;
+    background: #EEE;
+}
+
+
+.btn-checkbox-radio a.active .fa-file-text {
+    background-color: #0080FF;
+}
+
+.btn-checkbox-radio a:not(.active) .fa-file-text:before {
+    font-family: FontAwesome;
+    content: "\f0f6";
+}
+
+.btn-checkbox-radio a.active .fa-file-text:before {
+    font-family: FontAwesome;
+    content: "\f058";
+    color: #085082;
+}
+
+.btn-checkbox-radio.btn-group a {
+    margin-right: 10px;
+    border-radius: 50px !important;
+}
+
+.btn-fa {
+    padding: 8px;
+    background: #ffffff;
+    margin-left: 1.5px;
+    margin-right: 8px;
+    margin-top: 2px;
+    width: 30px;
+}
+
+.icon-btn {
+    padding: 1px 15px 3px 2px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+    display: inline-block;
+}

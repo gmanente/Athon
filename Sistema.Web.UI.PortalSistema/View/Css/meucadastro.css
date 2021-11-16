@@ -1,0 +1,20 @@
+﻿/*
+    MEU CADASTRO CSS
+    AUTOR: Evander Emanuel da Silva Costa
+    ORGANIZAÇÃO: Univag - Centro Universitário (NTI - Núcleo de Tecnologia da Informação)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+
+input.error {
+    margin-top: 0;
+}
+
+.select2-container .select2-choice {
+    height: 32px;
+}
+
+span.error {
+color: red;
+}

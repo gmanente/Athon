@@ -1,0 +1,21 @@
+﻿/*
+    MÓDULO CSS
+    AUTOR: Leandro Moreira Curioso de Oliveira & Felipe Nascimento
+    ORGANIZAÇÃO: Univag - Centro Universitário (NTI - Núcleo de Tecnologia da Informação)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+.acesso-externo {
+   background:#8694DF;
+   color:#fff;
+}
+.p-alert {
+    margin:0;
+    padding:1px;
+    background:#FD494D;
+    border-radius:3px;
+    color:white;
+    font-weight: bold;
+}
+

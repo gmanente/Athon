@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="MeuPerfilAvatar.aspx.cs" Inherits="Sistema.Web.UI.Sistema.MeuPerfilAvatar" %>

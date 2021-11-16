@@ -1,0 +1,852 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <Conexao_VisaoGeral Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>Conexao_VisaoGeral</Alias>
+        <ConnectionStringEncrypted>5d71jGEW87zCGYy9ZYTjXsN49+vnWXudYQah8WkE9U+Bas8tT0t73Wl4/VDDJaBjx3xTid8JS4XgR+XsegTrL9V0f8JVANOkaEYl2GRM4HbEYPstxkzZ</ConnectionStringEncrypted>
+        <Key>a20b23812bca46e6860ff8f00fb1581b</Key>
+        <Name>Conexao_VisaoGeral</Name>
+      </Conexao_VisaoGeral>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <dataset_visaogeral Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>dataset_visaogeral</Alias>
+        <Columns isList="true" count="20">
+          <value>empresa,System.Int32</value>
+          <value>campus,System.Int32</value>
+          <value>aluno,System.Int32</value>
+          <value>matricula,System.String</value>
+          <value>nome,System.String</value>
+          <value>Cpf,System.String</value>
+          <value>RG,System.String</value>
+          <value>turma_sigla,System.String</value>
+          <value>periodo_letivo_sigla,System.String</value>
+          <value>descricao_turno_curso,System.String</value>
+          <value>descricao_curso,System.String</value>
+          <value>curso_sigla_generica,System.String</value>
+          <value>Descricao_Gpa,System.String</value>
+          <value>Descricao_Modularidade,System.String</value>
+          <value>grade_letiva,System.Int32</value>
+          <value>serie,System.Decimal</value>
+          <value>turma,System.Int32</value>
+          <value>situacao_academica,System.String</value>
+          <value>situacao_academica_sigla,System.String</value>
+          <value>pessoa_fisica,System.Int32</value>
+        </Columns>
+        <CommandTimeout>60000</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Key>7cf5522fb4e84ed9953950ea7749da48</Key>
+        <Name>dataset_visaogeral</Name>
+        <NameInSource>Conexao_VisaoGeral</NameInSource>
+        <Parameters isList="true" count="3">
+          <value>pCampus,,8,0</value>
+          <value>pCurso,,3,4</value>
+          <value>pPeriodoLetivo,,22,10</value>
+        </Parameters>
+        <SqlCommand>DECLARE @campus        INT = @pCampus; 
+DECLARE @periodoLetivo VARCHAR(10) = @pPeriodoLetivo;
+DECLARE @curso         CHAR(4) = @pCurso;  	
+	SELECT
+	 DB_Univag.dbo.vw_Consulta_Aluno_Serie.empresa
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.campus
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.aluno
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.matricula
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.nome
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.Cpf
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.RG
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.turma_sigla
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.periodo_letivo_sigla
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.descricao_turno_curso
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.descricao_curso
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.curso_sigla_generica
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.Descricao_Gpa
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.Descricao_Modularidade
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.grade_letiva
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.serie
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.turma
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.situacao_academica
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.situacao_academica_sigla
+	,DB_Univag.dbo.vw_Consulta_Aluno_Serie.pessoa_fisica
+
+ 
+	FROM DB_Univag.dbo.vw_Consulta_Aluno_Serie
+ 
+	WHERE DB_Univag.dbo.vw_Consulta_Aluno_Serie.empresa                = 1
+	AND DB_Univag.dbo.vw_Consulta_Aluno_Serie.campus                   = @campus
+	AND DB_Univag.dbo.vw_Consulta_Aluno_Serie.periodo_letivo_sigla     = @periodoLetivo
+	AND ((curso_sigla_generica = @curso OR @curso IS NULL OR @curso = 'null') OR (curso_sigla_generica IS NULL))
+	AND DB_Univag.dbo.vw_Consulta_Aluno_Serie.situacao_academica_Ativo = 'S' 
+	AND DB_Univag.dbo.vw_Consulta_Aluno_Serie.Dtrequerimento IS NOT NULL
+    AND DB_Univag.dbo.vw_Consulta_Aluno_Serie.modularidade in (1,2,3,50)
+   --
+   -- somente os alunos não  tiraram foto
+   --
+AND NOT EXISTS (SELECT 1
+                  FROM DBAlunoFoto.dbo.AlunoFoto
+                 WHERE DBAlunoFoto.dbo.AlunoFoto.Cpf = DB_Univag.dbo.vw_Consulta_Aluno_Serie.Cpf)
+    ORDER BY DB_Univag.dbo.vw_Consulta_Aluno_Serie.nome
+    </SqlCommand>
+      </dataset_visaogeral>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="1">
+      <value>,vUsuarioImpressao,vUsuarioImpressao,,System.String,,False,False,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>9e3644b468e7445eb292f38dab029376</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="16">
+        <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,19,3</ClientRectangle>
+          <Components isList="true" count="6">
+            <Image1 Ref="6" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0.2,0.4,4,1.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Guid>33aa490451174fd591375d0bfd0b8c10</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <IconColor>68, 114, 196</IconColor>
+              <ImageBytes>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</ImageBytes>
+              <Margins>0,0,0,0</Margins>
+              <Name>Image1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+            </Image1>
+            <Text3 Ref="7" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.9,0.6,7.6,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,18,Bold</Font>
+              <Guid>3f19efffa0254f4d9479f017ec2e9411</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Alunos sem carteirinhas</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text3>
+            <Text22 Ref="8" type="Text" isKey="true">
+              <Border>None;[191:191:191];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>15,1,2.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>0764b8f8d85e4941bdd2d0b6988b5073</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Emissão do Relatório
+{Time}</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text22>
+            <Text19 Ref="9" type="Text" isKey="true">
+              <Border>None;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>6.6,1.6,5.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,12,Bold</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Periodo Letivo: {dataset_visaogeral.periodo_letivo_sigla}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text19>
+            <StartPointPrimitive16 Ref="10" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+              <ClientRectangle>0,0,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>StartPointPrimitive16</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <ReferenceToGuid>f40908725c9b4299bd0bbbe4bbc985fa</ReferenceToGuid>
+            </StartPointPrimitive16>
+            <StartPointPrimitive1 Ref="11" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+              <ClientRectangle>0,-0.4,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>StartPointPrimitive1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <ReferenceToGuid>17db39bcaa98487c9be48996993de903</ReferenceToGuid>
+            </StartPointPrimitive1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>171963acae494c47ba0c2520865acf3a</Guid>
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageHeaderBand1>
+        <PageFooterBand1 Ref="12" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,26.6,19,1.1</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text27 Ref="13" type="Text" isKey="true">
+              <Border>None;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,White,Gainsboro,270</Brush>
+              <ClientRectangle>0,0,19,1.1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>60e0a3e498c8409ab54e7f5d725b2f84</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text27>
+            <Text357 Ref="14" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0.1,2.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>0fd4cefdd719468ea60dd5cead64128c</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text357</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>Página {PageNumber} de {TotalPageCount}</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+            </Text357>
+            <Text8 Ref="15" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.1,16.8,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>64c45ff9e5a54e45afbfcd71b14cd8c1</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="4" />
+              <Parent isRef="12" />
+              <Text>{vUsuarioImpressao}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text8>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>ac4d97000e924f2f8a5aa56e2806e334</Guid>
+          <Name>PageFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageFooterBand1>
+        <GroupHeaderBand1 Ref="16" type="GroupHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,4.2,19,1</ClientRectangle>
+          <Components isList="true" count="6">
+            <Text4 Ref="17" type="Text" isKey="true">
+              <Border>All;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>0,0,19,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Editable>True</Editable>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,12,Bold</Font>
+              <Guid>933e0c572f0a4cb8bbbb270d4bdbf661</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Curso: {dataset_visaogeral.descricao_curso}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="18" type="DateFormat" isKey="true">
+                <StringFormat>MM.dd.yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <Text15 Ref="19" type="Text" isKey="true">
+              <Border>All;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>14.4,0.6,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Editable>True</Editable>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>7f45a541306646f48a13b5e797744c15</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Turma</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="20" type="DateFormat" isKey="true">
+                <StringFormat>MM.dd.yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text15>
+            <Text2 Ref="21" type="Text" isKey="true">
+              <Border>All;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>2.4,0.6,2.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Editable>True</Editable>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>af6586777a9f45c581ca95b6e0d0a476</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>CPF</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="22" type="DateFormat" isKey="true">
+                <StringFormat>MM.dd.yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text7 Ref="23" type="Text" isKey="true">
+              <Border>All;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>0,0.6,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Editable>True</Editable>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>f3299829ab1f49f8a522d720155de0a9</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Matrícula</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="24" type="DateFormat" isKey="true">
+                <StringFormat>MM.dd.yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text1 Ref="25" type="Text" isKey="true">
+              <Border>All;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>5,0.6,9.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Editable>True</Editable>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>f2d0eb6c2e7f47449c826dcd65f8b095</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Nome do Aluno</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="26" type="DateFormat" isKey="true">
+                <StringFormat>MM.dd.yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text11 Ref="27" type="Text" isKey="true">
+              <Border>All;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>16.8,0.6,2.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Editable>True</Editable>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>398a429311f74a41a58da9dab361d62f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Série</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="28" type="DateFormat" isKey="true">
+                <StringFormat>MM.dd.yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+          </Components>
+          <Condition>{dataset_visaogeral.descricao_curso}</Condition>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <PrintOnAllPages>True</PrintOnAllPages>
+        </GroupHeaderBand1>
+        <DataBand1 Ref="29" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,6,19,0.4</ClientRectangle>
+          <Components isList="true" count="5">
+            <Text23 Ref="30" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>14.4,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Guid>662f0803118443c494a441600d40f13b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="4" />
+              <Parent isRef="29" />
+              <Text>{dataset_visaogeral.turma_sigla}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text23>
+            <Text6 Ref="31" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.4,0,2.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Guid>f09c94690ae3401f85aedaae22414f28</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="4" />
+              <Parent isRef="29" />
+              <Text>{dataset_visaogeral.Cpf}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text10 Ref="32" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Guid>2f85f4c8ee64402cab2253504787431b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="4" />
+              <Parent isRef="29" />
+              <Text>{dataset_visaogeral.matricula}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+            <Text5 Ref="33" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5,0,9.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="4" />
+              <Parent isRef="29" />
+              <Text>{dataset_visaogeral.nome}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Text12 Ref="34" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>16.8,0,2.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Guid>0a0b158e5d654493a8c2480720ce40e6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="4" />
+              <Parent isRef="29" />
+              <Text>{dataset_visaogeral.serie}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>dataset_visaogeral</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="2">
+            <value>ASC</value>
+            <value>nome</value>
+          </Sort>
+        </DataBand1>
+        <GroupFooterBand1 Ref="35" type="GroupFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,7.2,19,0.4</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text13 Ref="36" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>14.4,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Editable>True</Editable>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9,Bold</Font>
+              <Guid>189e8b15495a43fdb9926e50ef3ec67f</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="4" />
+              <Parent isRef="35" />
+              <Text>Total: </Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="37" type="DateFormat" isKey="true">
+                <StringFormat>MM.dd.yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Text14 Ref="38" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>16.8,0,2.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Guid>2f1bd9312f904354aed02caa980a365d</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="4" />
+              <Parent isRef="35" />
+              <Text>{Count()}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupFooterBand1>
+        <ReportSummaryBand1 Ref="39" type="ReportSummaryBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,8.4,19,0.4</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text16 Ref="40" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>14.4,0,2.4,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Editable>True</Editable>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9,Bold</Font>
+              <Guid>24398a035a01447c84b809c6f8d555c5</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="4" />
+              <Parent isRef="39" />
+              <Text>Total Geral: </Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="41" type="DateFormat" isKey="true">
+                <StringFormat>MM.dd.yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text17 Ref="42" type="Text" isKey="true">
+              <Border>Left, Right, Bottom;LightGray;2;Solid;False;4;Black</Border>
+              <Brush>GradientBrush,Gainsboro,WhiteSmoke,90</Brush>
+              <ClientRectangle>16.8,0,2.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Guid>050f8049dbde4c1a8c24f0fb98ade178</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="4" />
+              <Parent isRef="39" />
+              <Text>{Count()}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>ReportSummaryBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </ReportSummaryBand1>
+        <EndPointPrimitive12 Ref="43" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+          <ClientRectangle>25.6,18.9,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>EndPointPrimitive12</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>cc34ec51cd434066a3c4ccde221f204e</ReferenceToGuid>
+        </EndPointPrimitive12>
+        <EndPointPrimitive16 Ref="44" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+          <ClientRectangle>19,3.2,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>EndPointPrimitive16</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>f40908725c9b4299bd0bbbe4bbc985fa</ReferenceToGuid>
+        </EndPointPrimitive16>
+        <StartPointPrimitive18 Ref="45" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+          <ClientRectangle>19,2.8,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>StartPointPrimitive18</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>2a71e3793a1d4f7487a7172575b6838e</ReferenceToGuid>
+        </StartPointPrimitive18>
+        <EndPointPrimitive18 Ref="46" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+          <ClientRectangle>19,3.6,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>EndPointPrimitive18</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>2a71e3793a1d4f7487a7172575b6838e</ReferenceToGuid>
+        </EndPointPrimitive18>
+        <StartPointPrimitive24 Ref="47" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+          <ClientRectangle>19,4.4,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>StartPointPrimitive24</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>007d90b2818146f5b9131618cd103c30</ReferenceToGuid>
+        </StartPointPrimitive24>
+        <EndPointPrimitive24 Ref="48" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+          <ClientRectangle>19,5.2,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>EndPointPrimitive24</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>007d90b2818146f5b9131618cd103c30</ReferenceToGuid>
+        </EndPointPrimitive24>
+        <StartPointPrimitive19 Ref="49" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+          <ClientRectangle>19,7.8,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>StartPointPrimitive19</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>56f2a0cf9ed94a12aa1b9042c1b2ffbd</ReferenceToGuid>
+        </StartPointPrimitive19>
+        <EndPointPrimitive19 Ref="50" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+          <ClientRectangle>19,8.3,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>EndPointPrimitive19</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>56f2a0cf9ed94a12aa1b9042c1b2ffbd</ReferenceToGuid>
+        </EndPointPrimitive19>
+        <RoundedRectanglePrimitive1 Ref="51" type="Stimulsoft.Report.Components.StiRoundedRectanglePrimitive" isKey="true">
+          <ClientRectangle>0,0,19,27.8</ClientRectangle>
+          <Color>Gainsboro</Color>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>17db39bcaa98487c9be48996993de903</Guid>
+          <Name>RoundedRectanglePrimitive1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Round>0.2</Round>
+          <Size>3</Size>
+        </RoundedRectanglePrimitive1>
+        <EndPointPrimitive1 Ref="52" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+          <ClientRectangle>19,27.8,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>EndPointPrimitive1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>17db39bcaa98487c9be48996993de903</ReferenceToGuid>
+        </EndPointPrimitive1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>29ba6a88cbeb41869458d030b172bc1d</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <PageHeight>29.7</PageHeight>
+      <PageWidth>21</PageWidth>
+      <Report isRef="0" />
+      <ResetPageNumber>True</ResetPageNumber>
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/10/2021 3:40:22 PM</ReportChanged>
+  <ReportCreated>5/13/2014 3:51:35 PM</ReportCreated>
+  <ReportFile>D:\Net_v4.6_New\Projetos\Univag.Sisger\Sistema.Web.UI.Relatorio\View\Report\CarteirinhaAluno\Stimull\AlunoCarteirinhaNaoFeitaRel.mrt</ReportFile>
+  <ReportGuid>2659e69e8d974592aea9212bb81713f1</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2020.5.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

@@ -1,0 +1,148 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Submodulo.master.cs" Inherits="Sistema.Web.UI.Relatorio.View.MasterPage.Submodulo" %>
+
+<%@ Import Namespace="Sistema.Api.dll.Repositorio.Util" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+
+<!--INÍCIO HEAD-->
+<head id="Head1" runat="server">
+
+    <!--INÍCIO CHAR SET-->
+    <meta charset="utf-8" />
+    <!--FINAL CHAR SET-->
+
+    <!--INÍCIO TÍTULO DA APLICAÇÃO-->
+    <title>SISUNIVAG / Relatórios / Univag</title>
+    <!--FIM TÍTULO DA APLICAÇÃO-->
+
+    <!--INÍCIO AUTOR & DIREITOS AUTORAIS & DISTRIBUIÇÃO DA APLICAÇÃO-->
+    <meta name="author" content="Univag - Centro Universitário (NTI - Núcleo de Tecnologia da Informação)" />
+    <meta name="copyright" content="© <% DateTime ano = DateTime.Now; Response.Write(ano.ToString("yyyy")); %> | Todos os direitos reservados" />
+    <meta name="document-type" content="Private" />
+    <meta name="document-distribution" content="IU" />
+    <!--FIM AUTOR & DIREITOS AUTORAIS & DISTRIBUIÇÃO DA APLICAÇÃO-->
+
+    <!--INÍCIO META TAG DE COMPATIBILIDADE CROSS-BROWSER-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--FIM META TAG DE COMPATIBILIDADE CROSS-BROWSER-->
+
+    <!--INÍCIO VIEWPORT PARA RESPONSIVIDADE EM DIFERENTES RESOLUÇÕES DE TELA-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--FIM VIEWPORT PARA RESPONSIVIDADE EM DIFERENTES RESOLUÇÕES DE TELA-->
+
+    <!--INÍCIO META TAGS PARA NÃO INDEXAÇÃO DO SISTEMA COM MOTORES DE BUSCA-->
+    <meta name="robots" content="noindex" />
+    <meta name="googlebot" content="noindex" />
+    <!--FIM META TAGS PARA NÃO INDEXAÇÃO DO SISTEMA COM MOTORES DE BUSCA-->
+
+    <!--INÍCIO CSS-->
+    <%= Funcoes.InvocarTagArquivo("View/Css/normalize.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/font-awesome.min.css" , true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/jquery.resizableColumns.css") %>
+    <%--    <%= Funcoes.InvocarTagArquivo("View/select2/select2.css") %>--%>
+    <%= Funcoes.InvocarTagArquivo("View/select2/select2-bootstrap.css") %>
+    <%--    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap-theme.css") %>--%>
+    <%= Funcoes.InvocarTagArquivo("View/Css/pre-sets.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/datepicker.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/tablecloth.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap-datetimepicker.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap-colorpicker.min.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/main.css", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/sweet-alert.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/animate.css" )%>
+    <%= Funcoes.InvocarTagArquivo("View/Css/pnotify.custom.min.css" )%>
+    <!--FIM CSS-->
+
+    <!--INÍCIO JAVASCRIPT-->
+    <%= Funcoes.InvocarTagArquivo("View/Js/sweet-alert.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.mask.min.js") %>
+    <%--<%= Funcoes.InvocarTagArquivo("View/Js/bootstrap.js") %>--%>
+    <%= Funcoes.InvocarTagArquivo("View/Js/webstorage.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/extention.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/main.js", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/lib.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/validate.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/ajaxhandler.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.tablecloth.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.tablesorter.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/serializeObject.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/bootstrap-datepicker.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/store.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.resizableColumns.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/moment.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/bootstrap-datetimepicker.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/select2/select2.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/criptografia.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.maskedinput.min.js" , true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.cookie.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/bootstrap-colorpicker.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/relatorio.js" , true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/ajaxUploader.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/pnotify.custom.min.js") %>
+
+    <!--FIM JAVASCRIPT-->
+
+    <%= Funcoes.ImportarSmartAdmin() %>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <!--INÍCIO NO-BACK-->
+    <script type="text/javascript">
+        window.history.forward();
+        function noBack() { window.history.forward(); }
+    </script>
+    <!--FIM NO-BACK-->
+
+            <!--INICIO APPLICATION INSIGHTS-->
+        <script type="text/javascript">
+            var sdkInstance = "appInsightsSDK"; window[sdkInstance] = "appInsights"; var aiName = window[sdkInstance], aisdk = window[aiName] || function (e) { function n(e) { t[e] = function () { var n = arguments; t.queue.push(function () { t[e].apply(t, n) }) } } var t = { config: e }; t.initialize = !0; var i = document, a = window; setTimeout(function () { var n = i.createElement("script"); n.src = e.url || "https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js", i.getElementsByTagName("script")[0].parentNode.appendChild(n) }); try { t.cookie = i.cookie } catch (e) { } t.queue = [], t.version = 2; for (var r = ["Event", "PageView", "Exception", "Trace", "DependencyData", "Metric", "PageViewPerformance"]; r.length;)n("track" + r.pop()); n("startTrackPage"), n("stopTrackPage"); var s = "Track" + r[0]; if (n("start" + s), n("stop" + s), n("setAuthenticatedUserContext"), n("clearAuthenticatedUserContext"), n("flush"), !(!0 === e.disableExceptionTracking || e.extensionConfig && e.extensionConfig.ApplicationInsightsAnalytics && !0 === e.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)) { n("_" + (r = "onerror")); var o = a[r]; a[r] = function (e, n, i, a, s) { var c = o && o(e, n, i, a, s); return !0 !== c && t["_" + r]({ message: e, url: n, lineNumber: i, columnNumber: a, error: s }), c }, e.autoExceptionInstrumented = !0 } return t }(
+                {
+                    instrumentationKey: "8f16e583-8d81-4b30-ab41-f5c0886d0d30"
+                }
+            ); window[aiName] = aisdk, aisdk.queue && 0 === aisdk.queue.length && aisdk.trackPageView({});
+        </script>
+        <!--FIM APPLICATION INSIGHTS-->
+
+</head>
+<!--FIM HEAD-->
+
+<!--INÍCIO BODY-->
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+
+    <!--INÍCIO NOSCRIPT-->
+    <!--[if lt IE 7]>
+            <p class="chromeframe">Você está utilizando um browser <strong>desatualizado!</strong> Por favor <a href="http://browsehappy.com/">atualize seu broswe</a> ou <a href="http://www.google.com/chromeframe/?redirect=true">ative o Google Frame</a> para melhorar sua experiência.</p>
+        <![endif]-->
+    <noscript><h2>Javascript desabilitado em seu navegador! Acesso negado.<br/><a href="http://www.enable-javascript.com/pt/" target="_blank" title="Como habilitar o javascript?">Clique aqui</a> e aprenda como habilita-lo para utilizar o Sistema de Gerenciamento SISGER.</h2></noscript>
+    <!--FIM NOSCRIPT-->
+
+
+    <!--INÍCIO HEADER SUBMÓDULO-->
+    <input type="hidden" id="PaginaAtual" name="PaginaAtual" value="<%= PaginaAtual %>" />
+    <% RelatorioSubmoduloMasterTemplate.Render(); %>
+    <!--FIM HEADER SUBMÓDULO-->
+
+    <!--INÍCIO FORM-->
+    <form id="form" runat="server">
+
+        <!--INÍCIO AJAX CONTAINER-->
+        <div id="ajax-container"></div>
+        <!--FIM AJAX CONTAINER-->
+        <!--INÍCIO SCRIPT MANAGER-->
+        <asp:ScriptManager ID="scm" runat="server" EnablePageMethods="true" />
+        <!--FIM SCRIPT MANAGER-->
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+
+    </form>
+    <!--FIM FORM-->
+
+</body>
+<!--FIM BODY-->
+
+</html>

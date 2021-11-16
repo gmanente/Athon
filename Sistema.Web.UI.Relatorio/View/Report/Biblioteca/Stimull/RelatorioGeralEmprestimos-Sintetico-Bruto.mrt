@@ -1,0 +1,688 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <ConexaoSQL Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>ConexaoSQL</Alias>
+        <ConnectionStringEncrypted>+WD7iVVd4wV/Wuhs5XAy597yf+vFVzGIQ0313E49qHvwcMGhT05DxUZPtMxhGPY30XSbg80K6oHiE6Xc6RRpP8N60aJPaEuMb0vVnGdx9nvccNeJRV3zmel7jKxjBOxent71aEZK0wVvWoT8S3gif5BYzQ==</ConnectionStringEncrypted>
+        <Key>65d2a65231c941f7898dad98c15b61be</Key>
+        <Name>ConexaoSQL</Name>
+      </ConexaoSQL>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <sql Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>sql</Alias>
+        <Columns isList="true" count="12">
+          <value>AcervoTipo,System.String</value>
+          <value>AcervoTituloNome,System.String</value>
+          <value>EmprestimosAbertos,System.Int32</value>
+          <value>EmprestimosFechados,System.Int32</value>
+          <value>IdAcervo,System.Int32</value>
+          <value>IdAcervoTipo,System.Int32</value>
+          <value>TotalAmarelo,System.Int32</value>
+          <value>TotalBranco,System.Int32</value>
+          <value>TotalEmprestimos,System.Int32</value>
+          <value>TotalOutros,System.Int32</value>
+          <value>TotalTombos,System.Int32</value>
+          <value>TotalVermelho,System.Int32</value>
+        </Columns>
+        <CommandTimeout>6000</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Key>6df024e6b0f64c70a8a3f7ecafa7aa09</Key>
+        <Name>sql</Name>
+        <NameInSource>ConexaoSQL</NameInSource>
+        <Parameters isList="true" count="8">
+          <value>IdAreaCampus,,8,0</value>
+          <value>IdAreaCurso,,8,0</value>
+          <value>PessoaNome,,22,30</value>
+          <value>DataInicial,,22,10</value>
+          <value>DataFinal,,22,10</value>
+          <value>IdTipoTrabalho,,8,0</value>
+          <value>TipoFiltroEmprestimo,,8,50</value>
+          <value>AcervoNome,,22,100</value>
+        </Parameters>
+        <SqlCommand>
+/*
+DECLARE @IdAreaCampus INT         = 0;
+DECLARE @IdTipoTrabalho INT       = 0;
+DECLARE @TipoFiltroEmprestimo INT = 0;
+DECLARE @AcervoNome VARCHAR(100)  = '';
+DECLARE @PessoaNome VARCHAR(30)   = '';
+DECLARE @DataInicial VARCHAR(10)  = '01/01/2019';
+DECLARE @DataFinal VARCHAR(10)    = '05/01/2019';
+*/
+
+DECLARE @TBL TABLE
+(
+	  IdAcervo INT
+	, IdAcervoTombo INT
+	, IdAcervoTipo INT
+	, AcervoTipo VARCHAR(250)
+	, AcervoTituloNome VARCHAR(250)
+	, IdAcervoCategoria INT
+	, EmprestimoEmAberto VARCHAR(250)
+
+	, IdEmprestimo INT
+	, IdDevolucaoTombo INT
+
+	, TotalEmprestimos INT
+)
+
+INSERT INTO @TBL
+
+
+SELECT
+            AcervoTombo.IdAcervo                                                                AS IdAcervo
+          , AcervoTombo.IdAcervoTombo                                                           AS IdAcervoTombo
+          
+          , AcervoTipo.IdAcervoTipo                                                             AS IdAcervoTipo
+          , AcervoTipo.Nome                                                                     AS AcervoTipo
+          , AcervoTitulo.NomeCompleto + IIF(AcervoTombo.SubTitulo != '',' - ' + AcervoTombo.SubTitulo,'')  AS AcervoTituloNome
+
+          , AcervoTombo.IdCategoria                                                             AS IdAcervoCategoria
+          , IIF(DevolucaoTombo.IdDevolucaoTombo IS NUll,1,0)                                    AS EmprestimoEmAberto
+
+          , Emprestimo.IdEmprestimo                                                             AS IdEmprestimo
+          , DevolucaoTombo.IdDevolucaoTombo                                                     AS IdDevolucaoTombo
+
+          , 1                                                                                   AS TotalEmprestimos
+
+      FROM DBBiblioteca.dbo.Emprestimo                  WITH (NOLOCK)
+INNER JOIN DBBiblioteca.dbo.EmprestimoAcervoTombo EAT   WITH (NOLOCK) ON EAT.IdEmprestimo = Emprestimo.IdEmprestimo
+ LEFT JOIN DBBiblioteca.dbo.DevolucaoTombo              WITH (NOLOCK) ON DevolucaoTombo.IdEmprestimoAcervoTombo = EAT.IdEmprestimoAcervoTombo
+ LEFT JOIN DBBiblioteca.dbo.Devolucao                   WITH (NOLOCK) ON Devolucao.IdDevolucao = DevolucaoTombo.IdDevolucao
+
+INNER JOIN DBBiblioteca.dbo.AcervoTombo                 WITH (NOLOCK) ON AcervoTombo.IdAcervoTombo = EAT.IdAcervoTombo
+INNER JOIN DBBiblioteca.dbo.Acervo                      WITH (NOLOCK) ON Acervo.IdAcervo = AcervoTombo.IdAcervo
+INNER JOIN DBBiblioteca.dbo.AcervoTitulo                WITH (NOLOCK) ON AcervoTitulo.IdAcervoTitulo = Acervo.IdAcervoTitulo
+INNER JOIN DBBiblioteca.dbo.AcervoTipoTrabalho          WITH (NOLOCK) ON AcervoTipoTrabalho.IdAcervoTipoTrabalho = Acervo.IdAcervoTipoTrabalho
+INNER JOIN DBBiblioteca.dbo.AcervoTipo                  WITH (NOLOCK) ON AcervoTipo.IdAcervoTipo = AcervoTipoTrabalho.IdAcervoTipo
+
+
+WHERE 1 = 1
+
+    AND CONVERT(DATE, Emprestimo.DataEmprestimo) BETWEEN CONVERT(DATE, @DataInicial, 105) AND CONVERT(DATE, @DataFinal, 105)
+
+    AND (CASE @TipoFiltroEmprestimo WHEN 0  THEN ISNULL(DevolucaoTombo.IdDevolucaoTombo, 0) WHEN 1 THEN 0 ELSE DevolucaoTombo.IdDevolucaoTombo END = ISNULL(DevolucaoTombo.IdDevolucaoTombo, 0))
+    AND (CASE @IdAreaCampus         WHEN 0  THEN 0 ELSE Emprestimo.IdCampus END = @IdAreaCampus)
+    AND (CASE @IdTipoTrabalho       WHEN 0  THEN 0 ELSE AcervoTipoTrabalho.IdAcervoTipoTrabalho END = @IdTipoTrabalho)
+    AND (CASE @AcervoNome           WHEN '' THEN '' ELSE AcervoTitulo.NomeCompleto  END LIKE '%'+@AcervoNome+'%')
+   -- AND (CASE @PessoaNome           WHEN '' THEN '' ELSE Pessoa.Nome END LIKE '%'+@PessoaNome+'%')
+
+ORDER BY IdAcervoTipo, AcervoTituloNome, IdAcervo, IdAcervoTombo, IdEmprestimo
+
+
+
+SELECT
+
+      TBL.IdAcervo
+    , TBL.IdAcervoTipo
+    , TBL.AcervoTipo
+    , TBL.AcervoTituloNome
+
+    , Count(DISTINCT TBL.IdAcervoTombo)                               AS TotalTombos
+    , Count(1)                                                        AS TotalEmprestimos
+    , SUM(IIF(TBL.EmprestimoEmAberto = 1, 1, 0))                      AS EmprestimosAbertos
+    , SUM(IIF(TBL.EmprestimoEmAberto = 0, 1, 0))                      AS EmprestimosFechados
+    
+    , SUM(IIF(TBL.IdAcervoCategoria = 3, 1, 0))                       AS TotalBranco
+    , SUM(IIF(TBL.IdAcervoCategoria = 2, 1, 0))                       AS TotalAmarelo
+    , SUM(IIF(TBL.IdAcervoCategoria = 1, 1, 0))                       AS TotalVermelho
+    , SUM(IIF(TBL.IdAcervoCategoria &gt; 3, 1, 0))                       AS TotalOutros
+
+FROM @TBL AS TBL
+
+GROUP BY TBL.IdAcervo, TBL.IdAcervoTipo, TBL.AcervoTipo, TBL.AcervoTituloNome
+
+ORDER BY TBL.IdAcervoTipo, TBL.AcervoTituloNome
+</SqlCommand>
+      </sql>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="4">
+      <value>,vFiltro,vFiltro,,System.String,,False,False,False,False</value>
+      <value>,vFiltroPeriodo,vFiltroPeriodo,,System.String,,False,False,False,False</value>
+      <value>,vTipoFiltroEmprestimo,vTipoFiltroEmprestimo,,System.String,,False,False,False,False</value>
+      <value>,vUsuarioImpressao,vUsuarioImpressao,,System.String,,False,False,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>f5be90fb3f374ac08c68f4e474c8338a</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>All;[127:127:127];2;Solid;False;4;Black</Border>
+      <Brush>White</Brush>
+      <Components isList="true" count="2">
+        <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
+          <Border>All;[127:127:127];1;Solid;False;4;Black</Border>
+          <Brush>White</Brush>
+          <ClientRectangle>0,0.4,27.6,2.5</ClientRectangle>
+          <Components isList="true" count="11">
+            <Panel1 Ref="6" type="Panel" isKey="true">
+              <Brush>White</Brush>
+              <ClientRectangle>0,0.05,27.6,1.85</ClientRectangle>
+              <Components isList="true" count="2">
+                <Text1 Ref="7" type="Text" isKey="true">
+                  <Brush>White</Brush>
+                  <ClientRectangle>0,0.15,27.6,0.6</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Arial,14,Bold</Font>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text1</Name>
+                  <Page isRef="4" />
+                  <Parent isRef="6" />
+                  <Text>Relatório Geral de Empréstimos {vTipoFiltroEmprestimo} </Text>
+                  <TextBrush>Black</TextBrush>
+                  <Type>Expression</Type>
+                  <VertAlignment>Center</VertAlignment>
+                </Text1>
+                <Text27 Ref="8" type="Text" isKey="true">
+                  <Brush>White</Brush>
+                  <ClientRectangle>0,0.75,27.6,0.9</ClientRectangle>
+                  <Conditions isList="true" count="0" />
+                  <Expressions isList="true" count="0" />
+                  <Font>Arial,10,Bold</Font>
+                  <Guid>0b997f1ba2334f53b1badab1c4f8c0e3</Guid>
+                  <HorAlignment>Center</HorAlignment>
+                  <Margins>0,0,0,0</Margins>
+                  <Name>Text27</Name>
+                  <Page isRef="4" />
+                  <Parent isRef="6" />
+                  <Text>{vFiltroPeriodo}
+{vFiltro}</Text>
+                  <TextBrush>Black</TextBrush>
+                  <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+                  <Type>Expression</Type>
+                </Text27>
+              </Components>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>Panel1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+            </Panel1>
+            <Text7 Ref="9" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>4.8,2.05,5.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>6e93929d302247969f2251cc2f762c22</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Título do Acervo</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text99 Ref="10" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>22.8,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>3278777c36af4e469bc260d1602138e5</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text99</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Total Vermelha</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text99>
+            <Text9 Ref="11" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>20.4,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>1fd918c9d06449e8a059fad165bd00d7</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Total Amarela</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text12 Ref="12" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>2.4,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>1ca11a23b799449099f75fe73052e114</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Acervo</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+            <Text15 Ref="13" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>0,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>2adf99a8e0f5418a95fdcefbce57f488</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Tipo de Acervo</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text15>
+            <Text3 Ref="14" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>10.2,2.05,2.6,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>763541fcf3804f8ca380476315ffd70f</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Empréstimos</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text4 Ref="15" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>12.8,2.05,2.6,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>6802e57a4e7941cfbc9d1751bdd6c199</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Total Emprestado</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <Text5 Ref="16" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>15.4,2.05,2.6,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>f4601c864b994ec4bd4617d065cda517</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Total Devolvido</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Text10 Ref="17" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>18,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>4eb6e1647d22455ea58ca1fa160b16ce</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Total Branca</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+            <Text11 Ref="18" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>25.2,2.05,2.4,0.44</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>da0dc7da7568475ebcd22aaad02fdcd6</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Total Outros</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <PrintOn>OnlyFirstPage</PrintOn>
+        </PageHeaderBand1>
+        <DataBand1 Ref="19" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,3.7,27.6,0.49</ClientRectangle>
+          <Components isList="true" count="10">
+            <Text6 Ref="20" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>4.8,0,5.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.AcervoTituloNome}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text17 Ref="21" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>25.2,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>9102521efe404135ae5b75884d9fc357</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text17</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.TotalOutros}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="22" type="NumberFormat" isKey="true">
+                <DecimalDigits>0</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseGroupSeparator>False</UseGroupSeparator>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text17>
+            <Text24 Ref="23" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>22.8,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>271d0fcc256e45d8903b49d9247fcdf4</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.TotalVermelho}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="24" type="NumberFormat" isKey="true">
+                <DecimalDigits>0</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseGroupSeparator>False</UseGroupSeparator>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text24>
+            <Text8 Ref="25" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>0,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>71c6dfaa86cc4238bdfe0d43100cc3c1</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.AcervoTipo}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="26" type="DateFormat" isKey="true">
+                <StringFormat>dd/MM/yyyy</StringFormat>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text2 Ref="27" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>2.4,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>d56ab9ca65a14388b43c839baf67088a</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.IdAcervo}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text13 Ref="28" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>20.4,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>79ee112f46f944e481005996c791f61c</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.TotalAmarelo}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="29" type="NumberFormat" isKey="true">
+                <DecimalDigits>0</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseGroupSeparator>False</UseGroupSeparator>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <Text14 Ref="30" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>18,0,2.4,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>c45c65cf151e4335b014b26f26ed51bd</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.TotalBranco}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="31" type="NumberFormat" isKey="true">
+                <DecimalDigits>0</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseGroupSeparator>False</UseGroupSeparator>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+            <Text16 Ref="32" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>15.4,0,2.6,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>e3a429c039b748d3a77a689fb008b0bd</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.EmprestimosFechados}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="33" type="NumberFormat" isKey="true">
+                <DecimalDigits>0</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseGroupSeparator>False</UseGroupSeparator>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text18 Ref="34" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>12.8,0,2.6,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>c5dc40c6741145d388f4bb8b3b13de5c</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.EmprestimosAbertos}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="35" type="NumberFormat" isKey="true">
+                <DecimalDigits>0</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseGroupSeparator>False</UseGroupSeparator>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text19 Ref="36" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>10.2,0,2.6,0.5</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>1e0affdaa57b4b2cae06e09ecc73dcb9</Guid>
+              <Margins>3,3,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sql.TotalEmprestimos}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="37" type="NumberFormat" isKey="true">
+                <DecimalDigits>0</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <UseGroupSeparator>False</UseGroupSeparator>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text19>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>sql</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="0" />
+        </DataBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>2886fe215b244fedaab1a981924f707a</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>29.6</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/10/2021 3:10:13 PM</ReportChanged>
+  <ReportCreated>2/9/2017 10:49:35 AM</ReportCreated>
+  <ReportFile>D:\Net_v4.6_New\Projetos\Univag.Sisger\Sistema.Web.UI.Relatorio\View\Report\Biblioteca\Stimull\RelatorioGeralEmprestimos-Sintetico-Bruto.mrt</ReportFile>
+  <ReportGuid>681339a69cbf4a608dfaa595469dc566</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2020.5.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

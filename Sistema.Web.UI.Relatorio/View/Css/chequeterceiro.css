@@ -1,0 +1,59 @@
+﻿/*
+    EDITAL CSS
+    AUTOR: Gustavo Martins da Silva
+    ORGANIZAÇÃO: Univag - Centro Universitário (NPD - Núcleo de Processamento de Dados)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+
+.bs-callout {
+    margin: 20px 0;
+    padding: 15px 30px 15px 15px;
+    border-left: 5px solid #eee;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-top-width: 1px!important;
+    border-right-width: 1px!important;
+    border-bottom-width: 1px!important;
+    border-right-color: #e4e4e4;
+    border-top-color: #e4e4e4;
+    border-bottom-color: #e4e4e4;
+}
+
+    .bs-callout h4 {
+        margin-top: 0;
+    }
+
+    .bs-callout p:last-child {
+        margin-bottom: 0;
+    }
+
+    .bs-callout code,
+    .bs-callout .highlight {
+        background-color: #fff;
+    }
+
+/* Themes for different contexts */
+.bs-callout-danger {
+    background-color: #ffffff;
+    border-left-color: #f84843;
+}
+
+.bs-callout-warning {
+    background-color: #fefbed;
+    border-color: #f1e7bc;
+}
+
+.bs-callout-info {
+    background-color: #fff;
+    border-left-color: #02a1f2;
+}
+
+/*Centralizar th*/
+.th-center > th{
+    text-align: center !important
+}
+ 

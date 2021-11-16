@@ -1,0 +1,787 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <ConexaoSQL Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>ConexaoSQL</Alias>
+        <ConnectionStringEncrypted>+d7762EW88XCGYzU6YThP954+8LnCZPNYQb98eFE9XKBNtmJQ0pz3W9NZVhiVOEn4/JjiUtZQoFvRuj46lisr9FayShLBUuZfxX9nGNMd3bE8tXrSHyjzeE=</ConnectionStringEncrypted>
+        <Key>9ebef9e26fd74679ade02792a100d1bc</Key>
+        <Name>ConexaoSQL</Name>
+      </ConexaoSQL>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <sqlRelatorio Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>sqlRelatorio</Alias>
+        <Columns isList="true" count="7">
+          <value>ORIGINAL,Id,Id,Id,System.Int32,_x0036_654ec2b47ed4f869c6581dfa3fce507</value>
+          <value>ORIGINAL,Mes,Mes,Mes,System.Int32,_x0033_d94dcaf25a247f6885da5464e5632d4</value>
+          <value>ORIGINAL,MesNome,MesNome,MesNome,System.String,_x0030_ece1745f3a045bcb3be5415c93825d8</value>
+          <value>ORIGINAL,Ano,Ano,Ano,System.Int32,a8865d0f1ead4cc08114b2447a4d59c4</value>
+          <value>ORIGINAL,PlanoConta,PlanoConta,PlanoConta,System.String,_x0032_1115917c51f492c987c443e1afbf4f7</value>
+          <value>ORIGINAL,CentroCusto,CentroCusto,CentroCusto,System.String,_x0030_bbe260c93e34612812d8bf848682aa8</value>
+          <value>ORIGINAL,Valor,Valor,Valor,System.Decimal,_x0031_b87fe5c644c4ce2a6d11aab7297be91</value>
+        </Columns>
+        <CommandTimeout>60000</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Key>980ea9946e3c499a8a7b4964b6038ffc</Key>
+        <Name>sqlRelatorio</Name>
+        <NameInSource>ConexaoSQL</NameInSource>
+        <Parameters isList="true" count="3">
+          <value>pIdBudget,vIdBudget,8,0,8c0dd2e4ab86422990b77a4b74078f4a</value>
+          <value>pMes,vMes,8,0,c13f8eee8de949c9b6df2d7a1001219e</value>
+          <value>pPlanoConta,vPlanoConta,22,200,07ab7160d951496a934624d8851a5d54</value>
+        </Parameters>
+        <SqlCommand>/*
+DECLARE @pIdBudget    INT         = 7;
+DECLARE @pCentroCusto VARCHAR(50) = '01.01.01.03'
+DECLARE @pMes         INT         = 2 -- MAIO
+*/
+SET @pPlanoConta = REPLACE(@pPlanoConta, '.00', '')
+
+IF(ISNULL(@pPlanoConta, '0') = '0')
+BEGIN
+SET @pPlanoConta = '01'
+END                       
+						
+DECLARE @vAno INT
+SELECT @vAno = DBCompra.dbo.Budget.AnoCompetencia
+   FROM DBCompra.dbo.Budget WITH(NOLOCK)
+  WHERE DBCompra.dbo.Budget.IdBudget = @pIdBudget
+
+DECLARE @TBL_MOVIMENTO TABLE
+(
+	 Id                    INT IDENTITY(1,1) 
+	,Mes                   INT
+    ,MesNome               VARCHAR(100)
+	,Ano                   INT
+	,PlanoConta            VARCHAR(200)
+	,CentroCusto           VARCHAR(200)
+	,Valor                 MONEY
+)
+
+INSERT INTO @TBL_MOVIMENTO
+SELECT
+	MONTH(DF.DataDocumento)        AS Mes
+	, DBComum.dbo.UvwMes.Descricao1  AS MesNome   
+	, YEAR(DF.DataDocumento)         AS AnoCompetencia
+	, CONCAT(PCG.Codigo, ' - ', PCG.Descricao) AS PlanoConta
+	, CC.Descricao                          AS CentroCusto
+	, ISNULL(SUM((IIF(DMT.IdDepositoMovimentoTipoNatureza = 1, (CAST((DF.Valor) AS NUMERIC(15,4))), (CAST(-(DF.Valor) AS NUMERIC(15,4)))))),0) AS ValorTotal
+FROM DBCompra.dbo.DepositoMovimento DM           WITH(NOLOCK)                                             
+INNER JOIN DBCompra.dbo.DepositoMovimentoTipo DMT      WITH(NOLOCK) ON DMT.IdDepositoMovimentoTipo = DM.IdDepositoMovimentoTipo AND DMT.IdDepositoMovimentoTipo IN (2,3,4)
+INNER JOIN DBCompra.dbo.DocumentoFiscal DF             WITH(NOLOCK) ON DF.IdDocumentoFiscal = DM.IdOperacao
+INNER JOIN DBCompra.dbo.OrdemCompra OC                 WITH(NOLOCK) ON OC.IdOrdemCompra = DF.IdOrdemCompra
+INNER JOIN DBCompra.dbo.CotacaoFornecedor CF           WITH(NOLOCK) ON CF.IdCotacaoFornecedor = OC.IdCotacaoFornecedor
+INNER JOIN DBCompra.dbo.Cotacao C                      WITH(NOLOCK) ON C.IdCotacao = CF.IdCotacao
+INNER JOIN DBCompra.dbo.Projeto P                      WITH(NOLOCK) ON P.IdProjeto = C.IdProjeto
+INNER JOIN DBComum.dbo.UvwMes                          WITH(NOLOCK) ON DBComum.dbo.UvwMes.Codigo = MONTH(DF.DataDocumento)
+INNER JOIN DBCompra.dbo.CentroCusto CC                 WITH(NOLOCK) ON CC.IdCentroCusto = (SELECT TOP 1 CC2.IdCentroCusto
+																								FROM DBCompra.dbo.CotacaoFornecedorProduto CFP2  WITH(NOLOCK)
+																						INNER JOIN DBCompra.dbo.CotacaoProduto CP2             WITH(NOLOCK) ON CP2.IdCotacaoProduto = CFP2.IdCotacaoProduto
+																						INNER JOIN DBCompra.dbo.CotacaoProdutoSolicitacao CPS2 WITH(NOLOCK) ON CPS2.IdCotacaoProduto = CP2.IdCotacaoProduto
+																						INNER JOIN DBCompra.dbo.SolicitacaoCompraProduto SCP2  WITH(NOLOCK) ON SCP2.IdSolicitacaoCompraProduto = CPS2.IdSolicitacaoCompraProduto
+																						INNER JOIN DBCompra.dbo.SolicitacaoCompra SC2          WITH(NOLOCK) ON SC2.IdSolicitacaoCompra = SCP2.IdSolicitacaoCompra
+																						LEFT JOIN DBCompra.dbo.SolicitacaoCompraProjeto SCPJ2 WITH(NOLOCK) ON SCPJ2.IdSolicitacaoCompra = SC2.IdSolicitacaoCompra
+																						LEFT JOIN DBCompra.dbo.Projeto P2                     WITH(NOLOCK) ON P2.IdProjeto = SCPJ2.IdProjeto
+																						INNER JOIN DBCompra.dbo.CentroCusto CC2                WITH(NOLOCK) ON CC2.IdCentroCusto = IIF(SCPJ2.IdSolicitacaoCompraProjeto IS NULL, SC2.IdCentroCusto, P2.IdCentroCusto)
+																							WHERE 1 = 1
+																								AND CFP2.ProdutoVencedor = 1
+																								AND CFP2.IdCotacaoFornecedor = CF.IdCotacaoFornecedor)
+INNER JOIN DBCompra.dbo.PlanoContaGerencial PCG        WITH(NOLOCK) ON PCG.IdPlanoContaGerencial = (SELECT TOP 1 PCG2.IdPlanoContaGerencial
+																					                  FROM DBCompra.dbo.CotacaoFornecedorProduto CFP2  WITH(NOLOCK)
+																						              JOIN DBCompra.dbo.CotacaoProduto CP2             WITH(NOLOCK) ON CP2.IdCotacaoProduto = CFP2.IdCotacaoProduto
+																						              JOIN DBCompra.dbo.CotacaoProdutoSolicitacao CPS2 WITH(NOLOCK) ON CPS2.IdCotacaoProduto = CP2.IdCotacaoProduto
+																						              JOIN DBCompra.dbo.SolicitacaoCompraProduto SCP2  WITH(NOLOCK) ON SCP2.IdSolicitacaoCompraProduto = CPS2.IdSolicitacaoCompraProduto
+																						              JOIN DBCompra.dbo.SolicitacaoCompra SC2          WITH(NOLOCK) ON SC2.IdSolicitacaoCompra = SCP2.IdSolicitacaoCompra
+																						              JOIN DBCompra.dbo.PlanoContaGerencial PCG2       WITH(NOLOCK) ON PCG2.IdPlanoContaGerencial = SC2.IdPlanoContaGerencial
+																						             WHERE CFP2.ProdutoVencedor = 1
+																						               AND CFP2.IdCotacaoFornecedor = CF.IdCotacaoFornecedor)
+WHERE YEAR(DF.DataDocumento)  = @vAno
+  AND PCG.Codigo LIKE @pPlanoConta + '%'
+  AND MONTH(DF.DataDocumento) = @pMes
+
+GROUP BY  MONTH(DF.DataDocumento)
+        , DBComum.dbo.UvwMes.Descricao1
+        , YEAR(DF.DataDocumento)
+        , CONCAT(PCG.Codigo, ' - ', PCG.Descricao)
+        , CC.Descricao
+
+--
+-- CONSULTA DE DEBITOS INDIRETOS
+--
+INSERT INTO @TBL_MOVIMENTO
+SELECT 
+	MONTH(DBCompra.dbo.RequisicaoMaterial.DataRequisicao)  AS Mes
+	, DBComum.dbo.UvwMes.Descricao1                          AS MesNome   
+	, YEAR(DBCompra.dbo.RequisicaoMaterial.DataRequisicao)   AS AnoCompetencia
+	, CONCAT(DBCompra.dbo.PlanoContaGerencial.Codigo, ' - ', DBCompra.dbo.PlanoContaGerencial.Descricao) AS PlanoConta
+	, DBCompra.dbo.CentroCusto.Descricao                 AS CentroCusto
+	, ISNULL(SUM((IIF(DBCompra.dbo.DepositoMovimentoTipo.IdDepositoMovimentoTipoNatureza = 2, 
+	(CAST((DBCompra.DBO.DepositoMovimentoProduto.Quantidade * DBCompra.DBO.DepositoMovimentoProduto.Valor) AS MONEY)), 
+				(CAST(-(DBCompra.DBO.DepositoMovimentoProduto.Quantidade * DBCompra.DBO.DepositoMovimentoProduto.Valor) AS MONEY))))),0) AS ValorTotal
+
+FROM DBCompra.dbo.DepositoMovimento WITH(NOLOCK)
+
+JOIN DBCompra.dbo.DepositoMovimentoTipo  WITH(NOLOCK)
+	ON DBCompra.dbo.DepositoMovimentoTipo.IdDepositoMovimentoTipo = DBCompra.dbo.DepositoMovimento.IdDepositoMovimentoTipo     
+
+JOIN DBCompra.dbo.DepositoMovimentoProduto WITH(NOLOCK)
+	ON DBCompra.dbo.DepositoMovimentoProduto.IdDepositoMovimento = DBCompra.dbo.DepositoMovimento.IdDepositoMovimento
+
+JOIN DBCompra.dbo.Produto WITH(NOLOCK)
+	ON DBCompra.dbo.Produto.IdProduto = DBCompra.dbo.DepositoMovimentoProduto.IdProduto
+	   
+JOIN DBCompra.dbo.RequisicaoMaterial WITH(NOLOCK)
+	ON DBCompra.dbo.RequisicaoMaterial.IdRequisicaoMaterial = DBCompra.dbo.DepositoMovimento.IdOperacao
+  
+JOIN DBCompra.dbo.CentroCusto WITH(NOLOCK)
+	ON DBCompra.dbo.CentroCusto.IdCentroCusto = RequisicaoMaterial.IdCentroCusto
+
+JOIN DBCompra.dbo.PlanoContaGerencial WITH(NOLOCK)
+  ON DBCompra.dbo.PlanoContaGerencial.IdPlanoContaGerencial = DBCompra.dbo.RequisicaoMaterial.IdPlanoContaGerencial
+
+
+JOIN DBCompra.dbo.RequisicaoMaterialEvento WITH(NOLOCK)
+ON DBCompra.dbo.RequisicaoMaterialEvento.IdRequisicaoMaterialEvento = (SELECT MAX(RME.IdRequisicaoMaterialEvento)
+	FROM DBCompra.dbo.RequisicaoMaterialEvento RME WITH(NOLOCK)
+																			WHERE RME.IdRequisicaoMaterial = DBCompra.dbo.RequisicaoMaterial.IdRequisicaoMaterial)
+
+JOIN DBCompra.dbo.RequisicaoMaterialEventoTipo WITH(NOLOCK)
+	ON DBCompra.dbo.RequisicaoMaterialEventoTipo.IdRequisicaoMaterialEventoTipo = DBCompra.dbo.RequisicaoMaterialEvento.IdRequisicaoMaterialEventoTipo
+
+JOIN DBCompra.dbo.RequisicaoMaterialProduto WITH(NOLOCK)
+	ON DBCompra.dbo.RequisicaoMaterialProduto.IdRequisicaoMaterial = DBCompra.dbo.RequisicaoMaterial.IdRequisicaoMaterial
+	AND DBCompra.dbo.RequisicaoMaterialProduto.IdProduto            = DBCompra.dbo.DepositoMovimentoProduto.IdProduto
+
+INNER JOIN DBComum.dbo.UvwMes
+		ON DBComum.dbo.UvwMes.Codigo = MONTH(DBCompra.dbo.RequisicaoMaterial.DataRequisicao)
+		
+WHERE DBCompra.dbo.RequisicaoMaterial.IdCampus             = 1
+	AND DBCompra.dbo.DepositoMovimentoTipo.IdDepositoMovimentoTipo IN (5,6,25)
+	AND DBCompra.dbo.DepositoMovimento.IdOperacaoOrigem      = 2
+	AND YEAR(DBCompra.dbo.RequisicaoMaterial.DataRequisicao)  = @vAno
+	AND DBCompra.dbo.PlanoContaGerencial.Codigo LIKE @pPlanoConta + '%'
+    AND MONTH(DBCompra.dbo.RequisicaoMaterial.DataRequisicao) = @pMes
+  
+GROUP BY MONTH(DBCompra.dbo.RequisicaoMaterial.DataRequisicao)
+       , DBComum.dbo.UvwMes.Descricao1                        
+       , YEAR(DBCompra.dbo.RequisicaoMaterial.DataRequisicao) 
+       , CONCAT(DBCompra.dbo.PlanoContaGerencial.Codigo, ' - ', DBCompra.dbo.PlanoContaGerencial.Descricao)
+       , DBCompra.dbo.CentroCusto.Descricao                 
+
+--
+-- CONTROLE DE SERVICOS
+--
+INSERT INTO @TBL_MOVIMENTO
+SELECT
+	MONTH(FM.DataOperacao)                   AS Mes
+	, DBComum.dbo.UvwMes.Descricao1            AS MesNome   
+	, YEAR(FM.DataOperacao)                    AS AnoCompetencia
+	, CONCAT(PCG.Codigo, ' - ', PCG.Descricao) AS PlanoConta
+	, CC.Descricao                             AS CentroCusto
+	, ISNULL(SUM(((CAST((FMI.VlrTotalMedicao) AS NUMERIC(15,4))))),0) AS ValorTotal        
+ FROM DBCompra.dbo.FolhaMedicao FM
+INNER JOIN DBCompra.dbo.FolhaMedicaoItem FMI  WITH(NOLOCK) ON FMI.IdFolhaMedicao = FM.IdFolhaMedicao
+INNER JOIN DBCompra.dbo.FolhaMedicaoEvento FME
+ON FME.IdFolhaMedicaoEvento = (SELECT TOP 1 FME2.IdFolhaMedicaoEvento
+											FROM DBCompra.dbo.FolhaMedicaoEvento FME2
+										WHERE FME2.IdFolhaMedicao = FM.IdFolhaMedicao
+										ORDER BY FME2.IdFolhaMedicaoEvento DESC )
+
+INNER JOIN DBComum.dbo.UvwMes
+		ON DBComum.dbo.UvwMes.Codigo = MONTH(FM.DataOperacao)
+
+INNER JOIN DBCompra.dbo.FolhaMedicaoEventoTipo FMET
+		ON FMET.IdFolhaMedicaoEventoTipo = FME.IdFolhaMedicaoEventoTipo
+
+INNER JOIN DBCompra.dbo.OrdemServico OC                WITH(NOLOCK) ON OC.IdOrdemServico = FM.IdOrdemServico  
+INNER JOIN DBCompra.dbo.CotacaoServicoFornecedor CF    WITH(NOLOCK) ON CF.IdCotacaoServicoFornecedor = OC.IdCotacaoServicoFornecedor
+INNER JOIN DBCompra.dbo.CotacaoServico C               WITH(NOLOCK) ON C.IdCotacaoServico = CF.IdCotacaoServico
+INNER JOIN DBCompra.dbo.Projeto P                      WITH(NOLOCK) ON P.IdProjeto = C.IdProjeto
+INNER JOIN DBCompra.dbo.CentroCusto CC                 WITH(NOLOCK) ON CC.IdCentroCusto = (SELECT TOP 1 CC2.IdCentroCusto
+																							 FROM DBCompra.dbo.CotacaoFornecedorServico CFP2  WITH(NOLOCK)
+																					   INNER JOIN DBCompra.dbo.CotacaoServicoItem CP2             WITH(NOLOCK) ON CP2.IdCotacaoServicoItem = CFP2.IdCotacaoServicoItem
+																					   INNER JOIN DBCompra.dbo.CotacaoServicoSolicitacao CPS2 WITH(NOLOCK) ON CPS2.IdCotacaoServicoItem = CP2.IdCotacaoServicoItem
+																					   INNER JOIN DBCompra.dbo.SolicitacaoCompraServico SCP2  WITH(NOLOCK) ON SCP2.IdSolicitacaoCompraServico = CPS2.IdSolicitacaoCompraServico
+																					   INNER JOIN DBCompra.dbo.SolicitacaoServico SC2          WITH(NOLOCK) ON SC2.IdSolicitacaoServico = SCP2.IdSolicitacaoServico
+																						LEFT JOIN DBCompra.dbo.SolicitacaoCompraServicoProjeto SCPJ2 WITH(NOLOCK) ON SCPJ2.IdSolicitacaoServico = SC2.IdSolicitacaoServico
+																						LEFT JOIN DBCompra.dbo.Projeto P2                     WITH(NOLOCK) ON P2.IdProjeto = SCPJ2.IdProjeto
+																					   INNER JOIN DBCompra.dbo.CentroCusto CC2                WITH(NOLOCK) ON CC2.IdCentroCusto = IIF(SCPJ2.IdSolicitacaoCompraServicoProjeto IS NULL, SC2.IdCentroCusto, P2.IdCentroCusto) 
+                                                                                            WHERE CFP2.ServicoVencedor = 1
+																						      AND CFP2.IdCotacaoServicoFornecedor = CF.IdCotacaoServicoFornecedor)
+
+INNER JOIN DBCompra.dbo.PlanoContaGerencial PCG        WITH(NOLOCK) ON PCG.IdPlanoContaGerencial = (SELECT TOP 1 PCG2.IdPlanoContaGerencial
+																							 FROM DBCompra.dbo.CotacaoFornecedorServico CFP2         WITH(NOLOCK)
+																					   INNER JOIN DBCompra.dbo.CotacaoServicoItem CP2                WITH(NOLOCK) ON CP2.IdCotacaoServicoItem = CFP2.IdCotacaoServicoItem
+																					   INNER JOIN DBCompra.dbo.CotacaoServicoSolicitacao CPS2        WITH(NOLOCK) ON CPS2.IdCotacaoServicoItem = CP2.IdCotacaoServicoItem
+																					   INNER JOIN DBCompra.dbo.SolicitacaoCompraServico SCP2         WITH(NOLOCK) ON SCP2.IdSolicitacaoCompraServico = CPS2.IdSolicitacaoCompraServico
+																					   INNER JOIN DBCompra.dbo.SolicitacaoServico SC2                WITH(NOLOCK) ON SC2.IdSolicitacaoServico = SCP2.IdSolicitacaoServico
+																						LEFT JOIN DBCompra.dbo.SolicitacaoCompraServicoProjeto SCPJ2 WITH(NOLOCK) ON SCPJ2.IdSolicitacaoServico = SC2.IdSolicitacaoServico
+																						LEFT JOIN DBCompra.dbo.Projeto P2                            WITH(NOLOCK) ON P2.IdProjeto = SCPJ2.IdProjeto
+																					   INNER JOIN DBCompra.dbo.PlanoContaGerencial PCG2              WITH(NOLOCK) ON PCG2.IdPlanoContaGerencial = SC2.IdPlanoContaGerencial
+                                                                                            WHERE CFP2.ServicoVencedor = 1
+																						      AND CFP2.IdCotacaoServicoFornecedor = CF.IdCotacaoServicoFornecedor)
+WHERE YEAR(FM.DataOperacao)  = @vAno
+  AND PCG.Codigo LIKE @pPlanoConta + '%'
+  AND FMET.IdFolhaMedicaoEventoTipo = 1
+  AND MONTH(FM.DataOperacao) = @pMes
+
+GROUP BY  MONTH(FM.DataOperacao)                 
+        , DBComum.dbo.UvwMes.Descricao1          
+        , YEAR(FM.DataOperacao)                 
+        , CONCAT(PCG.Codigo, ' - ', PCG.Descricao) 
+        , CC.Descricao                          
+
+SELECT 
+	Id          
+	,Mes         
+	,MesNome     
+	,Ano         
+	,PlanoConta  
+	,CentroCusto 
+	,Valor             
+	FROM @TBL_MOVIMENTO TBL
+
+ORDER BY PlanoConta DESC</SqlCommand>
+      </sqlRelatorio>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="4">
+      <value>,vMes,vMes,_x0031_0,System.Int32,_x0031_0,False,False,False,False,,cf20bccab90f40b880df1698a4e99d11</value>
+      <value>,vIdBudget,vIdBudget,_x0037_,System.Int32,_x0037_,False,False,False,False,,e9bbfc18f4dd490d9152280bf3dcbb75</value>
+      <value>,vPlanoConta,vPlanoConta,,System.String,,False,False,False,False,,bcb5da0aff734f8a829e2f9df8e58e2d</value>
+      <value>,vUsuarioImpressao,vUsuarioImpressao,,System.String,,False,False,False,False,,_x0037_8bd40b1b33d4f719e747c10b2c57402</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>6e878c81833447a2b4990014390a2bd4</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Dashboard1 Ref="4" type="Stimulsoft.Dashboard.Components.StiDashboard" isKey="true">
+      <Alias>Quadro por Plano de Contas - Valor Real</Alias>
+      <BackColor>White</BackColor>
+      <Components isList="true" count="1">
+        <Panel2 Ref="5" type="Stimulsoft.Dashboard.Components.Panel.StiPanelElement" isKey="true">
+          <AltClientRectangle>0,0,0,0</AltClientRectangle>
+          <BackColor>White</BackColor>
+          <Border>All;[140:140:140];1;Solid</Border>
+          <ClientRectangle>0.8,-6.63,1200,110.65</ClientRectangle>
+          <Components isList="true" count="7">
+            <Text122 Ref="6" type="Stimulsoft.Dashboard.Components.Text.StiTextElement" isKey="true">
+              <AltClientRectangle>0,0,0,0</AltClientRectangle>
+              <BackColor>White</BackColor>
+              <ClientRectangle>162.18,3.04,756.74,36.74</ClientRectangle>
+              <Expressions isList="true" count="0" />
+              <ForeColor>Black</ForeColor>
+              <Guid>2af79f54f13147b099dd4cdac65a1b38</Guid>
+              <Margin>3,3,3,3</Margin>
+              <Name>Text122</Name>
+              <Padding>0,0,0,0</Padding>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>&lt;font face="Arial" size="15"&gt;&lt;text-align="Center"&gt;&lt;b&gt;Lançamentos Mensais por Plano de Contas Valor Real - {sqlRelatorio.MesNome}/{sqlRelatorio.Ano}&lt;/b&gt;&lt;/text-align&gt;&lt;/font&gt;</Text>
+              <Title Ref="7" type="Stimulsoft.Dashboard.Components.StiTitle" isKey="true">
+                <BackColor>Transparent</BackColor>
+                <Font>Arial,11</Font>
+                <ForeColor>Transparent</ForeColor>
+                <Text>Texto</Text>
+                <Visible>False</Visible>
+              </Title>
+            </Text122>
+            <Text121 Ref="8" type="Stimulsoft.Dashboard.Components.Text.StiTextElement" isKey="true">
+              <AltClientRectangle>0,0,0,0</AltClientRectangle>
+              <BackColor>White</BackColor>
+              <ClientRectangle>528.72,41.92,200,20</ClientRectangle>
+              <Expressions isList="true" count="0" />
+              <ForeColor>Black</ForeColor>
+              <Guid>a949581bdc0f4fbeab4eff399f160e4d</Guid>
+              <Margin>3,3,3,3</Margin>
+              <Name>Text121</Name>
+              <Padding>0,0,0,0</Padding>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>&lt;font face="Arial" size="14"&gt;&lt;text-align="Left"&gt;&lt;b&gt;Centro de Custos&lt;/b&gt;&lt;/text-align&gt;&lt;/font&gt;</Text>
+              <Title Ref="9" type="Stimulsoft.Dashboard.Components.StiTitle" isKey="true">
+                <BackColor>Transparent</BackColor>
+                <Font>Arial,11</Font>
+                <ForeColor>Transparent</ForeColor>
+                <Text>Texto</Text>
+                <Visible>False</Visible>
+              </Title>
+            </Text121>
+            <Text206 Ref="10" type="Stimulsoft.Dashboard.Components.Text.StiTextElement" isKey="true">
+              <AltClientRectangle>0,0,0,0</AltClientRectangle>
+              <BackColor>White</BackColor>
+              <ClientRectangle>163.94,41.92,200,20</ClientRectangle>
+              <Expressions isList="true" count="0" />
+              <ForeColor>Black</ForeColor>
+              <Guid>189c9d2b65414da1a5738248e8ebc168</Guid>
+              <Margin>3,3,3,3</Margin>
+              <Name>Text206</Name>
+              <Padding>0,0,0,0</Padding>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>&lt;font face="Arial" size="14"&gt;&lt;text-align="Left"&gt;&lt;b&gt;Plano de Contas&lt;/b&gt;&lt;/text-align&gt;&lt;/font&gt;</Text>
+              <Title Ref="11" type="Stimulsoft.Dashboard.Components.StiTitle" isKey="true">
+                <BackColor>Transparent</BackColor>
+                <Font>Arial,11</Font>
+                <ForeColor>Transparent</ForeColor>
+                <Text>Texto</Text>
+                <Visible>False</Visible>
+              </Title>
+            </Text206>
+            <ComboBox1 Ref="12" type="Stimulsoft.Dashboard.Components.ComboBox.StiComboBoxElement" isKey="true">
+              <AltClientRectangle>0,0,0,0</AltClientRectangle>
+              <BackColor>Transparent</BackColor>
+              <Border>All;[191:191:191];1;Solid</Border>
+              <ClientRectangle>163.94,59.31,365.22,40</ClientRectangle>
+              <DataFilters isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <ForeColor>Black</ForeColor>
+              <Guid>574934c6da294893840bcffffc1b51ca</Guid>
+              <KeyMeter Ref="13" type="Stimulsoft.Dashboard.Components.ComboBox.StiKeyComboBoxMeter" isKey="true">
+                <Expression>sqlRelatorio.PlanoConta</Expression>
+                <Key>32189dfefbaf4aaca63713bfcb9e5298</Key>
+                <Label>Plano de Contas</Label>
+              </KeyMeter>
+              <Margin>3,3,3,3</Margin>
+              <Name>ComboBox1</Name>
+              <Padding>5,5,5,5</Padding>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <SelectionMode>Multi</SelectionMode>
+              <ShowAllValue>True</ShowAllValue>
+              <TransformActions isList="true" count="0" />
+              <TransformFilters isList="true" count="0" />
+              <TransformSorts isList="true" count="0" />
+            </ComboBox1>
+            <ComboBox2 Ref="14" type="Stimulsoft.Dashboard.Components.ComboBox.StiComboBoxElement" isKey="true">
+              <AltClientRectangle>0,0,0,0</AltClientRectangle>
+              <BackColor>Transparent</BackColor>
+              <Border>All;[191:191:191];1;Solid</Border>
+              <ClientRectangle>528.72,60.39,384.79,40</ClientRectangle>
+              <DataFilters isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <ForeColor>Black</ForeColor>
+              <Guid>2888df9b3ddb4fa6a382c09ffcceafdb</Guid>
+              <KeyMeter Ref="15" type="Stimulsoft.Dashboard.Components.ComboBox.StiKeyComboBoxMeter" isKey="true">
+                <Expression>sqlRelatorio.CentroCusto</Expression>
+                <Key>ad07870b19094e0dba44b65eb102ebd9</Key>
+                <Label>Centro de Custos</Label>
+              </KeyMeter>
+              <Margin>3,3,3,3</Margin>
+              <Name>ComboBox2</Name>
+              <Padding>5,5,5,5</Padding>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <ParentKey>574934c6da294893840bcffffc1b51ca</ParentKey>
+              <SelectionMode>Multi</SelectionMode>
+              <ShowAllValue>True</ShowAllValue>
+              <TransformActions isList="true" count="0" />
+              <TransformFilters isList="true" count="0" />
+              <TransformSorts isList="true" count="0" />
+            </ComboBox2>
+            <PivotTable1 Ref="16" type="Stimulsoft.Dashboard.Components.PivotTable.StiPivotTableElement" isKey="true">
+              <AltClientRectangle>0,0,0,0</AltClientRectangle>
+              <BackColor>White</BackColor>
+              <Border>All;[165:165:165];1;Solid</Border>
+              <ClientRectangle>0,106.31,1200,499.78</ClientRectangle>
+              <Columns isList="true" count="1">
+                <Item11 Ref="17" type="Stimulsoft.Dashboard.Components.PivotTable.StiPivotColumn" isKey="true">
+                  <Expression>sqlRelatorio.CentroCusto</Expression>
+                  <HorAlignment>Left</HorAlignment>
+                  <Key>aa0f126259c0488ea4ba7d25386fbd0c</Key>
+                  <Label>Centro de Custos</Label>
+                  <TopN Ref="18" type="Stimulsoft.Data.Engine.StiDataTopN" isKey="true" />
+                </Item11>
+              </Columns>
+              <CustomStyleName>Estilo CrosTab</CustomStyleName>
+              <DataFilters isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Guid>a5367cfa86184f79951ff79c34acee8e</Guid>
+              <Margin>3,3,3,3</Margin>
+              <Name>PivotTable1</Name>
+              <Padding>5,5,5,5</Padding>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <PivotTableConditions isList="true" count="0" />
+              <Rows isList="true" count="1">
+                <Item12 Ref="19" type="Stimulsoft.Dashboard.Components.PivotTable.StiPivotRow" isKey="true">
+                  <Expression>sqlRelatorio.PlanoConta</Expression>
+                  <HorAlignment>Left</HorAlignment>
+                  <Key>e45b07b2d11a460bab242fc3e8a39288</Key>
+                  <Label>Plano de Contas</Label>
+                  <TopN Ref="20" type="Stimulsoft.Data.Engine.StiDataTopN" isKey="true" />
+                </Item12>
+              </Rows>
+              <Style>Custom</Style>
+              <Summaries isList="true" count="1">
+                <Item13 Ref="21" type="Stimulsoft.Dashboard.Components.PivotTable.StiPivotSummary" isKey="true">
+                  <Expression>Sum(sqlRelatorio.Valor)</Expression>
+                  <Key>0bded32affbc4553807392a1f3e2fa35</Key>
+                  <Label>Valor</Label>
+                  <TextFormat Ref="22" type="CurrencyFormat" isKey="true">
+                    <DecimalDigits>2</DecimalDigits>
+                    <DecimalSeparator>,</DecimalSeparator>
+                    <GroupSeparator>.</GroupSeparator>
+                    <NegativePattern>9</NegativePattern>
+                    <PositivePattern>2</PositivePattern>
+                    <Symbol>R$</Symbol>
+                  </TextFormat>
+                </Item13>
+              </Summaries>
+              <Title Ref="23" type="Stimulsoft.Dashboard.Components.StiTitle" isKey="true">
+                <BackColor>White</BackColor>
+                <Font>Arial,10,Bold</Font>
+                <ForeColor>Black</ForeColor>
+                <HorAlignment>Center</HorAlignment>
+              </Title>
+              <TransformActions isList="true" count="0" />
+              <TransformFilters isList="true" count="0" />
+              <TransformSorts isList="true" count="0" />
+            </PivotTable1>
+            <Image1 Ref="24" type="Stimulsoft.Dashboard.Components.Image.StiImageElement" isKey="true">
+              <AltClientRectangle>0,0,0,0</AltClientRectangle>
+              <BackColor>White</BackColor>
+              <Border>None;[255:255:255];1;None</Border>
+              <ClientRectangle>2.72,3.04,159.24,99.33</ClientRectangle>
+              <Expressions isList="true" count="0" />
+              <Guid>dc38b609a78d418ea5f639ef2add00f9</Guid>
+              <Icon isNull="true" />
+              <IconColor>68, 114, 196</IconColor>
+              <Image>/9j/4AAQSkZJRgABAQEASABIAAD/4QAWRXhpZgAASUkqAAgAAAAAAAAAAAD/2wBDAAEBAQEBAQEB
+AQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/
+2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEB
+AQEBAQEBAQEBAQH/wAARCABDALQDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQF
+BgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS
+0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4
+eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi
+4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREA
+AgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl
+8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImK
+kpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP0
+9fb3+Pn6/9oADAMBAAIRAxEAPwD+/iiiopm2Ru+cBQWPXGB1+6N2c56Z+h6UAPY4GR/In9Mg1EZS
+u3OOSF/iyT06EfieeByTjivzP/aE/wCCsn7IX7Pfg34j+Ndf8U+JfHXh34V+JvBPgjxprvwo8K3n
+jTw5YeMvHP8AwkLWPh3TvFzXWi+D/EGq6GfDOoJ4r0rRfEV3qehTldP1Ozs9Qhvra1/n41z/AIK1
+eNv27Pjd8PvgP8Kv+Ci/j79m6y+MHxA8O/Dzwxo3wq/YZsNI1ZL3xdr9rpHh231j4i+Kf2mPEXiH
+Trw3tzYpd6t4bbSI490jGza1Mto/2uQ8AcRZ9h62PWFr5flWGh7TEZlicJjatGlGFGOIqvkwOGxd
+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
+jhijUIiKoxWvRRTAKKKKAP/Z</Image>
+              <Margin>3,3,3,3</Margin>
+              <Name>Image1</Name>
+              <Padding>0,0,0,0</Padding>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Title Ref="25" type="Stimulsoft.Dashboard.Components.StiTitle" isKey="true">
+                <BackColor>Transparent</BackColor>
+                <Font>Arial,11</Font>
+                <ForeColor>Transparent</ForeColor>
+                <Text>Image</Text>
+                <Visible>False</Visible>
+              </Title>
+            </Image1>
+          </Components>
+          <Expressions isList="true" count="0" />
+          <Guid>200058b22bc14990b4ab251bae812c65</Guid>
+          <Margin>3,3,3,3</Margin>
+          <Name>Panel2</Name>
+          <Padding>0,0,0,0</Padding>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </Panel2>
+      </Components>
+      <Expressions isList="true" count="0" />
+      <Guid>1dfbcc516f0d403e8165a4b728334b13</Guid>
+      <Name>Dashboard1</Name>
+      <Report isRef="0" />
+    </Dashboard1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/10/2021 4:17:27 PM</ReportChanged>
+  <ReportCreated>8/6/2020 10:09:54 AM</ReportCreated>
+  <ReportFile>D:\Net_v4.6_New\Projetos\Univag.Sisger\Sistema.Web.UI.Relatorio\View\Report\DiretoriaAdministrativa\Stimull\LancamentoMensalPlanoContaRealRel.mrt</ReportFile>
+  <ReportGuid>3d70cd1d302b4b2eb3314fb75a11ce3c</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2020.5.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

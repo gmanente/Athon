@@ -1,0 +1,50 @@
+﻿
+#loader {
+    display: none;
+}
+
+.jarviswidget .widget-body {
+    min-height: 70px!important;
+    position: relative;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+
+.jarviswidget.jarviswidget-color-blue-new > header {
+    border-color: #20569c;
+}
+
+.jarviswidget.jarviswidget-color-blue-new > header {
+    background: #2d5d9c;
+    color: #FFF;
+}
+
+    .jarviswidget.jarviswidget-color-blue-new > header > h2 {
+        color: #FFF !important;
+    }
+
+.error-required {
+    padding: 1px !important;
+    font-size: 11px !important;
+    padding-left: 5px !important;
+    position: absolute;
+    padding-right: 5px !important;
+    margin-top: 5px !important;
+    background: #bd1a1a !important;
+    border-color: #892220 !important;
+}
+
+    .error-required :before {
+        content: "\f06a";
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        padding-right: 5px;
+    }
+
+.ajust{
+    padding:10px!important;
+}

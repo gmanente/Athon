@@ -1,0 +1,66 @@
+﻿/*
+    CURSO CSS
+    AUTOR: Vagner da Costa Fragoso
+    ORGANIZAÇÃO: Univag - Centro Universitário (NTI - Núcleo de Tecnologia da Informação)
+*/
+
+#modal-registro .modal-dialog
+{
+    /*width: 980px !important;*/
+    z-index: 9999;
+}
+
+.espacoLancamento 
+{
+    padding-bottom: 6px;
+}
+
+.corLancamento 
+{
+    color: #0B486B;
+}
+
+.corSpanDestino
+{
+    color: #2b66d3;
+}
+
+.error 
+{
+    color: #df0707;
+}
+
+.fundoRegistropanel 
+{
+       background-color: #556270;
+}
+
+.modal-header 
+{
+    padding: 10px;
+}
+
+.modal-body 
+{
+    padding: 20px;
+}
+
+.modal-footer
+{
+    padding: 10px;
+}
+.alert-pequeno
+{
+    display: block;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    padding-right: 3px;
+    margin-bottom: 0px;
+    font-size: 12px;
+}
+
+#lilinkSemana1>active
+{
+    color: #df0707 !important;
+}

@@ -1,0 +1,906 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <SQLConnection Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>SQLConnection</Alias>
+        <ConnectionStringEncrypted>5dDZLcYWc8VHFazYYRhkY8PE9QthURPwQ3vogOTsNRPjEv8JxRhp7WldoYBkCWVn43hTr0Z+S93iSfX0aiU0u97EgQlPXkvNaUHNmGMEMj/wfLlDYUqT/ctHuczhmKRe1VjVg2IYewViS4i9Y3jre8VA</ConnectionStringEncrypted>
+        <Key>31cf03fde6c74aa8807408e28172fcff</Key>
+        <Name>SQLConnection</Name>
+      </SQLConnection>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <Estoque Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>Estoque</Alias>
+        <Columns isList="true" count="48">
+          <value>IdProjetoProduto,System.Int32</value>
+          <value>IdProjeto,System.Int32</value>
+          <value>ProjetoProdutoQuantidade,System.Decimal</value>
+          <value>ProjetoProdutoQuantidadeEstoque,System.Decimal</value>
+          <value>Valor,System.Decimal</value>
+          <value>ValorTotal,System.Decimal</value>
+          <value>Endereco,System.String</value>
+          <value>IdProduto,System.Int32</value>
+          <value>DescricaoCompleta,System.String</value>
+          <value>DescricaoReduzida,System.String</value>
+          <value>IdProdutoSubGrupo,System.Int32</value>
+          <value>IdProdutoMarca,System.Int32</value>
+          <value>IdProdutoFamilia,System.Int32</value>
+          <value>IdProdutoClasse,System.Int32</value>
+          <value>IdProdutoTipoReposicao,System.Int32</value>
+          <value>IdCfop,System.Int32</value>
+          <value>IdUnidadeMedida,System.Int32</value>
+          <value>QuantidadeMinima,System.Decimal</value>
+          <value>QuantidadeMaxima,System.Decimal</value>
+          <value>QuantidadePontoPedido,System.Decimal</value>
+          <value>DiasParaReposicao,System.Int32</value>
+          <value>LoteArredondamento,System.Decimal</value>
+          <value>DebitoTipo,System.String</value>
+          <value>DebitoTipoDescricao,System.String</value>
+          <value>Imobilizado,System.Boolean</value>
+          <value>Ativo,System.Boolean</value>
+          <value>IdProdutoGrupo,System.Int32</value>
+          <value>ProdutoGrupoDescricao,System.String</value>
+          <value>ProdutoSubGrupoDescricao,System.String</value>
+          <value>ProdutoMarcaDescricao,System.String</value>
+          <value>ProdutoFamiliaDescricao,System.String</value>
+          <value>ProdutoClasseDescricao,System.String</value>
+          <value>ProdutoClassePercentual,System.Decimal</value>
+          <value>ProdutoTipoReposicaoDescricao,System.String</value>
+          <value>ProdutoTipoReposicaoSigla,System.String</value>
+          <value>CodigoCfop,System.String</value>
+          <value>CfopDescricao,System.String</value>
+          <value>UnidadeMedidaDescricao,System.String</value>
+          <value>UnidadeMedidaSigla,System.String</value>
+          <value>ProjetoDescricao,System.String</value>
+          <value>ProjetoPadrao,System.Boolean</value>
+          <value>IdDeposito,System.Int32</value>
+          <value>IdCampus,System.Int32</value>
+          <value>DepositoDescricao,System.String</value>
+          <value>DepositoSigla,System.String</value>
+          <value>CampusNome,System.String</value>
+          <value>IdDepositoProduto,System.Int32</value>
+          <value>DepositoProdutoQuantidadeEstoque,System.Decimal</value>
+        </Columns>
+        <CommandTimeout>60000</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Key>7499512b9ffb40609239b9a835ebabbd</Key>
+        <Name>Estoque</Name>
+        <NameInSource>SQLConnection</NameInSource>
+        <Parameters isList="true" count="5">
+          <value>IdDeposito,,8,0</value>
+          <value>IdProjeto,,8,0</value>
+          <value>IdProdutoGrupo,,8,0</value>
+          <value>comSaldo,,2,0</value>
+          <value>Classe,,8,0</value>
+        </Parameters>
+        <SqlCommand>
+DECLARE @String VARCHAR(8000)
+
+--DECLARE @IdDeposito INT = 1;
+--DECLARE @IdProjeto  INT = 1;
+--DECLARE @IdProdutoGrupo INT = 0;
+--declare @comSaldo int = 0;
+
+SET @String = 'SELECT 
+		  ProjetoProduto.IdProjetoProduto
+		, ProjetoProduto.IdProjeto
+		, ProjetoProduto.Quantidade          ProjetoProdutoQuantidade
+		, ProjetoProduto.QuantidadeEstoque   ProjetoProdutoQuantidadeEstoque 
+		, ProjetoProduto.Valor
+		, CAST((ProjetoProduto.QuantidadeEstoque * ProjetoProduto.Valor) AS NUMERIC(15,4)) AS ValorTotal   
+		, ProjetoProduto.Endereco
+		, Produto.IdProduto
+		, Produto.DescricaoCompleta
+		, Produto.DescricaoReduzida
+		, Produto.IdProdutoSubGrupo
+		, Produto.IdProdutoMarca
+		, Produto.IdProdutoFamilia
+		, Produto.IdProdutoClasse
+		, Produto.IdProdutoTipoReposicao
+		, Produto.IdCfop
+		, Produto.IdUnidadeMedida
+		, Produto.QuantidadeMinima
+		, Produto.QuantidadeMaxima
+		, Produto.QuantidadePontoPedido
+		, Produto.DiasParaReposicao
+		, Produto.LoteArredondamento
+		, Produto.DebitoTipo
+		, CASE WHEN Produto.DebitoTipo = ''D'' THEN ''Direto'' ELSE ''Indireto'' END DebitoTipoDescricao       
+		, Produto.Imobilizado
+		, Produto.Ativo
+		, ProdutoGrupo.IdProdutoGrupo        IdProdutoGrupo
+		, ProdutoGrupo.Descricao             ProdutoGrupoDescricao
+		, ProdutoSubGrupo.Descricao          ProdutoSubGrupoDescricao
+		, ProdutoMarca.Descricao             ProdutoMarcaDescricao
+		, ProdutoFamilia.Descricao           ProdutoFamiliaDescricao
+		, ProdutoClasse.Descricao            ProdutoClasseDescricao
+		, ProdutoClasse.Percentual           ProdutoClassePercentual
+		, ProdutoTipoReposicao.Descricao     ProdutoTipoReposicaoDescricao
+		, ProdutoTipoReposicao.Sigla         ProdutoTipoReposicaoSigla
+		, Cfop.CodigoCfop                        
+		, Cfop.Descricao                     CfopDescricao
+		, UnidadeMedida.Descricao            UnidadeMedidaDescricao 
+		, UnidadeMedida.Sigla                UnidadeMedidaSigla
+		, Projeto.Descricao                  ProjetoDescricao
+		, Projeto.ProjetoPadrao		      
+		, Projeto.IdDeposito			      
+		, Deposito.IdCampus
+		, Deposito.Descricao                 DepositoDescricao		      
+		, Deposito.Sigla                     DepositoSigla
+		, Campus.Nome                        CampusNome
+		, DepositoProduto.IdDepositoProduto
+		, DepositoProduto.QuantidadeEstoque  DepositoProdutoQuantidadeEstoque
+      FROM DBCompra.dbo.ProjetoProduto
+INNER JOIN DBCompra.dbo.Projeto              ON Projeto.IdProjeto = ProjetoProduto.IdProjeto
+INNER JOIN DBCompra.dbo.Deposito             ON Deposito.IdDeposito = Projeto.IdDeposito
+INNER JOIN DBComum.dbo.Campus                ON Campus.IdCampus = Deposito.IdCampus
+INNER JOIN DBCompra.dbo.DepositoProduto      ON DepositoProduto.IdProduto = ProjetoProduto.IdProduto AND DepositoProduto.IdDeposito = Projeto.IdDeposito
+INNER JOIN DBCompra.dbo.Produto              ON Produto.IdProduto = ProjetoProduto.IdProduto
+INNER JOIN DBCompra.dbo.ProdutoSubGrupo      ON ProdutoSubGrupo.IdProdutoSubGrupo = Produto.IdProdutoSubGrupo
+INNER JOIN DBCompra.dbo.ProdutoGrupo         ON ProdutoGrupo.IdProdutoGrupo = ProdutoSubGrupo.IdProdutoGrupo
+INNER JOIN DBCompra.dbo.ProdutoMarca         ON ProdutoMarca.IdProdutoMarca = Produto.IdProdutoMarca
+INNER JOIN DBCompra.dbo.ProdutoFamilia       ON ProdutoFamilia.IdProdutoFamilia = Produto.IdProdutoFamilia
+INNER JOIN DBCompra.dbo.ProdutoClasse        ON ProdutoClasse.IdProdutoClasse = Produto.IdProdutoClasse
+INNER JOIN DBCompra.dbo.Cfop                 ON Cfop.IdCfop = Produto.IdCfop
+INNER JOIN DBCompra.dbo.UnidadeMedida        ON UnidadeMedida.IdUnidadeMedida = Produto.IdUnidadeMedida 
+ LEFT JOIN DBCompra.dbo.ProdutoTipoReposicao ON ProdutoTipoReposicao.IdProdutoTipoReposicao = Produto.IdProdutoTipoReposicao  
+     WHERE 1 = 1 
+       --AND @comSaldo-- ProjetoProduto.QuantidadeEstoque &gt; 0
+	   --AND (CASE WHEN @comSaldo = 0 THEN @comSaldo ELSE ProdutoSubGrupo.IdProdutoGrupo END = @comSaldo)
+       --AND Deposito.IdDeposito = @IdDeposito
+       --AND ProjetoProduto.IdProjeto = @IdProjeto
+	   
+	   AND (CASE WHEN '+CAST(@IdProjeto AS varchar)+' = 0 THEN '+CAST(@IdProjeto AS varchar)+' ELSE ProjetoProduto.IdProjeto END = '+CAST(@IdProjeto AS varchar)+')
+	   AND (CASE WHEN '+CAST(@IdDeposito AS varchar)+' = 0 THEN '+CAST(@IdDeposito AS varchar)+' ELSE Deposito.IdDeposito END = '+CAST(@IdDeposito AS varchar)+')
+       AND (CASE WHEN '+CAST(@classe AS varchar)+' = 0 THEN '+CAST(@classe AS varchar)+' ELSE DBCompra.dbo.ProdutoClasse.IdProdutoClasse END = '+CAST(@classe AS varchar)+')
+       AND (CASE WHEN '+CAST(@IdProdutoGrupo AS varchar)+' = 0 THEN '+CAST(@IdProdutoGrupo AS varchar)+' ELSE ProdutoSubGrupo.IdProdutoGrupo END = '+CAST(@IdProdutoGrupo AS varchar)+')
+  --ORDER BY Produto.DescricaoReduzida
+'
+
+      IF (@comSaldo &lt;&gt; 0)
+      BEGIN
+        SET @String = @String + 'AND ProjetoProduto.QuantidadeEstoque &gt; 0'
+      END
+
+EXEC (@String)</SqlCommand>
+      </Estoque>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="1">
+      <value>,vUsuarioImpressao,vUsuarioImpressao,,System.String,,False,False,False,False</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>6e9f4468045a4e349492ec8715475e2d</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="9">
+        <PageHeaderBand1 Ref="5" type="PageHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,0.4,27.7,2.25</ClientRectangle>
+          <Components isList="true" count="5">
+            <Image1 Ref="6" type="Image" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0,3.8,1.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Guid>d7d393e856304acbae51b6d877063432</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <IconColor>68, 114, 196</IconColor>
+              <ImageBytes>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</ImageBytes>
+              <Margins>0,0,0,0</Margins>
+              <Name>Image1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+            </Image1>
+            <Text1 Ref="7" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,0.36,27.6,1.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,15,Bold</Font>
+              <Guid>8be6db0ea3cd4eaba9cbbb5ed8a31666</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Relatório de Saldo Atual</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text21 Ref="8" type="Text" isKey="true">
+              <Border>None;[191:191:191];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>23.8,0.4,2.8,0.8</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>6e3ac108bd954529b62afc2264d77729</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text21</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Emissão do Relatório
+{Time}</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text21>
+            <Text13 Ref="9" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,1.6,27.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>47a1fbd14dee4339bba669f54d0f7f81</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text13</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Campus: {Estoque.CampusNome}</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text13>
+            <StartPointPrimitive1 Ref="10" type="Stimulsoft.Report.Components.StiStartPointPrimitive" isKey="true">
+              <ClientRectangle>0.03,-0.4,0,0</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Name>StartPointPrimitive1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <ReferenceToGuid>ce2bc3b6cc424a6b98d3992fc3d7f98c</ReferenceToGuid>
+            </StartPointPrimitive1>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageHeaderBand1>
+        <PageFooterBand1 Ref="11" type="PageFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,18,27.7,1</ClientRectangle>
+          <Components isList="true" count="3">
+            <Text27 Ref="12" type="Text" isKey="true">
+              <Border>Top;[216:216:216];2;Solid;False;2;[216:216:216]</Border>
+              <Brush>GradientBrush,White,Gainsboro,270</Brush>
+              <ClientRectangle>0.02,0,27.7,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>d7fc40b194bb40c4bd4f5eb87ec84d1c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text27</Name>
+              <Page isRef="4" />
+              <Parent isRef="11" />
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text27>
+            <Text357 Ref="13" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>25,0,2.53,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>7a6eda437baf4a5d9857e84a0ba1d08d</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text357</Name>
+              <Page isRef="4" />
+              <Parent isRef="11" />
+              <Text>Página {PageNumber} de {TotalPageCount}</Text>
+              <TextBrush>GradientBrush,DimGray,Black,90</TextBrush>
+              <Type>Expression</Type>
+            </Text357>
+            <Text15 Ref="14" type="Text" isKey="true">
+              <Brush>EmptyBrush</Brush>
+              <ClientRectangle>0,0,16.2,1</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>7444b66d21664cf6ae6b6231528d5810</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text15</Name>
+              <Page isRef="4" />
+              <Parent isRef="11" />
+              <Text> {vUsuarioImpressao}</Text>
+              <TextBrush>Black</TextBrush>
+              <Type>Expression</Type>
+            </Text15>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>PageFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </PageFooterBand1>
+        <Text30 Ref="15" type="Text" isKey="true">
+          <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+          <Brush>Transparent</Brush>
+          <ClientRectangle>31.04,5.47,3.6,0.4</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Font>Arial,8</Font>
+          <HorAlignment>Right</HorAlignment>
+          <Margins>0,0,0,0</Margins>
+          <Name>Text30</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Text>{Estoque.Parameters["IdDeposito"].ParameterValue}</Text>
+          <TextBrush>Black</TextBrush>
+          <Type>DataColumn</Type>
+          <VertAlignment>Center</VertAlignment>
+        </Text30>
+        <GroupHeaderBand1 Ref="16" type="GroupHeaderBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,3.45,27.7,1.22</ClientRectangle>
+          <Components isList="true" count="7">
+            <Text6 Ref="17" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>1.6,0.6,8.8,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>886ac8d366af489b877f65c751c43aff</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Descrição Reduzida do Produto</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text5 Ref="18" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>11.63,0.6,1.19,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>e18487c24df5447c9933e8c4cb7a2b3c</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Classe</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Text2 Ref="19" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>0,0.6,1.6,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>becd6aa01e2446e1afea601ecd30fb83</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Código</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text16 Ref="20" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>0,0,27.7,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,10,Bold</Font>
+              <Guid>fc9ecd13326544ff89be516f68e2a399</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text16</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Grupo: {Estoque.ProdutoGrupoDescricao}</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text16>
+            <Text23 Ref="21" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>10.41,0.6,1.2,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>2d51c06eebfc4624ba38b15497a1afcf</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text23</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Unid.</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text23>
+            <Text25 Ref="22" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>12.82,0.6,7.76,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>e681088cd7424815ad57c78dfea71519</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text25</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Depósito</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text25>
+            <Text28 Ref="23" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>20.58,0.6,7.1,0.6</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>02ea190bc0ec49179f76ac59509ee123</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text28</Name>
+              <Page isRef="4" />
+              <Parent isRef="16" />
+              <Text>Projeto</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text28>
+          </Components>
+          <Condition>{Estoque.ProdutoGrupoDescricao}</Condition>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <PrintOnAllPages>True</PrintOnAllPages>
+        </GroupHeaderBand1>
+        <DataBand1 Ref="24" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,5.47,27.7,0.4</ClientRectangle>
+          <Components isList="true" count="6">
+            <Text7 Ref="25" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>0,-0.02,1.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>ed254d60acb14523b26514a18d0c2d26</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{Estoque.IdProduto}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text8 Ref="26" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>1.6,-0.02,8.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <Guid>ce8ba08452354bbebe32a248eaec0cd6</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{Estoque.DescricaoReduzida}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text4 Ref="27" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>11.63,-0.02,1.19,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>e6ed1a1c893e41ee963963832c4f9b4b</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{Estoque.ProdutoClasseDescricao}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <Text24 Ref="28" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>10.41,-0.02,1.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>760964b2314b41fab8eb75286f46d1c6</Guid>
+              <HorAlignment>Center</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text24</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{Estoque.UnidadeMedidaSigla}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text24>
+            <Text26 Ref="29" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>12.82,-0.02,7.76,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>1406ed642e3649f687d8c97becde854d</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text26</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{Estoque.DepositoDescricao}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text26>
+            <Text29 Ref="30" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <CanBreak>True</CanBreak>
+              <CanGrow>True</CanGrow>
+              <ClientRectangle>20.58,-0.02,7.1,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8</Font>
+              <GrowToHeight>True</GrowToHeight>
+              <Guid>9a478ddd8bbf4fb7844bfe4afcf9ee07</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text29</Name>
+              <Page isRef="4" />
+              <Parent isRef="24" />
+              <Text>{Estoque.ProjetoDescricao}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text29>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>Estoque</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="2">
+            <value>ASC</value>
+            <value>DescricaoReduzida</value>
+          </Sort>
+        </DataBand1>
+        <GroupFooterBand1 Ref="31" type="GroupFooterBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,6.67,27.7,0.4</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text10 Ref="32" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>0,0,25.05,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Enabled>False</Enabled>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>bd7ec598b85447319bbca26b2f72e44d</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="4" />
+              <Parent isRef="31" />
+              <Text>Total:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+            <Text11 Ref="33" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25.05,0,2.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Enabled>False</Enabled>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Guid>4878eb03067347359b48b44ef414bbae</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="4" />
+              <Parent isRef="31" />
+              <Text>{colSumRunning(Estoque.ValorTotal)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="34" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>GroupFooterBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupFooterBand1>
+        <ReportSummaryBand1 Ref="35" type="ReportSummaryBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <ClientRectangle>0,7.87,27.7,0.4</ClientRectangle>
+          <Components isList="true" count="2">
+            <Text14 Ref="36" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;4;[191:191:191]</Border>
+              <Brush>Transparent</Brush>
+              <ClientRectangle>25.05,0,2.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Enabled>False</Enabled>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,9</Font>
+              <Guid>882b2751722b4b278a9371848f01c01a</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text14</Name>
+              <Page isRef="4" />
+              <Parent isRef="35" />
+              <Text>{SumRunning(Estoque.ValorTotal)}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="37" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+              </TextFormat>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Totals</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text14>
+            <Text12 Ref="38" type="Text" isKey="true">
+              <Border>All;[216:216:216];2;Solid;False;2;[191:191:191]</Border>
+              <Brush>GradientBrush,White,Gainsboro,90</Brush>
+              <ClientRectangle>0,0,25.05,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Enabled>False</Enabled>
+              <Expressions isList="true" count="0" />
+              <Font>Arial,8,Bold</Font>
+              <Guid>5bda743aabc6458ab04a34c879b690ef</Guid>
+              <HorAlignment>Right</HorAlignment>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text12</Name>
+              <Page isRef="4" />
+              <Parent isRef="35" />
+              <Text>Total Geral:</Text>
+              <TextBrush>GradientBrush,Black,DimGray,90</TextBrush>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text12>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>ReportSummaryBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </ReportSummaryBand1>
+        <RoundedRectanglePrimitive1 Ref="39" type="Stimulsoft.Report.Components.StiRoundedRectanglePrimitive" isKey="true">
+          <ClientRectangle>0.03,0,27.67,19</ClientRectangle>
+          <Color>216, 216, 216</Color>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>ce2bc3b6cc424a6b98d3992fc3d7f98c</Guid>
+          <Name>RoundedRectanglePrimitive1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Round>0.2</Round>
+          <Size>2</Size>
+        </RoundedRectanglePrimitive1>
+        <EndPointPrimitive1 Ref="40" type="Stimulsoft.Report.Components.StiEndPointPrimitive" isKey="true">
+          <ClientRectangle>27.7,19,0,0</ClientRectangle>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Name>EndPointPrimitive1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <ReferenceToGuid>ce2bc3b6cc424a6b98d3992fc3d7f98c</ReferenceToGuid>
+        </EndPointPrimitive1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>c98cdf68a1ae4e3f8f6ed69186656b05</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>29.7</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/10/2021 4:22:28 PM</ReportChanged>
+  <ReportCreated>12/7/2015 8:31:19 AM</ReportCreated>
+  <ReportFile>D:\Net_v4.6_New\Projetos\Univag.Sisger\Sistema.Web.UI.Relatorio\View\Report\Estoque\Stimull\SaldoAtualEstoquePorDepositoAnaliticoSemValorRel .mrt</ReportFile>
+  <ReportGuid>ef073c63abaf449e9751ae002d70a2ef</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2020.5.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

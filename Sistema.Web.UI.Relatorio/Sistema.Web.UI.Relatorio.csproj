@@ -1,0 +1,960 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6609278A-6E1C-4CE3-8E8C-AB10BA2707CC}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sistema.Web.UI.Relatorio</RootNamespace>
+    <AssemblyName>Sistema.Web.UI.Relatorio</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+    <ApplicationInsightsResourceId>/subscriptions/52065e47-7ada-4198-a62e-552b2956e145/resourcegroups/Grupo_de_Recursos_Insights/providers/microsoft.insights/components/Sistema.Web.UI.Relatorio</ApplicationInsightsResourceId>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0219,0168,0108</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="LibExcel, Version=1.0.0.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\LibExcel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.4.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector, Version=2.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.9.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector, Version=2.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.9.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel, Version=2.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.9.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web, Version=2.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.Web.2.9.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer, Version=2.9.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.9.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights, Version=2.11.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.2.11.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights.TraceListener, Version=2.11.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.ApplicationInsights.TraceListener.2.11.0\lib\net45\Microsoft.ApplicationInsights.TraceListener.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation, Version=1.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.5\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\Net_v4.6\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Base, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Dashboard, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Dashboards.Web.2021.3.5\lib\net45\Stimulsoft.Dashboard.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Dashboard.Drawing, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Dashboards.Web.2021.3.5\lib\net45\Stimulsoft.Dashboard.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Dashboard.Export, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Dashboards.Web.2021.3.5\lib\net45\Stimulsoft.Dashboard.Export.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Data, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Map, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Map.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.MathFX, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.MathFX.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Report.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Check, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Report.Check.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Helper, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Stimulsoft.Report.Helper.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Mvc, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Web.2021.3.5\lib\net45\Stimulsoft.Report.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.Web, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Web.2021.3.5\lib\net45\Stimulsoft.Report.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Stimulsoft.Report.WebDesign, Version=2021.3.5.0, Culture=neutral, PublicKeyToken=ebe6666cba19647a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Web.2021.3.5\lib\net45\Stimulsoft.Report.WebDesign.dll</HintPath>
+    </Reference>
+    <Reference Include="Svg, Version=2.4.3.29446, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Stimulsoft.Reports.Engine.2021.3.5\lib\net45\Svg.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Buffers.4.4.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Diagnostics.DiagnosticSource.4.6.0\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Memory.4.5.3\lib\netstandard1.1\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard1.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Localization\ar.xml" />
+    <Content Include="Localization\be.xml" />
+    <Content Include="Localization\bg.xml" />
+    <Content Include="Localization\bh.xml" />
+    <Content Include="Localization\ca-ES.xml" />
+    <Content Include="Localization\cs.xml" />
+    <Content Include="Localization\de.xml" />
+    <Content Include="Localization\el-GR.xml" />
+    <Content Include="Localization\en-GB.xml" />
+    <Content Include="Localization\en.xml" />
+    <Content Include="Localization\es.xml" />
+    <Content Include="Localization\eu-ES.xml" />
+    <Content Include="Localization\fa.xml" />
+    <Content Include="Localization\fr.xml" />
+    <Content Include="Localization\gl-ES.xml" />
+    <Content Include="Localization\hr.xml" />
+    <Content Include="Localization\hu.xml" />
+    <Content Include="Localization\id.xml" />
+    <Content Include="Localization\it.xml" />
+    <Content Include="Localization\ja.xml" />
+    <Content Include="Localization\ka.xml" />
+    <Content Include="Localization\ko.xml" />
+    <Content Include="Localization\lt.xml" />
+    <Content Include="Localization\nb-NO.xml" />
+    <Content Include="Localization\nl.xml" />
+    <Content Include="Localization\pl.xml" />
+    <Content Include="Localization\pt-BR.xml" />
+    <Content Include="Localization\pt.xml" />
+    <Content Include="Localization\ro.xml" />
+    <Content Include="Localization\ru.xml" />
+    <Content Include="Localization\sk.xml" />
+    <Content Include="Localization\sr.xml" />
+    <Content Include="Localization\sv.xml" />
+    <Content Include="Localization\tr.xml" />
+    <Content Include="Localization\uk.xml" />
+    <Content Include="Localization\vi.xml" />
+    <Content Include="Localization\zh-CHS.xml" />
+    <Content Include="Localization\zh-CHT.xml" />
+    <Content Include="Scripts\Script_AlunoDocumento - Historico do 2 GRAU.sql" />
+    <Content Include="Scripts\Script_RelSecretariaAcademica.sql" />
+    <Content Include="Util\Imagens\Famec\logo_160x70.png" />
+    <Content Include="Util\Imagens\Univag\logo_160x70.png" />
+    <Content Include="View\Css\font-awesome.min.css" />
+    <Content Include="View\Css\main.css" />
+    <Content Include="View\Css\relatorio.css" />
+    <Content Include="View\Css\relcerimonial.css" />
+    <Content Include="View\Css\relcompra.css" />
+    <Content Include="View\Css\relcontapagar.css" />
+    <Content Include="View\Css\reldiretoriaadministrativa.css" />
+    <Content Include="View\Css\relgestaoservico.css" />
+    <Content Include="View\Css\relestoque.css" />
+    <Content Include="View\Css\relprotocolo.css" />
+    <Content Include="View\Css\relfrentedecaixa.css" />
+    <Content Include="View\Css\relgerenciafinanceira.css" />
+    <Content Include="View\Css\relgestaopessoa.css" />
+    <Content Include="View\fonts\fontawesome-webfont.svg" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="View\Img\ajax-loader.gif" />
+    <Content Include="View\Img\logo_branco_300x100.png" />
+    <Content Include="View\Img\navshadow.gif" />
+    <Content Include="View\Img\tabblue.gif" />
+    <Content Include="View\Img\tabgrey.gif" />
+    <Content Include="View\Js\bootstrap-checkbox.js" />
+    <Content Include="View\Js\relassessoriaacademica.js" />
+    <Content Include="View\Js\relbiblioteca.js" />
+    <Content Include="View\Js\relcerimonial.js" />
+    <Content Include="View\Js\relcompra.js" />
+    <Content Include="View\Js\relcontabilidade.js" />
+    <Content Include="View\Js\relcontapagar.js" />
+    <Content Include="View\Js\reldiretoriaadministrativa.js" />
+    <Content Include="View\Js\relgestaoservico.js" />
+    <Content Include="View\Js\relestoque.js" />
+    <Content Include="View\Js\relprotocolo.js" />
+    <Content Include="View\Js\relfrentedecaixa.js" />
+    <Content Include="View\Js\relgestaopessoa.js" />
+    <Content Include="View\Js\relimportacaofies.js" />
+    <Content Include="View\Js\relouvidoria.js" />
+    <Content Include="View\Js\relpia.js" />
+    <Content Include="View\Js\relaluno.js" />
+    <Content Include="View\Js\relgestaoadministrativa.js" />
+    <Content Include="View\Js\jquery.maskedinput.min.js" />
+    <Content Include="View\Js\relbolsaconvenio.js" />
+    <Content Include="View\Js\relgerenciafinanceira.js" />
+    <Content Include="View\Js\relsecacademica.js" />
+    <Content Include="View\Js\relsecretariaacademica.js" />
+    <Content Include="View\Js\reltesourariamaster.js" />
+    <Content Include="View\Js\reltriagem.js" />
+    <Content Include="View\Js\relvestibular.js" />
+    <Content Include="View\Js\relcoordenacao.js" />
+    <Content Include="View\Js\relcae.js" />
+    <Content Include="View\Js\relcarteirinhaaluno.js" />
+    <Content Include="View\Js\relchequeterceiro.js" />
+    <Content Include="View\Js\main.js" />
+    <Content Include="View\Js\relatorio.js" />
+    <Content Include="View\Js\rel-ajax-handler.js" />
+    <Content Include="View\Page\Erro.aspx" />
+    <Content Include="View\Page\UltimosAcessos.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioDisponibilidadeTombo.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioEmprestimosAtraso.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioGeralAcervo.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresTipoTrabalho.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresCurso.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresClassificacao.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioGeralBibliotecaVirtual.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioGeralPeriodicoOnline.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoControleChaves.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasAcervo.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasChave.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasPagas.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoEmprestimos-Sintetico.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoEmprestimos.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Analitico.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Grafico.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Sintetico.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioItensMaisEmprestados.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoDevolucoes.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoChavesEmprestimo.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoNegociacaoMultas.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultas.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoReservas.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoLivrosEmprestados.aspx" />
+    <Content Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoLivrosReservados.aspx" />
+    <Content Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaTotalCursoRel.aspx" />
+    <Content Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaNaoImpressaRel.aspx" />
+    <Content Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaNaoFeitaRel.aspx" />
+    <Content Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaNaoFeitoRel.aspx" />
+    <Content Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaNaoImpressoRel.aspx" />
+    <Content Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaTotalCargoRel.aspx" />
+    <Content Include="View\Report\Compras\Aspx\FornecedorRel.aspx" />
+    <Content Include="View\Report\ContaPagar\Aspx\ContaPagarCadastroRel.aspx" />
+    <Content Include="View\Report\ContaPagar\Aspx\ContaPagarPendenteRel.aspx" />
+    <Content Include="View\Report\ContaPagar\Aspx\ContaPagarQuitadoModalidadeRel.aspx" />
+    <Content Include="View\Report\ContaPagar\Aspx\ContaPagarQuitadoRel.aspx" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Aspx\BudgetCentroCustoRel.aspx" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Aspx\LancamentoMensalCentroCustoRel.aspx" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Aspx\BudgetPlanoContaRel.aspx" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Aspx\LancamentoMensalPlanoContaRel.aspx" />
+    <Content Include="View\Report\Estoque\Aspx\EstoqueEntradaProdutoRel.aspx" />
+    <Content Include="View\Report\Estoque\Aspx\EstoquePorAnomaliaAnaliticoRel.aspx" />
+    <Content Include="View\Report\Estoque\Aspx\EstoqueSaidaProdutoRel.aspx" />
+    <Content Include="View\Report\Estoque\Aspx\EstoquePorGiroAnaliticoRel.aspx" />
+    <Content Include="View\Report\Estoque\Aspx\SaldoAtualEstoquePorDepositoAnaliticoRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\CalourosVeteranosFiesRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoAreaCursoRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoGeralMatricula.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoQuadroGeralRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\EvolucaoMatriculaRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\MapaCalourosVeteranosRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\ResumoEntradaAlunoRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\ResumoCalourosVeteranosRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\CalourosVeteranosRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaAlunoAtivoSemestreRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaQuantitativoAlunoPercentualBolsaConvenioRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaQuantitativoAlunoRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaSalaLocalizacaoRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaCapacidadeInstaladaDisponibilidadeRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaSalaCapacidadeRel.aspx" />
+    <Content Include="View\Report\GestaoAdministrativa\Aspx\DemonstrativoMatriculaRematriculaRel.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\Audit.ashx.cs">
+      <DependentUpon>Audit.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Util\StiReportOptions.cs" />
+    <Compile Include="Util\StiReportUfc.cs" />
+    <Compile Include="Util\Tool.cs" />
+    <Compile Include="View\MasterPage\Submodulo.Master.cs">
+      <DependentUpon>Submodulo.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Util\AjaxHandler.ashx.cs">
+      <DependentUpon>AjaxHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Erro.aspx.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Erro.aspx.designer.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\UltimosAcessos.aspx.cs">
+      <DependentUpon>UltimosAcessos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\UltimosAcessos.aspx.designer.cs">
+      <DependentUpon>UltimosAcessos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioDisponibilidadeTombo.aspx.cs">
+      <DependentUpon>RelatorioDisponibilidadeTombo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioDisponibilidadeTombo.aspx.designer.cs">
+      <DependentUpon>RelatorioDisponibilidadeTombo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioEmprestimosAtraso.aspx.cs">
+      <DependentUpon>RelatorioEmprestimosAtraso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioEmprestimosAtraso.aspx.designer.cs">
+      <DependentUpon>RelatorioEmprestimosAtraso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralAcervo.aspx.cs">
+      <DependentUpon>RelatorioGeralAcervo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralAcervo.aspx.designer.cs">
+      <DependentUpon>RelatorioGeralAcervo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresTipoTrabalho.aspx.cs">
+      <DependentUpon>RelatorioExemplaresTipoTrabalho.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresTipoTrabalho.aspx.designer.cs">
+      <DependentUpon>RelatorioExemplaresTipoTrabalho.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresCurso.aspx.cs">
+      <DependentUpon>RelatorioExemplaresCurso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresCurso.aspx.designer.cs">
+      <DependentUpon>RelatorioExemplaresCurso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresClassificacao.aspx.cs">
+      <DependentUpon>RelatorioExemplaresClassificacao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioExemplaresClassificacao.aspx.designer.cs">
+      <DependentUpon>RelatorioExemplaresClassificacao.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralBibliotecaVirtual.aspx.cs">
+      <DependentUpon>RelatorioGeralBibliotecaVirtual.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralBibliotecaVirtual.aspx.designer.cs">
+      <DependentUpon>RelatorioGeralBibliotecaVirtual.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralPeriodicoOnline.aspx.cs">
+      <DependentUpon>RelatorioGeralPeriodicoOnline.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralPeriodicoOnline.aspx.designer.cs">
+      <DependentUpon>RelatorioGeralPeriodicoOnline.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoControleChaves.aspx.cs">
+      <DependentUpon>RelatorioPeriodoControleChaves.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoControleChaves.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoControleChaves.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasAcervo.aspx.cs">
+      <DependentUpon>RelatorioPeriodoMultasAcervo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasAcervo.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoMultasAcervo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasChave.aspx.cs">
+      <DependentUpon>RelatorioPeriodoMultasChave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasChave.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoMultasChave.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasPagas.aspx.cs">
+      <DependentUpon>RelatorioPeriodoMultasPagas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultasPagas.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoMultasPagas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoEmprestimos-Sintetico.aspx.cs">
+      <DependentUpon>RelatorioQuantitativoEmprestimos-Sintetico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoEmprestimos-Sintetico.aspx.designer.cs">
+      <DependentUpon>RelatorioQuantitativoEmprestimos-Sintetico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoEmprestimos.aspx.cs">
+      <DependentUpon>RelatorioQuantitativoEmprestimos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoEmprestimos.aspx.designer.cs">
+      <DependentUpon>RelatorioQuantitativoEmprestimos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Analitico.aspx.cs">
+      <DependentUpon>RelatorioGeralEmprestimos-Analitico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Analitico.aspx.designer.cs">
+      <DependentUpon>RelatorioGeralEmprestimos-Analitico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Grafico.aspx.cs">
+      <DependentUpon>RelatorioGeralEmprestimos-Grafico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Grafico.aspx.designer.cs">
+      <DependentUpon>RelatorioGeralEmprestimos-Grafico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Sintetico.aspx.cs">
+      <DependentUpon>RelatorioGeralEmprestimos-Sintetico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioGeralEmprestimos-Sintetico.aspx.designer.cs">
+      <DependentUpon>RelatorioGeralEmprestimos-Sintetico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioItensMaisEmprestados.aspx.cs">
+      <DependentUpon>RelatorioItensMaisEmprestados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioItensMaisEmprestados.aspx.designer.cs">
+      <DependentUpon>RelatorioItensMaisEmprestados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoDevolucoes.aspx.cs">
+      <DependentUpon>RelatorioPeriodoDevolucoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoDevolucoes.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoDevolucoes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoChavesEmprestimo.aspx.cs">
+      <DependentUpon>RelatorioPeriodoChavesEmprestimo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoChavesEmprestimo.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoChavesEmprestimo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoNegociacaoMultas.aspx.cs">
+      <DependentUpon>RelatorioPeriodoNegociacaoMultas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoNegociacaoMultas.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoNegociacaoMultas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultas.aspx.cs">
+      <DependentUpon>RelatorioPeriodoMultas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoMultas.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoMultas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoReservas.aspx.cs">
+      <DependentUpon>RelatorioPeriodoReservas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioPeriodoReservas.aspx.designer.cs">
+      <DependentUpon>RelatorioPeriodoReservas.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoLivrosEmprestados.aspx.cs">
+      <DependentUpon>RelatorioQuantitativoLivrosEmprestados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoLivrosEmprestados.aspx.designer.cs">
+      <DependentUpon>RelatorioQuantitativoLivrosEmprestados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoLivrosReservados.aspx.cs">
+      <DependentUpon>RelatorioQuantitativoLivrosReservados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Biblioteca\Aspx\RelatorioQuantitativoLivrosReservados.aspx.designer.cs">
+      <DependentUpon>RelatorioQuantitativoLivrosReservados.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaTotalCursoRel.aspx.cs">
+      <DependentUpon>AlunoCarteirinhaTotalCursoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaTotalCursoRel.aspx.designer.cs">
+      <DependentUpon>AlunoCarteirinhaTotalCursoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaNaoImpressaRel.aspx.cs">
+      <DependentUpon>AlunoCarteirinhaNaoImpressaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaNaoImpressaRel.aspx.designer.cs">
+      <DependentUpon>AlunoCarteirinhaNaoImpressaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaNaoFeitaRel.aspx.cs">
+      <DependentUpon>AlunoCarteirinhaNaoFeitaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\AlunoCarteirinhaNaoFeitaRel.aspx.designer.cs">
+      <DependentUpon>AlunoCarteirinhaNaoFeitaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaNaoFeitoRel.aspx.cs">
+      <DependentUpon>FuncionarioCrachaNaoFeitoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaNaoFeitoRel.aspx.designer.cs">
+      <DependentUpon>FuncionarioCrachaNaoFeitoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaNaoImpressoRel.aspx.cs">
+      <DependentUpon>FuncionarioCrachaNaoImpressoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaNaoImpressoRel.aspx.designer.cs">
+      <DependentUpon>FuncionarioCrachaNaoImpressoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaTotalCargoRel.aspx.cs">
+      <DependentUpon>FuncionarioCrachaTotalCargoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\CarteirinhaAluno\Aspx\FuncionarioCrachaTotalCargoRel.aspx.designer.cs">
+      <DependentUpon>FuncionarioCrachaTotalCargoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Compras\Aspx\FornecedorRel.aspx.cs">
+      <DependentUpon>FornecedorRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Compras\Aspx\FornecedorRel.aspx.designer.cs">
+      <DependentUpon>FornecedorRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\ContaPagar\Aspx\ContaPagarCadastroRel.aspx.cs">
+      <DependentUpon>ContaPagarCadastroRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\ContaPagar\Aspx\ContaPagarCadastroRel.aspx.designer.cs">
+      <DependentUpon>ContaPagarCadastroRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\ContaPagar\Aspx\ContaPagarPendenteRel.aspx.cs">
+      <DependentUpon>ContaPagarPendenteRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\ContaPagar\Aspx\ContaPagarPendenteRel.aspx.designer.cs">
+      <DependentUpon>ContaPagarPendenteRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\ContaPagar\Aspx\ContaPagarQuitadoModalidadeRel.aspx.cs">
+      <DependentUpon>ContaPagarQuitadoModalidadeRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\ContaPagar\Aspx\ContaPagarQuitadoModalidadeRel.aspx.designer.cs">
+      <DependentUpon>ContaPagarQuitadoModalidadeRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\ContaPagar\Aspx\ContaPagarQuitadoRel.aspx.cs">
+      <DependentUpon>ContaPagarQuitadoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\ContaPagar\Aspx\ContaPagarQuitadoRel.aspx.designer.cs">
+      <DependentUpon>ContaPagarQuitadoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\DiretoriaAdministrativa\Aspx\BudgetCentroCustoRel.aspx.cs">
+      <DependentUpon>BudgetCentroCustoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\DiretoriaAdministrativa\Aspx\BudgetCentroCustoRel.aspx.designer.cs">
+      <DependentUpon>BudgetCentroCustoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\DiretoriaAdministrativa\Aspx\LancamentoMensalCentroCustoRel.aspx.cs">
+      <DependentUpon>LancamentoMensalCentroCustoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\DiretoriaAdministrativa\Aspx\LancamentoMensalCentroCustoRel.aspx.designer.cs">
+      <DependentUpon>LancamentoMensalCentroCustoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\DiretoriaAdministrativa\Aspx\BudgetPlanoContaRel.aspx.cs">
+      <DependentUpon>BudgetPlanoContaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\DiretoriaAdministrativa\Aspx\BudgetPlanoContaRel.aspx.designer.cs">
+      <DependentUpon>BudgetPlanoContaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\DiretoriaAdministrativa\Aspx\LancamentoMensalPlanoContaRel.aspx.cs">
+      <DependentUpon>LancamentoMensalPlanoContaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\DiretoriaAdministrativa\Aspx\LancamentoMensalPlanoContaRel.aspx.designer.cs">
+      <DependentUpon>LancamentoMensalPlanoContaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\EstoqueEntradaProdutoRel.aspx.cs">
+      <DependentUpon>EstoqueEntradaProdutoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\EstoqueEntradaProdutoRel.aspx.designer.cs">
+      <DependentUpon>EstoqueEntradaProdutoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\EstoquePorAnomaliaAnaliticoRel.aspx.cs">
+      <DependentUpon>EstoquePorAnomaliaAnaliticoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\EstoquePorAnomaliaAnaliticoRel.aspx.designer.cs">
+      <DependentUpon>EstoquePorAnomaliaAnaliticoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\EstoqueSaidaProdutoRel.aspx.cs">
+      <DependentUpon>EstoqueSaidaProdutoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\EstoqueSaidaProdutoRel.aspx.designer.cs">
+      <DependentUpon>EstoqueSaidaProdutoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\EstoquePorGiroAnaliticoRel.aspx.cs">
+      <DependentUpon>EstoquePorGiroAnaliticoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\EstoquePorGiroAnaliticoRel.aspx.designer.cs">
+      <DependentUpon>EstoquePorGiroAnaliticoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\SaldoAtualEstoquePorDepositoAnaliticoRel.aspx.cs">
+      <DependentUpon>SaldoAtualEstoquePorDepositoAnaliticoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\Estoque\Aspx\SaldoAtualEstoquePorDepositoAnaliticoRel.aspx.designer.cs">
+      <DependentUpon>SaldoAtualEstoquePorDepositoAnaliticoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\CalourosVeteranosFiesRel.aspx.cs">
+      <DependentUpon>CalourosVeteranosFiesRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\CalourosVeteranosFiesRel.aspx.designer.cs">
+      <DependentUpon>CalourosVeteranosFiesRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoAreaCursoRel.aspx.cs">
+      <DependentUpon>GestaoAdministrativaEvasaoAreaCursoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoAreaCursoRel.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaEvasaoAreaCursoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoGeralMatricula.aspx.cs">
+      <DependentUpon>GestaoAdministrativaEvasaoGeralMatricula.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoGeralMatricula.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaEvasaoGeralMatricula.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoQuadroGeralRel.aspx.cs">
+      <DependentUpon>GestaoAdministrativaEvasaoQuadroGeralRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaEvasaoQuadroGeralRel.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaEvasaoQuadroGeralRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\EvolucaoMatriculaRel.aspx.cs">
+      <DependentUpon>EvolucaoMatriculaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\EvolucaoMatriculaRel.aspx.designer.cs">
+      <DependentUpon>EvolucaoMatriculaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\MapaCalourosVeteranosRel.aspx.cs">
+      <DependentUpon>MapaCalourosVeteranosRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\MapaCalourosVeteranosRel.aspx.designer.cs">
+      <DependentUpon>MapaCalourosVeteranosRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\ResumoEntradaAlunoRel.aspx.cs">
+      <DependentUpon>ResumoEntradaAlunoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\ResumoEntradaAlunoRel.aspx.designer.cs">
+      <DependentUpon>ResumoEntradaAlunoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\ResumoCalourosVeteranosRel.aspx.cs">
+      <DependentUpon>ResumoCalourosVeteranosRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\ResumoCalourosVeteranosRel.aspx.designer.cs">
+      <DependentUpon>ResumoCalourosVeteranosRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\CalourosVeteranosRel.aspx.cs">
+      <DependentUpon>CalourosVeteranosRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\CalourosVeteranosRel.aspx.designer.cs">
+      <DependentUpon>CalourosVeteranosRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaAlunoAtivoSemestreRel.aspx.cs">
+      <DependentUpon>GestaoAdministrativaAlunoAtivoSemestreRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaAlunoAtivoSemestreRel.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaAlunoAtivoSemestreRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaQuantitativoAlunoPercentualBolsaConvenioRel.aspx.cs">
+      <DependentUpon>GestaoAdministrativaQuantitativoAlunoPercentualBolsaConvenioRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaQuantitativoAlunoPercentualBolsaConvenioRel.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaQuantitativoAlunoPercentualBolsaConvenioRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaQuantitativoAlunoRel.aspx.cs">
+      <DependentUpon>GestaoAdministrativaQuantitativoAlunoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaQuantitativoAlunoRel.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaQuantitativoAlunoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaSalaLocalizacaoRel.aspx.cs">
+      <DependentUpon>GestaoAdministrativaSalaLocalizacaoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaSalaLocalizacaoRel.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaSalaLocalizacaoRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaCapacidadeInstaladaDisponibilidadeRel.aspx.cs">
+      <DependentUpon>GestaoAdministrativaCapacidadeInstaladaDisponibilidadeRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaCapacidadeInstaladaDisponibilidadeRel.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaCapacidadeInstaladaDisponibilidadeRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaSalaCapacidadeRel.aspx.cs">
+      <DependentUpon>GestaoAdministrativaSalaCapacidadeRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\GestaoAdministrativaSalaCapacidadeRel.aspx.designer.cs">
+      <DependentUpon>GestaoAdministrativaSalaCapacidadeRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\DemonstrativoMatriculaRematriculaRel.aspx.cs">
+      <DependentUpon>DemonstrativoMatriculaRematriculaRel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\GestaoAdministrativa\Aspx\DemonstrativoMatriculaRematriculaRel.aspx.designer.cs">
+      <DependentUpon>DemonstrativoMatriculaRematriculaRel.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="View\fonts\fontawesome-webfont.eot" />
+    <Content Include="View\fonts\fontawesome-webfont.ttf" />
+    <Content Include="View\fonts\fontawesome-webfont.woff" />
+    <Content Include="View\fonts\FontAwesome.otf" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="View\MasterPage\Submodulo.Master" />
+    <Content Include="View\Report\CarteirinhaAluno\Stimull\AlunoCarteirinhaTotalCursoRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\CarteirinhaAluno\Stimull\AlunoCarteirinhaNaoImpressaRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\CarteirinhaAluno\Stimull\AlunoCarteirinhaNaoFeitaRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\CarteirinhaAluno\Stimull\FuncionarioCrachaTotalCargoRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\CarteirinhaAluno\Stimull\FuncionarioCrachaNaoImpressoRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\CarteirinhaAluno\Stimull\FuncionarioCrachaNaoFeitoRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Util\AjaxHandler.ashx" />
+    <Content Include="Util\Audit.ashx" />
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\DemonstrativoMatriculaRematriculaRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaSalaCapacidadeRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaCapacidadeInstaladaDisponibilidadeRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaSalaLocalizacaoRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaQuantitativoAlunoRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaQuantitativoAlunoPercentualBolsaConvenioRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\CalourosVeteranosRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaAlunoAtivoSemestreRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaEvasaoGeralMatriculaRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaEvasaoAreaCursoRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\GestaoAdministrativaEvasaoQuadroGeralRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\CalourosVeteranosFiesRel.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioDisponibilidadeTombo.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioExemplaresClassificacao.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioExemplaresCurso.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioExemplaresTipoTrabalho.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralAcervo.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralEmprestimos-Analitico.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralEmprestimos-Sintetico.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralEmprestimos-Grafico.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioItensMaisEmprestados.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoDevolucoes.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoMultas.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoReservas.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Relatorico.pubxml" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoNegociacaoMultas.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Properties\PublishProfiles\Relatorio.pubxml" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoChavesEmprestimo.mrt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="View\Report\Estoque\Stimull\SaldoAtualEstoquePorDepositoAnaliticoRel.mrt" />
+    <Content Include="View\Report\Estoque\Stimull\EstoquePorGiroAnaliticoRel.mrt" />
+    <None Include="Properties\PublishProfiles\Sistema.Web.UI.Relatorio.pubxml" />
+    <None Include="Properties\PublishProfiles\UNIVAG_Sistema.Web.UI.Relatorio.pubxml" />
+    <Content Include="View\Report\Estoque\Stimull\EstoquePorAnomaliaAnaliticoRel.mrt" />
+    <Content Include="View\Report\Estoque\Stimull\SaldoAtualEstoquePorDepositoAnaliticoSemValorRel.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioQuantitativoEmprestimos.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioQuantitativoLivrosEmprestados.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioQuantitativoLivrosReservados.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioQuantitativoEmprestimos-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoMultasAcervo.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoMultasChave.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioQuantitativoLivrosEmprestados-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioQuantitativoLivrosReservados-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioEmprestimosAtraso.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioEmprestimosAtraso-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioItensMaisEmprestados-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoMultasAcervo-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoMultasChave-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoReservas-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoDevolucoes-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralEmprestimos-Analitico-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralEmprestimos-Sintetico-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioQuantitativoEmprestimos-Sintetico-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioQuantitativoEmprestimos-Sintetico.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralBibliotecaVirtual.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralPeriodicoOnline.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioDisponibilidadeTombo-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoMultasPagas.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoMultasPagas-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioExemplaresClassificacao-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioExemplaresCurso-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioExemplaresTipoTrabalho-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioGeralAcervo-Bruto.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoControleChaves.mrt" />
+    <Content Include="View\Report\Biblioteca\Stimull\RelatorioPeriodoControleChaves-Bruto.mrt" />
+    <Content Include="View\Report\ContaPagar\Stimull\ContaPagarPendenteRel.mrt" />
+    <Content Include="View\Report\ContaPagar\Stimull\ContaPagarCadastroRel.mrt" />
+    <Content Include="View\Report\ContaPagar\Stimull\ContaPagarQuitadoRel.mrt" />
+    <Content Include="View\Report\ContaPagar\Stimull\ContaPagarQuitadoModalidadeRel.mrt" />
+    <Content Include="View\Report\Estoque\Stimull\EstoqueEntradaProdutoDataRel.mrt" />
+    <Content Include="View\Report\Estoque\Stimull\EstoqueEntradaProdutoNomeRel.mrt" />
+    <Content Include="View\Report\Estoque\Stimull\EstoqueSaidaProdutoDataRel.mrt" />
+    <Content Include="View\Report\Estoque\Stimull\EstoqueSaidaProdutoNomeRel.mrt" />
+    <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\ResumoCalourosVeteranosRel.mrt" />
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\MapaCalourosVeteranosRel.mrt" />
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\ResumoEntradaAlunoRel.mrt" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Stimull\LancamentoMensalPlanoContaMetaRel.mrt" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Stimull\LancamentoMensalPlanoContaRealRel.mrt" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Stimull\LancamentoMensalPlanoContaTendenciaRel.mrt" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Stimull\LancamentoMensalCentroCustoMetaRel.mrt" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Stimull\LancamentoMensalCentroCustoRealRel.mrt" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Stimull\LancamentoMensalCentroCustoTendenciaRel.mrt" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Stimull\BudgetCentroCustoRel.mrt" />
+    <Content Include="View\Report\DiretoriaAdministrativa\Stimull\BudgetPlanoContaRel.mrt" />
+    <Content Include="View\Report\Compras\Stimull\FornecedorRel.mrt" />
+    <Content Include="View\Report\GestaoAdministrativa\Stimull\EvolucaoMatriculaRel.mrt" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sistema.Api.dll\Sistema.Api.dll.csproj">
+      <Project>{ef326c03-0215-46d7-8c4e-5ce9e2f89430}</Project>
+      <Name>Sistema.Api.dll</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>48765</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:56760/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.9.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets" Condition="Exists('..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.9.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.9.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.9.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.9.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.9.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.9.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.9.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.9.0\build\Microsoft.ApplicationInsights.WindowsServer.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.9.0\build\Microsoft.ApplicationInsights.WindowsServer.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Microsoft.ApplicationInsights.Web.2.9.0\build\Microsoft.ApplicationInsights.Web.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Microsoft.ApplicationInsights.Web.2.9.0\build\Microsoft.ApplicationInsights.Web.targets'))" />
+  </Target>
+  <Import Project="..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.9.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets" Condition="Exists('..\..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.9.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets')" />
+  <Import Project="..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.9.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets" Condition="Exists('..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.9.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" />
+  <Import Project="..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.9.0\build\Microsoft.ApplicationInsights.WindowsServer.targets" Condition="Exists('..\..\..\packages\Microsoft.ApplicationInsights.WindowsServer.2.9.0\build\Microsoft.ApplicationInsights.WindowsServer.targets')" />
+  <Import Project="..\..\..\packages\Microsoft.ApplicationInsights.Web.2.9.0\build\Microsoft.ApplicationInsights.Web.targets" Condition="Exists('..\..\..\packages\Microsoft.ApplicationInsights.Web.2.9.0\build\Microsoft.ApplicationInsights.Web.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

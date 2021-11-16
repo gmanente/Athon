@@ -1,0 +1,31 @@
+﻿a.btn-detail {
+    text-decoration:none
+}
+
+a.btn-detail:not(.collapsed) span:after {
+    font-family: FontAwesome;
+    content: "\f078";
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    float: right;
+}
+
+a.btn-detail.collapsed span:after {
+    font-family: FontAwesome;
+    content: "\f054";
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    float: right;
+}
+
+.select-line {
+    background-color:#f2f9fc!important;
+}
+
+#grid-master > tbody tr td {
+    cursor:pointer;
+}

@@ -1,0 +1,109 @@
+﻿/*
+    AUTOR: GERMANO MANENTE NETO
+*/
+
+.tr-color-foot-total > td {
+    font-size: 13px !important;
+    text-align: right;
+    background-color: #DEDEDE !important;
+    border-top: solid #eee 4px !important;
+}
+
+.info-quantidade-grupo-zerada {
+    background-color: #b97373;
+    font-size: 10px;
+}
+
+.info-quantidade-grupo {
+    background-color: lightseagreen;
+    font-size: 10px;
+}
+
+.info-quantidade-modulo-zerada {
+    background-color: #b97373;
+    font-size: 10px;
+}
+
+.info-quantidade-modulo {
+    background-color: lightseagreen;
+    font-size: 10px;
+}
+
+.info-quantidade-aluno-zerada {
+    background-color: #b97373;
+    font-size: 10px;
+}
+
+.info-quantidade-aluno {
+    background-color: lightseagreen;
+    font-size: 10px;
+}
+
+.modal-content .modal-header h3 {
+    font-size: 20px;
+    margin: 0;
+    line-height: 1.42857143;
+}
+
+.modal-content .modal-header p {
+    margin: 0;
+}
+
+.cinza-padrao {
+    background-color: #444;
+    color: #666;
+    background: #EEE;
+}
+
+.table th, .table td {
+    text-align: center !important;
+}
+
+.item-div {
+    padding: 5px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+label {
+    font-weight: bold;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.table thead th {
+    border: solid 1px #ddd !important;
+    border-top: none !important;
+}
+
+.tabela-parcela-detalhes thead th {
+    background-color: #5290C4;
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#5290C4),to(#1F6196));
+    color: #FFF;
+}
+
+.container-btn-detalhes a:not(.collapsed) #icon-del:after {
+    font-family: FontAwesome;
+    content: "\f068";
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    float: right;
+}
+
+.container-btn-detalhes a.collapsed #icon-del:after {
+    font-family: FontAwesome;
+    content: "\f067";
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    float: right;
+}
+
+.no-padding .box-smart {
+    margin: 0 0 10px;
+}

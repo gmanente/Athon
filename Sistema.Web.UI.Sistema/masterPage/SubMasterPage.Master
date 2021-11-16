@@ -1,0 +1,130 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SubMasterPage.aspx.cs" Inherits="Sistema.Web.UI.Sistema.masterPage.SubMasterPage" %>
+
+<%@ Import Namespace="Sistema.Api.dll.Repositorio.Util" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
+
+
+<head id="Head1" runat="server">
+
+    <!--INÍCIO CHAR SET-->
+    <meta charset="utf-8" />
+    <!--FINAL CHAR SET-->
+
+    <!--INÍCIO TÍTULO DA APLICAÇÃO-->
+    <title>SISUNIVAG / Segurança / Univag</title>
+    <!--FIM TÍTULO DA APLICAÇÃO-->
+
+    <!--INÍCIO AUTOR & DIREITOS AUTORAIS & DISTRIBUIÇÃO DA APLICAÇÃO-->
+    <meta name="author" content="Athon Sistemas" />
+    <meta name="copyright" content="© <% DateTime ano = DateTime.Now; Response.Write(ano.ToString("yyyy")); %> | Todos os direitos reservados" />
+    <meta name="document-type" content="Private" />
+    <meta name="document-distribution" content="IU" />
+    <!--FIM AUTOR & DIREITOS AUTORAIS & DISTRIBUIÇÃO DA APLICAÇÃO-->
+
+    <!--INÍCIO META TAG DE COMPATIBILIDADE CROSS-BROWSER-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--FIM META TAG DE COMPATIBILIDADE CROSS-BROWSER-->
+
+    <!--INÍCIO VIEWPORT PARA RESPONSIVIDADE EM DIFERENTES RESOLUÇÕES DE TELA-->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--FIM VIEWPORT PARA RESPONSIVIDADE EM DIFERENTES RESOLUÇÕES DE TELA-->
+
+    <!--INÍCIO META TAGS PARA NÃO INDEXAÇÃO DO SISTEMA COM MOTORES DE BUSCA-->
+    <meta name="robots" content="noindex" />
+    <meta name="googlebot" content="noindex" />
+    <!--FIM META TAGS PARA NÃO INDEXAÇÃO DO SISTEMA COM MOTORES DE BUSCA-->
+    
+    <!--INÍCIO CSS-->
+    <%= Funcoes.InvocarTagArquivo("View/Css/normalize.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/all.min.css", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/font-awesome.min.css" , true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/jquery.resizableColumns.css") %>
+    <%--<%= Funcoes.InvocarTagArquivo("View/select2/select2.css") %>--%>
+    <%= Funcoes.InvocarTagArquivo("View/select2/select2-bootstrap.css") %>       
+    <%--    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap-theme.css") %>--%>
+<%--    <%= Funcoes.InvocarTagArquivo("View/Css/fontawesome-iconpicker.min.css") %>--%>
+    <%= Funcoes.InvocarTagArquivo("View/Css/jquery.resizableColumns.css") %> 
+    <%= Funcoes.InvocarTagArquivo("View/Css/pre-sets.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/datepicker.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/tablecloth.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap-datetimepicker.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/bootstrap-colorpicker.min.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/main.css", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/sweet-alert.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/docs.min.css") %>
+    <%= Funcoes.InvocarTagArquivo("View/Css/pnotify.custom.min.css", false, false)%>
+    <!--FIM CSS-->
+    
+    <!--INÍCIO JAVASCRIPT-->
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.mask.min.js") %>
+    <%--<%= Funcoes.InvocarTagArquivo("View/Js/bootstrap.js") %>--%>
+    <%= Funcoes.InvocarTagArquivo("View/Js/webstorage.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/extention.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/criptografia.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/main.js", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/lib.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/validate.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/ajaxhandler.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.tablecloth.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.tablesorter.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/serializeObject.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/bootstrap-datepicker.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/store.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.resizableColumns.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/moment.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/bootstrap-datetimepicker.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/select2/select2.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/ajaxUploader.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/util.js", true) %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/base64.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/sweet-alert.min.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/jquery.cookie.js") %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/pnotify.custom.min.js", false, false) %>
+    <%= Funcoes.InvocarTagArquivo("View/Js/bootstrap-colorpicker.js", false, true) %>
+<%--    <%= Funcoes.InvocarTagArquivo("View/Js/fontawesome-iconpicker.min.js") %>    --%>
+
+    <!--FIM JAVASCRIPT-->
+    
+    <%= Funcoes.ImportarSmartAdmin() %>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script type="text/javascript">
+        window.history.forward();
+        function noBack() { window.history.forward(); }
+    </script>
+</head>
+<body onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="">
+        <!--INÍCIO NOSCRIPT-->
+   
+     <!--[if lt IE 7]>
+         <p class="chromeframe">Você está utilizando um browser <strong>desatualizado!</strong> Por favor <a href="http://browsehappy.com/">atualize seu broswe</a> ou <a href="http://www.google.com/chromeframe/?redirect=true">ative o Google Frame</a> para melhorar sua experiência.</p>
+        <![endif]-->
+        <noscript>
+             <h2>Javascript desabilitado em seu navegador! Acesso negado.<br/><a href="http://www.enable-javascript.com/pt/" target="_blank" title="Como habilitar o javascript?">Clique aqui</a> e aprenda como habilita-lo para utilizar o Sistema de Gerenciamento SISGER.</h2>
+     	</noscript>
+    <!--FIM NOSCRIPT-->
+
+    <!--INÍCIO HEADER SUBMÓDULO-->
+    <input type="hidden" id="PaginaAtual" name="PaginaAtual" value="<%=PaginaAtual %>">
+    <% SegurancaSubmoduloTemplate.Render(); %>
+    <!--FIM HEADER SUBMÓDULO-->
+
+    <form id="form" runat="server">
+
+           <div id="ajax-container"></div>
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            <!--INÍCIO SCRIPT MANAGER-->
+                <asp:ScriptManager ID="scm" runat="server" EnablePageMethods="true" />
+            <!--FIM SCRIPT MANAGER-->
+        </asp:ContentPlaceHolder>
+
+    </form>
+</body>
+</html>

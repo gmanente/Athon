@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A034B615-D1AE-44E3-BEEC-336FAE9B03A7}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sistema.Web.UI.Mensageria</RootNamespace>
+    <AssemblyName>Sistema.Web.UI.Mensageria</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44301</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Template\AtendimentoChamado.html" />
+    <Content Include="Template\AtendimentoAtendenteChamado.html" />
+    <Content Include="Template\FinalizacaoChamado.html" />
+    <Content Include="View\Css\font-awesome.min.css" />
+    <Content Include="View\Css\main.css" />
+    <Content Include="View\Css\atendimento.css" />
+    <Content Include="View\fonts\fontawesome-webfont.svg" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="View\Img\ajax-loader.gif" />
+    <Content Include="View\Js\atendimento.js" />
+    <Content Include="View\Js\main.js" />
+    <Content Include="View\Page\Atendimento.aspx" />
+    <Content Include="View\Page\EmailTester.aspx" />
+    <Content Include="View\Page\Erro.aspx" />
+    <Content Include="View\Page\SMSTester.aspx" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\AjaxFileUploader.ashx.cs">
+      <DependentUpon>AjaxFileUploader.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="View\MasterPage\Submodulo.Master.cs">
+      <DependentUpon>Submodulo.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\MasterPage\Submodulo.Master.designer.cs">
+      <DependentUpon>Submodulo.Master</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Atendimento.aspx.cs">
+      <DependentUpon>Atendimento.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Atendimento.aspx.designer.cs">
+      <DependentUpon>Atendimento.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\EmailTester.aspx.cs">
+      <DependentUpon>EmailTester.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\EmailTester.aspx.designer.cs">
+      <DependentUpon>EmailTester.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\Erro.aspx.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\Erro.aspx.designer.cs">
+      <DependentUpon>Erro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page\SMSTester.aspx.cs">
+      <DependentUpon>SMSTester.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Page\SMSTester.aspx.designer.cs">
+      <DependentUpon>SMSTester.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="View\MasterPage\Submodulo.Master" />
+    <Content Include="Util\AjaxFileUploader.ashx" />
+    <Content Include="View\fonts\fontawesome-webfont.eot" />
+    <Content Include="View\fonts\fontawesome-webfont.ttf" />
+    <Content Include="View\fonts\fontawesome-webfont.woff" />
+    <Content Include="View\fonts\FontAwesome.otf" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="View\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="Properties\PublishProfiles\Sistema.Web.UI.Mensageria.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Uploads\Temp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sistema.Api.dll\Sistema.Api.dll.csproj">
+      <Project>{ef326c03-0215-46d7-8c4e-5ce9e2f89430}</Project>
+      <Name>Sistema.Api.dll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sistema.ExtensionApi.dll\Sistema.ExtensionApi.dll.csproj">
+      <Project>{E8951957-98FE-4983-8C55-D317722DB167}</Project>
+      <Name>Sistema.ExtensionApi.dll</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:5657/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

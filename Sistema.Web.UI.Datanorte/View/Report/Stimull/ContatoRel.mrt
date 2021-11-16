@@ -1,0 +1,553 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <ConexãoSQL Ref="2" type="Stimulsoft.Report.Dictionary.StiSqlDatabase" isKey="true">
+        <Alias>ConexãoSQL</Alias>
+        <ConnectionStringEncrypted>+RTBCcZKerzLTaH0Y3Dhf8R4laLvS6m8a33t9MPYKRPFcLlpYVzZ/eJbccl6WPZzwtZxKE5ZkqxybLnEyAB3T/lU+ytLSnu8a0TZpWNc9j+BeMGJSFv6xWlNpdzpca17w1jdwudWQ/FsbmnU6gnrEtHE9etLVnuQb0fNrGkcdw/geHWDxgmrlWh7zezDGOBn</ConnectionStringEncrypted>
+        <Key>deb61de30312407c8e0421a3938c87fb</Key>
+        <Name>ConexãoSQL</Name>
+      </ConexãoSQL>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <sqlRelatorio Ref="3" type="Stimulsoft.Report.Dictionary.StiSqlSource" isKey="true">
+        <Alias>sqlRelatorio</Alias>
+        <Columns isList="true" count="28">
+          <value>Contatos_Id,System.Int32</value>
+          <value>Cpf,System.String</value>
+          <value>Nome,System.String</value>
+          <value>Sexo,System.String</value>
+          <value>Nasc,System.DateTime</value>
+          <value>Nome_Civil,System.String</value>
+          <value>Nome_Mae,System.String</value>
+          <value>Nome_Pai,System.String</value>
+          <value>Cadastro_Id,System.Int32</value>
+          <value>Rg,System.String</value>
+          <value>RgOrgao,System.String</value>
+          <value>RgUF,System.String</value>
+          <value>Logr_Tipo,System.String</value>
+          <value>Logr_Nome,System.String</value>
+          <value>Logr_Numero,System.String</value>
+          <value>Bairro,System.String</value>
+          <value>Cep,System.String</value>
+          <value>Cidade,System.String</value>
+          <value>Uf,System.String</value>
+          <value>TelefoneTipo,System.String</value>
+          <value>TelefoneDDD,System.String</value>
+          <value>TelefoneNumero,System.String</value>
+          <value>IdContatoHistorico,System.Int32</value>
+          <value>DataOperacao,System.DateTime</value>
+          <value>DataOperacaoString,System.String</value>
+          <value>Idusuario,System.Int32</value>
+          <value>Observacao,System.String</value>
+          <value>UsuarioNome,System.String</value>
+        </Columns>
+        <CommandTimeout>30</CommandTimeout>
+        <Dictionary isRef="1" />
+        <Key>0edafc3ec71247f180ed400b37776024</Key>
+        <Name>sqlRelatorio</Name>
+        <NameInSource>ConexãoSQL</NameInSource>
+        <Parameters isList="true" count="11">
+          <value>pNome,vNome,22,150</value>
+          <value>pCpf,vCpf,22,150</value>
+          <value>pCep,vCep,22,150</value>
+          <value>pBairro,vBairro,22,150</value>
+          <value>pLogr_Numero,vLogr_Numero,22,150</value>
+          <value>pLogr_Nome,vLogr_Nome,22,150</value>
+          <value>pTelefoneNumero,vTelefoneNumero,22,150</value>
+          <value>pDDDInicial,vDDDInicial,22,150</value>
+          <value>pDDDFinal,vDDDFinal,22,150</value>
+          <value>pCidade,vCidade,22,150</value>
+          <value>pUf,vUf,22,150</value>
+        </Parameters>
+        <SqlCommand>DECLARE @vNome           varchar(150) = null
+DECLARE @vCpf            varchar(150) = null
+DECLARE @vCep            varchar(150) = null
+DECLARE @vBairro         varchar(150) = null
+DECLARE @vLogr_Numero    varchar(150) = null
+DECLARE @vLogr_Nome      varchar(150) = null
+DECLARE @vTelefoneNumero varchar(150) = null
+DECLARE @vDDDFinal       varchar(150) = null
+DECLARE @vDDDInicial     varchar(150) = null
+DECLARE @vCidade         varchar(150) = null
+DECLARE @vUf             varchar(150) = null
+
+SET  @vNome           = @pNome          
+SET  @vCpf            = @pCpf           
+SET  @vCep            = @pCep           
+SET  @vBairro         = @pBairro        
+SET  @vLogr_Numero    = @pLogr_Numero   
+SET  @vLogr_Nome      = @pLogr_Nome     
+SET  @vTelefoneNumero = @pTelefoneNumero
+SET  @vDDDFinal       = @pDDDFinal      
+SET  @vDDDInicial     = @pDDDInicial    
+SET  @vCidade         = @pCidade        
+SET  @vUf             = @pUf            
+
+
+SELECT                                                                                            
+	DBAthon.dbo.UvwConsultarContato.Contatos_Id                                                
+	,DBAthon.dbo.UvwConsultarContato.Cpf                                                        
+	,DBAthon.dbo.UvwConsultarContato.Nome                                                       
+	,DBAthon.dbo.UvwConsultarContato.Sexo                                                       
+	,DBAthon.dbo.UvwConsultarContato.Nasc                                                       
+	,DBAthon.dbo.UvwConsultarContato.Nome_Civil                                                 
+	,DBAthon.dbo.UvwConsultarContato.Nome_Mae                                                   
+	,DBAthon.dbo.UvwConsultarContato.Nome_Pai                                                   
+	,DBAthon.dbo.UvwConsultarContato.Cadastro_Id                                                
+	,DBAthon.dbo.UvwConsultarContato.Rg                                                         
+	,DBAthon.dbo.UvwConsultarContato.RgOrgao                                                    
+	,DBAthon.dbo.UvwConsultarContato.RgUF                                                       
+	,DBAthon.dbo.UvwConsultarContato.Logr_Tipo                                                  
+	,DBAthon.dbo.UvwConsultarContato.Logr_Nome                                                  
+	,DBAthon.dbo.UvwConsultarContato.Logr_Numero                                                
+	,DBAthon.dbo.UvwConsultarContato.Bairro                                                     
+	,DBAthon.dbo.UvwConsultarContato.Cep                                                        
+	,DBAthon.dbo.UvwConsultarContato.Cidade                                                     
+	,DBAthon.dbo.UvwConsultarContato.Uf                                                         
+	,DBAthon.dbo.UvwConsultarContato.TelefoneTipo                                               
+	,DBAthon.dbo.UvwConsultarContato.TelefoneDDD                                                
+	,DBAthon.dbo.UvwConsultarContato.TelefoneNumero                                             
+	,DBAthon.dbo.ContatoHistorico.IdContatoHistorico                                            
+	,DBAthon.dbo.ContatoHistorico.DataOperacao                                                  
+	,CONVERT(VARCHAR(15), DBAthon.dbo.ContatoHistorico.DataOperacao, 103) AS DataOperacaoString 
+	,DBAthon.dbo.ContatoHistorico.Idusuario                                                     
+	,DBAthon.dbo.ContatoHistorico.Observacao                                                    
+	,DBAthon.dbo.Usuario.Nome AS UsuarioNome                                                    
+                                                                                                  
+	FROM DBAthon.dbo.UvwConsultarContato   
+	
+	LEFT JOIN DBAthon.dbo.ContatoHistorico                                                                                              
+	ON DBAthon.dbo.ContatoHistorico.IdContatoHistorico = (SELECT MAX(HIST.IdContatoHistorico)                                    
+                                                               FROM DBAthon.dbo.ContatoHistorico HIST                               
+                                                              WHERE HIST.Contatos_Id = DBAthon.dbo.UvwConsultarContato.Contatos_Id) 
+
+LEFT JOIN DBAthon.dbo.Usuario                                                    
+       ON DBAthon.dbo.Usuario.IdUsuario = DBAthon.dbo.ContatoHistorico.Idusuario 
+
+WHERE 1 = 1
+  AND DBAthon.dbo.UvwConsultarContato.Uf = @vUf 
+  AND ((DBAthon.dbo.UvwConsultarContato.Nome LIKE @vNome + '%' OR (@vNome) = '') OR ((@vNome) = ''))  
+  AND ((DBAthon.dbo.UvwConsultarContato.Cpf LIKE @vCpf + '%' OR (@vCpf) = '') OR ((@vCpf) = ''))  
+  AND ((DBAthon.dbo.UvwConsultarContato.Cep LIKE @vCep + '%' OR (@vCep) = '') OR ((@vCep) = ''))  
+  AND ((DBAthon.dbo.UvwConsultarContato.Bairro LIKE @vBairro + '%' OR (@vBairro) = '') OR ((@vBairro) = ''))  
+  AND ((DBAthon.dbo.UvwConsultarContato.Logr_Numero LIKE @vLogr_Numero + '%' OR (@vLogr_Numero) = '') OR ((@vLogr_Numero) = ''))  
+  AND ((DBAthon.dbo.UvwConsultarContato.Logr_Nome LIKE @vLogr_Nome + '%' OR (@vLogr_Nome) = '') OR ((@vLogr_Nome) = NULL))  
+  AND ((DBAthon.dbo.UvwConsultarContato.TelefoneNumero LIKE TelefoneNumero + '%' OR (TelefoneNumero) = '') OR ((TelefoneNumero) = ''))  
+  AND ((DBAthon.dbo.UvwConsultarContato.TelefoneDDD &gt;= @vDDDInicial + '%' OR (@vDDDInicial) = '') OR ((@vDDDInicial) = ''))  
+  AND ((DBAthon.dbo.UvwConsultarContato.TelefoneDDD &lt;= @vDDDFinal + '%' OR (@vDDDFinal) = '') OR ((@vDDDFinal) = ''))  
+  AND ((DBAthon.dbo.UvwConsultarContato.Cidade LIKE @vCidade + '%' OR (@vCidade) = '') OR ((@vCidade) = ''))  </SqlCommand>
+      </sqlRelatorio>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Resources isList="true" count="0" />
+    <Variables isList="true" count="11">
+      <value>,vNome,vNome,Denise,System.String,Denise,False,False,False,False,,_x0039_45949b34a104098a2429ae6d48ee2cb</value>
+      <value>,vCpf,vCpf,,System.String,,False,False,False,False,,_x0031_bd3c97936784e338a6a616d739bf0a1</value>
+      <value>,vCep,vCep,,System.String,,False,False,False,False,,_x0030_def461fa6a145a78cf290ee93dbe9f5</value>
+      <value>,vBairro,vBairro,,System.String,,False,False,False,False,,_x0038_a2ef107e3c8426e9fc6b5a08d6819d1</value>
+      <value>,vLogr_Numero,vLogr_Numero,,System.String,,False,False,False,False,,ad81ea0bfff645e691d6cfd326430034</value>
+      <value>,vLogr_Nome,vLogr_Nome,,System.String,,False,False,False,False,,cced97b2da854aab826166306c28b76d</value>
+      <value>,vTelefoneNumero,vTelefoneNumero,,System.String,,False,False,False,False,,_x0036_8a5e1aa80794b7caf581779fe2a4ab6</value>
+      <value>,vDDDFinal,vDDDFinal,,System.String,,False,False,False,False,,a3c6a6ab374f4945bd9cd0d18303bd0c</value>
+      <value>,vDDDInicial,vDDDInicial,,System.String,,False,False,False,False,,_x0034_d49e7e23f5d4467aa28ee7aa589d355</value>
+      <value>,vCidade,vCidade,,System.String,,False,False,False,False,,_x0039_71716993c3a4339ac57b2e1a7f58269</value>
+      <value>,vUf,vUf,MT,System.String,MT,False,False,False,False,,_x0032_49a838f52494251b631f2eb30d87710</value>
+    </Variables>
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <Key>d64671c342b14f23b9bea425891bac95</Key>
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>All;[191:191:191];2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="2">
+        <GroupHeaderBand1 Ref="5" type="GroupHeaderBand" isKey="true">
+          <Brush>White</Brush>
+          <ClientRectangle>0,0.4,27.7,0.4</ClientRectangle>
+          <Components isList="true" count="7">
+            <Text18 Ref="6" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>8.62,0,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>6fb380da7c0a485c878c8da038a0fee9</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text18</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>CPF</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="7" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text18>
+            <Text22 Ref="8" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>0.03,0,8.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>1e23ceddc4074f2288595a1de5d91515</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text22</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Fatura</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text22>
+            <Text2 Ref="9" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>10.4,0,4.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>8d18bcb84b674218b5390b9bf5299db6</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Cidade</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="10" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text2>
+            <Text4 Ref="11" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>15,0,3.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>8bfd961f968b4575b7a7a8cd52090bc6</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Bairro</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="12" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text4>
+            <Text6 Ref="13" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>18.6,0,1.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>ff56022935894fabb997cceb9cc632e8</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text6</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>CEP</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="14" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text6>
+            <Text8 Ref="15" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>19.8,0,5.06,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>a7958db1ecce4883aa0c06ba27d23665</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text8</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Endereço</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="16" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text8>
+            <Text10 Ref="17" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>[242:242:242]</Brush>
+              <ClientRectangle>24.86,0,2.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7,Bold</Font>
+              <Guid>f9380ddc6f374ebba27f4b4a2b490225</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text10</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>Telefone</Text>
+              <TextBrush>Black</TextBrush>
+              <TextFormat Ref="18" type="CurrencyFormat" isKey="true">
+                <DecimalDigits>2</DecimalDigits>
+                <DecimalSeparator>,</DecimalSeparator>
+                <GroupSeparator>.</GroupSeparator>
+                <NegativePattern>1</NegativePattern>
+                <PositivePattern>0</PositivePattern>
+                <Symbol>R$</Symbol>
+                <UseLocalSetting>False</UseLocalSetting>
+              </TextFormat>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text10>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <Expressions isList="true" count="0" />
+          <Guid>05ed27478ffa418497b824afd1ed4294</Guid>
+          <Name>GroupHeaderBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+        </GroupHeaderBand1>
+        <DataBand1 Ref="19" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,1.6,27.7,0.4</ClientRectangle>
+          <Components isList="true" count="7">
+            <Text19 Ref="20" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>0.03,0,8.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>2e0fc2e2a42c4c068b06d02caf9916af</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text19</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sqlRelatorio.Nome}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text19>
+            <Text1 Ref="21" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>8.62,0,1.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>e961aea118584af591fdeab4678af4fe</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sqlRelatorio.Cpf}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text1>
+            <Text3 Ref="22" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>10.4,0,4.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>acaaa17b02f248c5971882e88cd45732</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sqlRelatorio.Cidade} ({sqlRelatorio.Uf})</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text3>
+            <Text5 Ref="23" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>15,0,3.6,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>6d6c6cec0a4f4e9bbef42d25b27cdced</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text5</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sqlRelatorio.Bairro}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text5>
+            <Text7 Ref="24" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>18.6,0,1.2,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>2f7d036be035467d8ecc27da83bd276a</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text7</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sqlRelatorio.Cep}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>DataColumn</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text7>
+            <Text9 Ref="25" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>19.8,0,5.06,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>3fb0524c52784aa1a20a1a1a4a79244d</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text9</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>{sqlRelatorio.Logr_Nome}, {sqlRelatorio.Logr_Numero}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text9>
+            <Text11 Ref="26" type="Text" isKey="true">
+              <Border>All;[191:191:191];1;Solid;False;4;Black</Border>
+              <Brush>White</Brush>
+              <ClientRectangle>24.86,0,2.8,0.4</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Expressions isList="true" count="0" />
+              <Font>Arial,7</Font>
+              <Guid>dd8620aa715840679fe1dbbb6316c7a6</Guid>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text11</Name>
+              <Page isRef="4" />
+              <Parent isRef="19" />
+              <Text>({sqlRelatorio.TelefoneDDD}) {sqlRelatorio.TelefoneNumero}</Text>
+              <TextBrush>Black</TextBrush>
+              <TextOptions>,,,,WordWrap=True,A=0</TextOptions>
+              <Type>Expression</Type>
+              <VertAlignment>Center</VertAlignment>
+            </Text11>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataRelationName isNull="true" />
+          <DataSourceName>sqlRelatorio</DataSourceName>
+          <Expressions isList="true" count="0" />
+          <Filters isList="true" count="0" />
+          <Guid>8e54ccd80f3c46c5b066f859da341f4e</Guid>
+          <Name>DataBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="0" />
+        </DataBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Expressions isList="true" count="0" />
+      <Guid>e362e2901bdc4d808182e2a6d8a37ac4</Guid>
+      <Margins>1,1,1,1</Margins>
+      <Name>Page1</Name>
+      <Orientation>Landscape</Orientation>
+      <PageHeight>21</PageHeight>
+      <PageWidth>29.7</PageWidth>
+      <Report isRef="0" />
+    </Page1>
+  </Pages>
+  <ReferencedAssemblies isList="true" count="8">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>10/25/2021 1:01:07 PM</ReportChanged>
+  <ReportCreated>10/19/2021 2:24:18 PM</ReportCreated>
+  <ReportFile>D:\Net_v4.6\Projetos\Athon.Sisger\Sistema.Web.UI.Datanorte\View\Report\Stimull\ContatoRel.mrt</ReportFile>
+  <ReportGuid>11419c90f4c14870a09cfe80a0863833</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Centimeters</ReportUnit>
+  <ReportVersion>2021.4.1.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}
+</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

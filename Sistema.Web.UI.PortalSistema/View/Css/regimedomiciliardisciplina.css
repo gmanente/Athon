@@ -1,0 +1,15 @@
+﻿/*
+    CURSO CSS
+    AUTOR: Vagner da Costa Fragoso
+    ORGANIZAÇÃO: Univag - Centro Universitário (NTI - Núcleo de Tecnologia da Informação)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+@charset "UTF-8";
+/*Charset*/
+@charset "UTF-8";
+#Modal-Atividade .modal-dialog
+{
+    width: 900px !important;
+}

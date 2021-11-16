@@ -1,0 +1,67 @@
+﻿/*
+    MAIN CSS
+    AUTOR: Leandro Moreira Curioso de Oliveira
+    ORGANIZAÇÃO: Univag - Centro Universitário (NPD - Núcleo de Processamento de Dados)
+*/
+
+/*Charset*/
+@charset "UTF-8";
+
+/*Ínício body*/
+body {
+    width: 100%;
+}
+/*Fim body*/
+
+/*Ínício header*/
+header {
+    width: 100%;
+    padding: 15px;
+    background: #2d3f51 url(../img/bg-top.jpg) repeat-x;
+    -webkit-box-shadow: 0 3px 5px rgba(89,89,89,.6);
+    -moz-box-shadow: 0 3px 5px rgba(89,89,89,.6);
+    box-shadow: 0 3px 5px rgba(89,89,89,.6);
+    text-align: center;
+}
+
+#logo-univag {
+    margin-top: 20px;
+}
+
+#logo-sisger {
+    margin-top: 10px;
+}
+
+.menu-handler {
+    margin-top: 10px;
+}
+
+#info-usuario {
+    padding: 10px;
+    height: 140px;
+    background-color: white;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin-top: 15px;
+    text-align: center;
+}
+/*Fim header*/
+
+/*Ínício menu*/
+#titulo-menu {
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+.item-menu {
+    padding: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+/*Fim menu*/
+
+.modal {
+    text-align: left;
+}
